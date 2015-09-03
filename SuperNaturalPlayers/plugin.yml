@@ -1,0 +1,13 @@
+name: SuperNaturalPlayers
+main: com.weeryan17.snp.Main
+depend: [ProtocolLib]
+version: 1.0
+commands:
+  howl:
+    description: Thing!
+  bl:
+    description: Thing!
+  bat:
+    description: Thing!
+  snp:
+    description: Thing!

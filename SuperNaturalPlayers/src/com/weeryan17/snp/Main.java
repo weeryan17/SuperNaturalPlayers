@@ -1,0 +1,112 @@
+package com.weeryan17.snp;
+
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import com.weeryan17.snp.Commands.Howl;
+import com.weeryan17.snp.Commands.MainCommand;
+import com.weeryan17.snp.Commands.VampBatCommand;
+import com.weeryan17.snp.Commands.VampBlCommand;
+import com.weeryan17.snp.Events;
+import com.weeryan17.snp.PlayerClass;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+//import java.util.logging.Logger;
+
+
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandExecutor;
+//import org.bukkit.command.PluginCommand;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Wolf;
+import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
+//import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.Scoreboard;
+
+public class Main
+extends JavaPlugin
+implements Listener,
+CommandExecutor {
+    ProtocolManager protocolManager;
+    public static int stop;
+    Scoreboard score;
+    public static Main plugin;
+    String type;
+    String player;
+
+    public void onEnable() {
+        this.protocolManager = ProtocolLibrary.getProtocolManager();
+        this.Timer();
+        this.saveConfig();
+        plugin = this;
+        VampBlCommand exec2 = new VampBlCommand(plugin);
+        Howl exec4 = new Howl(plugin);
+        MainCommand exec = new MainCommand(plugin);
+        VampBatCommand exec3 = new VampBatCommand(plugin);
+        Events event = new Events(plugin);
+        this.getCommand("snp").setExecutor((CommandExecutor)exec);
+        this.getCommand("bl").setExecutor((CommandExecutor)exec2);
+        this.getCommand("bat").setExecutor((CommandExecutor)exec3);
+        this.getCommand("howl").setExecutor((CommandExecutor)exec4);
+        Bukkit.getServer().getPluginManager().registerEvents((Listener)event, (Plugin)this);
+        this.getLogger().info("Super Natural Players plugin enabled");
+    }
+
+    public void Timer() {
+        @SuppressWarnings("unused")
+		int thing = Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)this, new Runnable(){
+
+            @Override
+            public void run() {
+                PlayerClass playerClass = new PlayerClass(Main.plugin);
+                playerClass.run();
+            }
+        }, 0, 100);
+    }
+
+    public void Timer2(final Player player, final Wolf wolf) {
+        stop = Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)this, new Runnable(){
+
+            @Override
+            public void run() {
+                PlayerClass playerClass = new PlayerClass(Main.plugin);
+                playerClass.run2(player, wolf);
+            }
+        }, 0, 1);
+    }
+
+    public void onDisable() {
+        this.getLogger().info("Super Natural Players plugin disabled");
+        this.saveConfig();
+    }
+
+    public static void error(String message) {
+        Main.log(Level.WARNING, message);
+    }
+
+    public static void log(Level level, String message) {
+        plugin.getLogger().log(level, message);
+    }
+
+    public static void addLore(ItemStack i, String s) {
+        if (i.getItemMeta().getLore() == null) {
+            ArrayList<String> lore = new ArrayList<String>();
+            lore.add(s);
+            ItemMeta imeta = i.getItemMeta();
+            imeta.setLore(lore);
+            i.setItemMeta(imeta);
+        } else {
+            List<String> lore = i.getItemMeta().getLore();
+            lore.add(s);
+            ItemMeta imeta = i.getItemMeta();
+            imeta.setLore(lore);
+            i.setItemMeta(imeta);
+        }
+    }
+
+}
