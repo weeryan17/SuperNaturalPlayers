@@ -1,9 +1,9 @@
 package com.weeryan17.snp;
 
 import com.weeryan17.snp.EntityHider;
-import com.weeryan17.snp.Events;
+//import com.weeryan17.snp.Events;
 import com.weeryan17.snp.Main;
-import com.weeryan17.snp.Sun;
+//import com.weeryan17.snp.Sun;
 //import java.util.Collection;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
@@ -61,18 +61,19 @@ public class PlayerClass {
             int days = (int)world.getFullTime() / 24000;
             int phase = days % 8;
             if (this.instance.getConfig().get("Players." + test18 + ".type").toString().equals("Vampire")) {
-                Score score = Events.objective.getScore((Object)ChatColor.RED + "Blood");
+                Score score = Events.objective.getScore(ChatColor.RED + "Blood");
                 double d = this.instance.getConfig().getDouble("Players." + test18 + ".Blood");
                 i = (int)d;
                 score.setScore(i);
-                double rad = Sun.calcPlayerIrradiation(this.p);
+                double rad = Sun.calcPlayerIrradiation(p);
                 if (rad >= 0.25 && this.p.getGameMode() != GameMode.CREATIVE && this.p.getGameMode() != GameMode.SPECTATOR) {
                     this.p.damage(rad);
-                    this.p.sendMessage((Object)ChatColor.RED + "The day light is burning you");
+                    this.p.sendMessage(ChatColor.RED + "The day light is burning you");
                     this.p.setFireTicks(100);
                 }
+                
             }
-            if (!this.instance.getConfig().get("Players." + test18 + ".type").toString().equals("Werewolf")) continue;
+            if (!this.instance.getConfig().get("Players." + test18 + ".type").toString().equals("Werewolf"));
             if (phase == 0 && world.getTime() >= 13000) {
                 this.p.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
                 this.p.removePotionEffect(PotionEffectType.SPEED);
@@ -81,22 +82,22 @@ public class PlayerClass {
                 this.p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 4));
                 this.p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 300, 0));
                 this.p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 300, 0));
-                if (this.instance.getConfig().getBoolean("Players." + test18 + ".Wolf")) continue;
-                this.p.sendMessage((Object)ChatColor.DARK_PURPLE + "The moon is full and bright tonight...");
+                if (this.instance.getConfig().getBoolean("Players." + test18 + ".Wolf"));
+                this.p.sendMessage(ChatColor.DARK_PURPLE + "The moon is full and bright tonight...");
                 Location loc = this.p.getLocation();
                 this.p.playSound(loc, Sound.WOLF_HOWL, 5.0f, 0.0f);
                 Wolf wolf = (Wolf)loc.getWorld().spawnEntity(loc, EntityType.WOLF);
                 EntityHider hide = new EntityHider((Plugin)this.instance, EntityHider.Policy.BLACKLIST);
                 hide.hideEntity(this.p, (Entity)wolf);
                 this.instance.Timer2(this.p, wolf);
-                this.instance.getConfig().set("Players." + test18 + ".Wolf", (Object)true);
-                continue;
+                this.instance.getConfig().set("Players." + test18 + ".Wolf", true);
+               ;
             }
             this.p.removePotionEffect(PotionEffectType.SPEED);
             this.p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 0));
-            if (!this.instance.getConfig().getBoolean("Players." + test18 + ".Wolf")) continue;
+            if (!this.instance.getConfig().getBoolean("Players." + test18 + ".Wolf"));
             Bukkit.getScheduler().cancelTask(Main.stop);
-            this.instance.getConfig().set("Players." + test18 + ".Wolf", (Object)false);
+            this.instance.getConfig().set("Players." + test18 + ".Wolf", false);
         }
     }
 

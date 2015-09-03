@@ -66,7 +66,7 @@ CommandExecutor {
                 PlayerClass playerClass = new PlayerClass(Main.plugin);
                 playerClass.run();
             }
-        }, 0, 100);
+        }, 0, 10);
     }
 
     public void Timer2(final Player player, final Wolf wolf) {

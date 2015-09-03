@@ -23,8 +23,10 @@ implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("howl") && this.instance.getConfig().get("Players." + player + ".type").toString().equals("Werewolf")) {
             Player p = Bukkit.getServer().getPlayer(player);
             Location loc = p.getLocation();
-            p.playSound(loc, Sound.WOLF_HOWL, 5.0f, 0.0f);
+            for(Player pl : Bukkit.getOnlinePlayers()) {
+            	  pl.playSound(loc, Sound.WOLF_HOWL, 5.0f, 0.0f);
         }
-        return false;
     }
+        return false;
+}
 }

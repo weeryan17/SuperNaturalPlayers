@@ -28,7 +28,7 @@ implements CommandExecutor {
             if (cmd.getName().equalsIgnoreCase("bl") && this.instance.getConfig().get("Players." + playerName + ".type").toString().equals("Vampire")) {
                 if (args.length == 0) {
                     this.blood(playerName, sender);
-                    sender.sendMessage((Object)ChatColor.RED + "You went into blood lust mode. This will drain your blood");
+                    sender.sendMessage(ChatColor.RED + "You went into blood lust mode. This will drain your blood");
                 }
             } else {
                 sender.sendMessage("You are not a Vampire");
@@ -43,7 +43,7 @@ implements CommandExecutor {
     public void blood(final String sender, final CommandSender player) {
         double blood = this.instance.getConfig().getDouble("Players." + sender + ".Blood");
         if (blood >= 0.1) {
-            this.instance.getConfig().set("Players." + sender + ".Blood", (Object)(blood - 0.2));
+            this.instance.getConfig().set("Players." + sender + ".Blood", (blood - 0.2));
             Player p = Bukkit.getServer().getPlayer(sender);
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 3, 1));
             p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 3, 1));
@@ -56,20 +56,20 @@ implements CommandExecutor {
             }, 0, 1);
         } else {
             this.stop();
-            player.sendMessage((Object)ChatColor.DARK_RED + "no blood left");
+            player.sendMessage(ChatColor.DARK_RED + "no blood left");
         }
     }
 
     public void blood2(String sender, CommandSender player) {
         double blood = this.instance.getConfig().getDouble("Players." + sender + ".Blood");
         if (blood >= 0.1) {
-            this.instance.getConfig().set("Players." + sender + ".Blood", (Object)(blood - 0.2));
+            this.instance.getConfig().set("Players." + sender + ".Blood", (blood - 0.2));
             Player p = Bukkit.getServer().getPlayer(sender);
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1, 1));
             p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1, 1));
         } else {
             this.stop();
-            player.sendMessage((Object)ChatColor.DARK_RED + "no blood left");
+            player.sendMessage(ChatColor.DARK_RED + "no blood left");
         }
     }
 

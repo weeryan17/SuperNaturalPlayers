@@ -33,7 +33,7 @@ implements CommandExecutor {
         if (sender instanceof Player && this.instance.getConfig().get("Players." + playerRaw + ".type").toString().equals("Vampire")) {
             if (cmd.getName().equalsIgnoreCase("bat")) {
                 if (!(this.instance.getConfig().getBoolean("Player." + playerRaw + ".Bat") || args.length != 0)) {
-                    this.instance.getConfig().set("Player." + playerRaw + ".Bat", (Object)true);
+                    this.instance.getConfig().set("Player." + playerRaw + ".Bat", true);
                     this.player = Bukkit.getServer().getPlayer(playerRaw);
                     Location loc = this.player.getLocation();
                     final Bat bat = (Bat)loc.getWorld().spawnEntity(loc, EntityType.BAT);
@@ -41,7 +41,7 @@ implements CommandExecutor {
                     hide.hideEntity(this.player, (Entity)bat);
                     this.player.setAllowFlight(true);
                     this.player.setMaxHealth(2.0);
-                    this.player.sendMessage((Object)ChatColor.BLACK + "you became a bat");
+                    this.player.sendMessage(ChatColor.BLACK + "you became a bat");
                     this.stop = Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)this.instance, new Runnable(){
 
                         @Override
@@ -54,23 +54,23 @@ implements CommandExecutor {
                         }
                     }, 0, 1);
                 } else {
-                    this.instance.getConfig().set("Player." + playerRaw + ".Bat", (Object)false);
+                    this.instance.getConfig().set("Player." + playerRaw + ".Bat", false);
                     this.player.setAllowFlight(false);
                     this.player.setMaxHealth(20.0);
-                    this.player.sendMessage((Object)ChatColor.RED + "You are no longer a bat");
+                    this.player.sendMessage(ChatColor.RED + "You are no longer a bat");
                     this.player.removePotionEffect(PotionEffectType.INVISIBILITY);
                     this.player.removePotionEffect(PotionEffectType.WEAKNESS);
                     Bukkit.getScheduler().cancelTask(this.stop);
                 }
             }
         } else {
-            sender.sendMessage((Object)ChatColor.RED + "You need to be a vampire to become a bat");
+            sender.sendMessage(ChatColor.RED + "You need to be a vampire to become a bat");
         }
         if (args.length == 1 && args[0].equals("stop")) {
-            this.instance.getConfig().set("Player." + playerRaw + ".Bat", (Object)false);
+            this.instance.getConfig().set("Player." + playerRaw + ".Bat", false);
             this.player.setAllowFlight(false);
             this.player.setMaxHealth(20.0);
-            this.player.sendMessage((Object)ChatColor.RED + "You are no longer a bat");
+            this.player.sendMessage(ChatColor.RED + "You are no longer a bat");
             this.player.removePotionEffect(PotionEffectType.INVISIBILITY);
             this.player.removePotionEffect(PotionEffectType.WEAKNESS);
             Bukkit.getScheduler().cancelTask(this.stop);

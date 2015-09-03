@@ -39,19 +39,19 @@ public class Events implements Listener
             final Double blood = damage / 2.0;
             final Double bloodfinal = blood + this.instance.getConfig().getDouble("Players." + player + ".Blood");
             final Double bloodTotal = blood + this.instance.getConfig().getDouble("Players." + player + ".BloodTotal");
-            this.instance.getConfig().set("Players." + player + ".Blood", (Object)bloodfinal);
-            this.instance.getConfig().set("Players." + player + ".BloodTotal", (Object)bloodTotal);
+            this.instance.getConfig().set("Players." + player + ".Blood", bloodfinal);
+            this.instance.getConfig().set("Players." + player + ".BloodTotal", bloodTotal);
         }
         if (damager instanceof Player) {
             if (damagee instanceof Player && this.instance.getConfig().get("Players." + hurt + ".type").toString().equals("Vampire")) {
                 final Player p = Bukkit.getServer().getPlayer(player);
-                if (p.getItemInHand().getType().equals((Object)Material.WOOD_SWORD)) {
+                if (p.getItemInHand().getType().equals(Material.WOOD_SWORD)) {
                     event.setDamage(60.0);
                 }
             }
             if (damagee instanceof Player && this.instance.getConfig().get("Players." + hurt + ".type").toString().equals("Werewolf")) {
                 final Player p = Bukkit.getServer().getPlayer(player);
-                if (p.getItemInHand().getType().equals((Object)Material.GOLD_SWORD)) {
+                if (p.getItemInHand().getType().equals(Material.GOLD_SWORD)) {
                     event.setDamage(60.0);
                 }
             }
@@ -81,14 +81,14 @@ public class Events implements Listener
         final String UUID = playerRaw.getUniqueId().toString();
         if (!this.instance.getConfig().contains("Players." + player)) {
             this.instance.getLogger().info("Creating config info");
-            this.instance.getConfig().set("Players." + player + ".UUID", (Object)UUID);
-            this.instance.getConfig().set("Players." + player + ".Wolf", (Object)false);
-            this.instance.getConfig().set("Players." + player + ".type", (Object)"Human");
-            this.instance.getConfig().set("Players." + player + ".Blood", (Object)0);
-            this.instance.getConfig().set("Players." + player + ".Kills", (Object)0);
-            this.instance.getConfig().set("Players." + player + ".Souls", (Object)0);
-            this.instance.getConfig().set("Players." + player + ".BloodTotal", (Object)0);
-            this.instance.getConfig().set("Players." + player + ".Bat", (Object)false);
+            this.instance.getConfig().set("Players." + player + ".UUID", UUID);
+            this.instance.getConfig().set("Players." + player + ".Wolf", false);
+            this.instance.getConfig().set("Players." + player + ".type", "Human");
+            this.instance.getConfig().set("Players." + player + ".Blood", 0);
+            this.instance.getConfig().set("Players." + player + ".Kills", 0);
+            this.instance.getConfig().set("Players." + player + ".Souls", 0);
+            this.instance.getConfig().set("Players." + player + ".BloodTotal", 0);
+            this.instance.getConfig().set("Players." + player + ".Bat", false);
             this.instance.saveConfig();
         }
         else {
@@ -108,8 +108,8 @@ public class Events implements Listener
                 if (item.getItemMeta().getLore().get(0).equals(ChatColor.YELLOW + "Used to turn blood into food")) {
                     if (this.instance.getConfig().getDouble("Players." + name + ".Blood") >= 1.0) {
                         double blood = this.instance.getConfig().getDouble("Players." + name + ".Blood");
-                        --blood;
-                        this.instance.getConfig().set("Players." + name + ".Blood", (Object)blood);
+                        blood = blood - 1;
+                        this.instance.getConfig().set("Players." + name + ".Blood", blood);
                         player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1, 10));
                     }
                     else {

@@ -28,22 +28,22 @@ implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("snp") && sender.hasPermission("snp.command")) {
             Player p;
             if (args.length == 0) {
-                sender.sendMessage((Object)ChatColor.RED + "[SNP Help]");
-                sender.sendMessage((Object)ChatColor.YELLOW + "/snp toggle <player> <race>");
-                sender.sendMessage((Object)ChatColor.YELLOW + "/snp item <player> <item>");
-                sender.sendMessage((Object)ChatColor.YELLOW + "/snp reload (reloads config)");
+                sender.sendMessage(ChatColor.RED + "[SNP Help]");
+                sender.sendMessage(ChatColor.YELLOW + "/snp toggle <player> <race>");
+                sender.sendMessage(ChatColor.YELLOW + "/snp item <player> <item>");
+                sender.sendMessage(ChatColor.YELLOW + "/snp reload (reloads config)");
             }
             if (!(args.length != 1 || args[0].equals("reload"))) {
                 if (args[0].equals("toggle")) {
-                    sender.sendMessage((Object)ChatColor.RED + "[SNP Help]");
-                    sender.sendMessage((Object)ChatColor.YELLOW + "/snp toggle <player> <race>");
-                    sender.sendMessage((Object)ChatColor.YELLOW + "Races:");
-                    sender.sendMessage((Object)ChatColor.YELLOW + "Demon, Werewolf, Vampire, Angel, Necromancer, and Ghoul");
+                    sender.sendMessage(ChatColor.RED + "[SNP Help]");
+                    sender.sendMessage(ChatColor.YELLOW + "/snp toggle <player> <race>");
+                    sender.sendMessage(ChatColor.YELLOW + "Races:");
+                    sender.sendMessage(ChatColor.YELLOW + "Demon, Werewolf, Vampire, Angel, Necromancer, and Ghoul");
                 } else if (args[0].equals("item")) {
-                    sender.sendMessage((Object)ChatColor.RED + "[SNP Help]");
-                    sender.sendMessage((Object)ChatColor.YELLOW + "/snp item <player> <item>");
-                    sender.sendMessage((Object)ChatColor.YELLOW + "items:");
-                    sender.sendMessage((Object)ChatColor.YELLOW + "BloodPot");
+                    sender.sendMessage(ChatColor.RED + "[SNP Help]");
+                    sender.sendMessage(ChatColor.YELLOW + "/snp item <player> <item>");
+                    sender.sendMessage(ChatColor.YELLOW + "items:");
+                    sender.sendMessage(ChatColor.YELLOW + "BloodPot");
                 }
             }
             if (args.length == 3 && args[0].equals("toggle")) {
@@ -51,14 +51,14 @@ implements CommandExecutor {
                 this.test2 = args[2];
                 if (args[2].equals("Demon") || args[2].equals("Werewolf") || args[2].equals("Vampire") || args[2].equals("Angel") || args[2].equals("Necromancer") || args[2].equals("Human")) {
                     sender.sendMessage("You turned " + this.test + " into a(n) " + this.test2);
-                    this.instance.getConfig().set("Players." + this.test + ".type", (Object)this.test2);
+                    this.instance.getConfig().set("Players." + this.test + ".type", this.test2);
                     p = Bukkit.getServer().getPlayer(this.test);
                     p.sendMessage("You are now a(n) " + this.test2);
-                    this.instance.getConfig().set("Players." + this.test + ".Wolf", (Object)false);
-                    this.instance.getConfig().set("Players." + this.test + ".Blood", (Object)0);
-                    this.instance.getConfig().set("Players." + this.test + ".Kills", (Object)0);
-                    this.instance.getConfig().set("Players." + this.test + ".Souls", (Object)0);
-                    this.instance.getConfig().set("Players." + this.test + ".Bat", (Object)false);
+                    this.instance.getConfig().set("Players." + this.test + ".Wolf", false);
+                    this.instance.getConfig().set("Players." + this.test + ".Blood", 0);
+                    this.instance.getConfig().set("Players." + this.test + ".Kills", 0);
+                    this.instance.getConfig().set("Players." + this.test + ".Souls", 0);
+                    this.instance.getConfig().set("Players." + this.test + ".Bat", false);
                     this.instance.saveConfig();
                 } else {
                     sender.sendMessage("not a valid race");
@@ -68,13 +68,14 @@ implements CommandExecutor {
                 p = Bukkit.getServer().getPlayer(args[1]);
                 ItemStack item = new ItemStack(Material.POTION);
                 ItemMeta meta = item.getItemMeta();
-                meta.setDisplayName((Object)ChatColor.RED + "Blood Potion");
+                meta.setDisplayName(ChatColor.RED + "Blood Potion");
                 item.setItemMeta(meta);
-                Main.addLore(item, (Object)ChatColor.YELLOW + "Used to turn blood into food");
+                Main.addLore(item, ChatColor.YELLOW + "Used to turn blood into food");
+                Main.addLore(item, ChatColor.YELLOW + "Only useable as a Vampire");
                 p.getInventory().addItem(new ItemStack[]{item});
             }
         } else {
-            sender.sendMessage((Object)ChatColor.RED + "You don't have permision to preform this acction");
+            sender.sendMessage(ChatColor.RED + "You don't have permision to preform this acction");
         }
         return false;
     }
