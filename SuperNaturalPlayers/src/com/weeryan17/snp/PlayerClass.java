@@ -73,7 +73,7 @@ public class PlayerClass {
                 }
                 
             }
-            if (!this.instance.getConfig().get("Players." + test18 + ".type").toString().equals("Werewolf"));
+            if (!this.instance.getConfig().get("Players." + test18 + ".type").toString().equals("Werewolf")){
             if (phase == 0 && world.getTime() >= 13000) {
                 this.p.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
                 this.p.removePotionEffect(PotionEffectType.SPEED);
@@ -82,7 +82,7 @@ public class PlayerClass {
                 this.p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 4));
                 this.p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 300, 0));
                 this.p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 300, 0));
-                if (this.instance.getConfig().getBoolean("Players." + test18 + ".Wolf"));
+                if (this.instance.getConfig().getBoolean("Players." + test18 + ".Wolf") == false){
                 this.p.sendMessage(ChatColor.DARK_PURPLE + "The moon is full and bright tonight...");
                 Location loc = this.p.getLocation();
                 this.p.playSound(loc, Sound.WOLF_HOWL, 5.0f, 0.0f);
@@ -91,13 +91,15 @@ public class PlayerClass {
                 hide.hideEntity(this.p, (Entity)wolf);
                 this.instance.Timer2(this.p, wolf);
                 this.instance.getConfig().set("Players." + test18 + ".Wolf", true);
-               ;
             }
-            this.p.removePotionEffect(PotionEffectType.SPEED);
+        } else {
+        	this.p.removePotionEffect(PotionEffectType.SPEED);
             this.p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 0));
             if (!this.instance.getConfig().getBoolean("Players." + test18 + ".Wolf"));
             Bukkit.getScheduler().cancelTask(Main.stop);
             this.instance.getConfig().set("Players." + test18 + ".Wolf", false);
+        }
+        }
         }
     }
 
