@@ -73,7 +73,7 @@ public class PlayerClass {
                 }
                 
             }
-            if (!this.instance.getConfig().get("Players." + test18 + ".type").toString().equals("Werewolf")){
+            if (this.instance.getConfig().get("Players." + test18 + ".type").toString().equals("Werewolf")){
             if (phase == 0 && world.getTime() >= 13000) {
                 this.p.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
                 this.p.removePotionEffect(PotionEffectType.SPEED);

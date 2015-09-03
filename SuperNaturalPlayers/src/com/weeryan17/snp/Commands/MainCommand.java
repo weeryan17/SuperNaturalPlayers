@@ -33,6 +33,7 @@ implements CommandExecutor {
                 sender.sendMessage(ChatColor.YELLOW + "/snp item <player> <item>");
                 sender.sendMessage(ChatColor.YELLOW + "/snp reload (reloads config)");
             }
+            if(args.length == 1){
                 if (args[0].equals("toggle")) {
                     sender.sendMessage(ChatColor.RED + "[SNP Help]");
                     sender.sendMessage(ChatColor.YELLOW + "/snp toggle <player> <race>");
@@ -43,6 +44,7 @@ implements CommandExecutor {
                     sender.sendMessage(ChatColor.YELLOW + "/snp item <player> <item>");
                     sender.sendMessage(ChatColor.YELLOW + "items:");
                     sender.sendMessage(ChatColor.YELLOW + "BloodPot");
+            }
             }
             if (args.length == 3 && args[0].equals("toggle")) {
                 this.test = args[1];
