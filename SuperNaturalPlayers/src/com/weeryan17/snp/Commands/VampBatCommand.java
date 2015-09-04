@@ -5,11 +5,9 @@ import com.weeryan17.snp.Main;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-//import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-//import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Bat;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -32,8 +30,8 @@ implements CommandExecutor {
         String playerRaw = sender.getName().toString();
         if (sender instanceof Player && this.instance.getConfig().get("Players." + playerRaw + ".type").toString().equals("Vampire")) {
             if (cmd.getName().equalsIgnoreCase("bat")) {
-                if (!(this.instance.getConfig().getBoolean("Player." + playerRaw + ".Bat") || args.length != 0)) {
-                    this.instance.getConfig().set("Player." + playerRaw + ".Bat", true);
+                if (!(this.instance.getConfig().getBoolean("Players." + playerRaw + ".Bat") || args.length != 0)) {
+                    this.instance.getConfig().set("Players." + playerRaw + ".Bat", true);
                     this.player = Bukkit.getServer().getPlayer(playerRaw);
                     Location loc = this.player.getLocation();
                     final Bat bat = (Bat)loc.getWorld().spawnEntity(loc, EntityType.BAT);
@@ -54,7 +52,7 @@ implements CommandExecutor {
                         }
                     }, 0, 1);
                 } else {
-                    this.instance.getConfig().set("Player." + playerRaw + ".Bat", false);
+                    this.instance.getConfig().set("Players." + playerRaw + ".Bat", false);
                     this.player.setAllowFlight(false);
                     this.player.setMaxHealth(20.0);
                     this.player.sendMessage(ChatColor.RED + "You are no longer a bat");
@@ -67,7 +65,7 @@ implements CommandExecutor {
             sender.sendMessage(ChatColor.RED + "You need to be a vampire to become a bat");
         }
         if (args.length == 1 && args[0].equals("stop")) {
-            this.instance.getConfig().set("Player." + playerRaw + ".Bat", false);
+            this.instance.getConfig().set("Players." + playerRaw + ".Bat", false);
             this.player.setAllowFlight(false);
             this.player.setMaxHealth(20.0);
             this.player.sendMessage(ChatColor.RED + "You are no longer a bat");
