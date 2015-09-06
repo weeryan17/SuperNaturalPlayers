@@ -232,7 +232,7 @@ public class EntityHider implements Listener {
      */
     public final boolean showEntity(Player observer, Entity entity) {
         validate(observer, entity);
-        boolean hiddenBefore = !setVisibility(observer, entity.getEntityId(), true);
+        boolean hiddenBefore = setVisibility(observer, entity.getEntityId(), true);
         
         // Resend packets
         if (manager != null && hiddenBefore) {

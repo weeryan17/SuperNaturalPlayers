@@ -7,7 +7,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -26,7 +25,7 @@ implements CommandExecutor {
             String playerName = sender.getName().toString();
             if (cmd.getName().equalsIgnoreCase("bl") && this.instance.getConfig().get("Players." + playerName + ".type").toString().equals("Vampire")) {
                 if (args.length == 0) {
-                    this.blood(playerName, sender);
+                    blood(playerName, sender);
                     sender.sendMessage(ChatColor.RED + "You went into blood lust mode. This will drain your blood");
                 }
             } else {
@@ -46,7 +45,7 @@ implements CommandExecutor {
             Player p = Bukkit.getServer().getPlayer(sender);
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 3, 1));
             p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 3, 1));
-            this.stop = Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)this.instance, new Runnable(){
+            stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new Runnable(){
 
                 @Override
                 public void run() {
@@ -54,7 +53,7 @@ implements CommandExecutor {
                 }
             }, 0, 1);
         } else {
-            this.stop();
+            stop();
             player.sendMessage(ChatColor.DARK_RED + "no blood left");
         }
     }
@@ -67,13 +66,13 @@ implements CommandExecutor {
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1, 1));
             p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1, 1));
         } else {
-            this.stop();
+            stop();
             player.sendMessage(ChatColor.DARK_RED + "no blood left");
         }
     }
 
     public void stop() {
-        Bukkit.getScheduler().cancelTask(this.stop);
+        Bukkit.getScheduler().cancelTask(stop);
     }
 
 }

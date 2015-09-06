@@ -1,6 +1,6 @@
 package com.weeryan17.snp.Commands;
 
-import com.weeryan17.snp.EntityHider;
+//import com.weeryan17.snp.EntityHider;
 import com.weeryan17.snp.Main;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
@@ -9,7 +9,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Bat;
-import org.bukkit.entity.Entity;
+//import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -30,18 +30,18 @@ implements CommandExecutor {
         String playerRaw = sender.getName().toString();
         if (sender instanceof Player && this.instance.getConfig().get("Players." + playerRaw + ".type").toString().equals("Vampire")) {
             if (cmd.getName().equalsIgnoreCase("bat")) {
-                if (!(this.instance.getConfig().getBoolean("Players." + playerRaw + ".Bat") || args.length != 0)) {
+                if (this.instance.getConfig().getBoolean("Players." + playerRaw + ".Bat") == false && args.length == 0) {
                     this.instance.getConfig().set("Players." + playerRaw + ".Bat", true);
-                    this.player = Bukkit.getServer().getPlayer(playerRaw);
+                    player = Bukkit.getServer().getPlayer(playerRaw);
                     Location loc = this.player.getLocation();
                     final Bat bat = (Bat)loc.getWorld().spawnEntity(loc, EntityType.BAT);
-                    EntityHider hide = new EntityHider((Plugin)this.instance, EntityHider.Policy.BLACKLIST);
-                    hide.hideEntity(this.player, (Entity)bat);
-                    this.player.setAllowFlight(true);
-                    this.player.setMaxHealth(2.0);
-                    this.player.sendMessage(ChatColor.BLACK + "you became a bat");
-                    this.stop = Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)this.instance, new Runnable(){
-
+                    for(Player pl : Bukkit.getOnlinePlayers()) {
+                    	pl.hidePlayer(player);
+                    }
+                    player.setAllowFlight(true);
+                    player.setMaxHealth(2.0);
+                    player.sendMessage(ChatColor.BLACK + "you became a bat");
+                    stop = Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)this.instance, new Runnable(){
                         @Override
                         public void run() {
                             Location loc = VampBatCommand.this.player.getLocation();
@@ -52,13 +52,16 @@ implements CommandExecutor {
                         }
                     }, 0, 1);
                 } else {
+                	for(Player pl : Bukkit.getOnlinePlayers()) {
+                    	pl.showPlayer(player);
+                    }
                     this.instance.getConfig().set("Players." + playerRaw + ".Bat", false);
                     this.player.setAllowFlight(false);
                     this.player.setMaxHealth(20.0);
                     this.player.sendMessage(ChatColor.RED + "You are no longer a bat");
                     this.player.removePotionEffect(PotionEffectType.INVISIBILITY);
                     this.player.removePotionEffect(PotionEffectType.WEAKNESS);
-                    Bukkit.getScheduler().cancelTask(this.stop);
+                    Bukkit.getScheduler().cancelTask(stop);
                 }
             }
         } else {
@@ -71,7 +74,7 @@ implements CommandExecutor {
             this.player.sendMessage(ChatColor.RED + "You are no longer a bat");
             this.player.removePotionEffect(PotionEffectType.INVISIBILITY);
             this.player.removePotionEffect(PotionEffectType.WEAKNESS);
-            Bukkit.getScheduler().cancelTask(this.stop);
+            Bukkit.getScheduler().cancelTask(stop);
         }
         return false;
     }
