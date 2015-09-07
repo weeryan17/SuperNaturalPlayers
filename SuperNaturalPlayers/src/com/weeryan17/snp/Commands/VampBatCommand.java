@@ -1,6 +1,5 @@
 package com.weeryan17.snp.Commands;
 
-//import com.weeryan17.snp.EntityHider;
 import com.weeryan17.snp.Main;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
@@ -9,10 +8,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Bat;
-//import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -41,16 +38,17 @@ implements CommandExecutor {
                     player.setAllowFlight(true);
                     player.setMaxHealth(2.0);
                     player.sendMessage(ChatColor.BLACK + "you became a bat");
-                    stop = Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)this.instance, new Runnable(){
+                    stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new Runnable(){
                         @Override
                         public void run() {
                             Location loc = VampBatCommand.this.player.getLocation();
                             bat.teleport(loc);
-                            VampBatCommand.this.player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 300, 9));
-                            VampBatCommand.this.player.removePotionEffect(PotionEffectType.INVISIBILITY);
-                            VampBatCommand.this.player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 300, 9));
+                            player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 300, 9));
+                            player.removePotionEffect(PotionEffectType.INVISIBILITY);
+                            player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 300, 9));
                         }
                     }, 0, 1);
+                    this.instance.getConfig().set("Players." + player + ".Task", stop);
                 } else {
                 	for(Player pl : Bukkit.getOnlinePlayers()) {
                     	pl.showPlayer(player);
@@ -61,7 +59,7 @@ implements CommandExecutor {
                     this.player.sendMessage(ChatColor.RED + "You are no longer a bat");
                     this.player.removePotionEffect(PotionEffectType.INVISIBILITY);
                     this.player.removePotionEffect(PotionEffectType.WEAKNESS);
-                    Bukkit.getScheduler().cancelTask(stop);
+                    Bukkit.getScheduler().cancelTask(this.instance.getConfig().getInt("Players." + player + ".Task"));
                 }
             }
         } else {
@@ -74,7 +72,7 @@ implements CommandExecutor {
             this.player.sendMessage(ChatColor.RED + "You are no longer a bat");
             this.player.removePotionEffect(PotionEffectType.INVISIBILITY);
             this.player.removePotionEffect(PotionEffectType.WEAKNESS);
-            Bukkit.getScheduler().cancelTask(stop);
+            Bukkit.getScheduler().cancelTask(this.instance.getConfig().getInt("Players." + playerRaw + ".Task"));
         }
         return false;
     }

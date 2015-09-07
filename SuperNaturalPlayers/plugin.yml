@@ -11,3 +11,5 @@ commands:
     description: Thing!
   snp:
     description: Thing!
+  class:
+    description: Thing!

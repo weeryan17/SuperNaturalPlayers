@@ -10,8 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class VampBlCommand
-implements CommandExecutor {
+public class VampBlCommand implements CommandExecutor {
     int stop;
     int thing2;
     private Main instance;
@@ -32,8 +31,8 @@ implements CommandExecutor {
                 sender.sendMessage("You are not a Vampire");
             }
         }
-        if (args.length == 1 && args[0].equals(this.stop)) {
-            this.stop();
+        if (args.length == 1 && args[0].equals("stop")) {
+            Bukkit.getScheduler().cancelTask(stop);
         }
         return true;
     }

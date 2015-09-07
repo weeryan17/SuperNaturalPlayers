@@ -53,6 +53,8 @@ public class PlayerClass {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 300, 0));
                 if (this.instance.getConfig().getBoolean("Players." + playerName + ".Wolf") == false){
                 p.sendMessage(ChatColor.DARK_PURPLE + "The moon is full and bright tonight...");
+                int moon = this.instance.getConfig().getInt("Players." + playerName + ".FullMoons");
+                this.instance.getConfig().set("Players." + playerName + ".FullMoons", moon+1);
                 Location loc = p.getLocation();
                 Wolf wolf = (Wolf)loc.getWorld().spawnEntity(loc, EntityType.WOLF);
                 hide.hideEntity(p, wolf);

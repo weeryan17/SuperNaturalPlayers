@@ -2,6 +2,7 @@ package com.weeryan17.snp;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
+import com.weeryan17.snp.Commands.ClassCommand;
 import com.weeryan17.snp.Commands.Howl;
 import com.weeryan17.snp.Commands.MainCommand;
 import com.weeryan17.snp.Commands.VampBatCommand;
@@ -12,6 +13,7 @@ import com.weeryan17.snp.PlayerClass;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
+
 
 
 import org.bukkit.Bukkit;
@@ -43,20 +45,22 @@ CommandExecutor {
         plugin = this;
         VampBlCommand exec2 = new VampBlCommand(plugin);
         Howl exec4 = new Howl(plugin);
+        ClassCommand exec5 = new ClassCommand(plugin);
         MainCommand exec = new MainCommand(plugin);
         VampBatCommand exec3 = new VampBatCommand(plugin);
         Events event = new Events(plugin);
-        this.getCommand("snp").setExecutor((CommandExecutor)exec);
-        this.getCommand("bl").setExecutor((CommandExecutor)exec2);
-        this.getCommand("bat").setExecutor((CommandExecutor)exec3);
-        this.getCommand("howl").setExecutor((CommandExecutor)exec4);
+        this.getCommand("class").setExecutor(exec5);
+        this.getCommand("snp").setExecutor(exec);
+        this.getCommand("bl").setExecutor(exec2);
+        this.getCommand("bat").setExecutor(exec3);
+        this.getCommand("howl").setExecutor(exec4);
         Bukkit.getServer().getPluginManager().registerEvents((Listener)event, (Plugin)this);
         this.getLogger().info("Super Natural Players plugin enabled");
     }
 
     public void Timer() {
         @SuppressWarnings("unused")
-		int thing = Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)this, new Runnable(){
+		int thing = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
 
             @Override
             public void run() {

@@ -87,6 +87,8 @@ public class Events implements Listener
             this.instance.getConfig().set("Players." + player + ".BloodTotal", 0);
             this.instance.getConfig().set("Players." + player + ".Vamplvl", 0);
             this.instance.getConfig().set("Players." + player + ".Bat", false);
+            this.instance.getConfig().set("Players." + player + ".Task", 0);
+            this.instance.getConfig().set("Players." + player + ".FullMoons", 0);
             this.instance.saveConfig();
         }
         else {
