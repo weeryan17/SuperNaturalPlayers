@@ -1,10 +1,12 @@
-package com.weeryan17.snp;
+package com.weeryan17.snp.Util;
 
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+
 import net.md_5.bungee.api.ChatColor;
+
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -16,6 +18,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.event.Listener;
+
+import com.weeryan17.snp.Main;
 
 public class Events implements Listener
 {

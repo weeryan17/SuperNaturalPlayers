@@ -1,4 +1,4 @@
-package com.weeryan17.snp;
+package com.weeryan17.snp.Util;
 
 //import org.bukkit.Location;
 //import org.bukkit.Material;

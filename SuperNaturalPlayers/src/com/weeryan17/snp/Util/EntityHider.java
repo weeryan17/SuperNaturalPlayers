@@ -1,4 +1,4 @@
-package com.weeryan17.snp;
+package com.weeryan17.snp.Util;
 
 import static com.comphenix.protocol.PacketType.Play.Server.*;
 

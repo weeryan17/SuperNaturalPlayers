@@ -7,12 +7,13 @@ import com.weeryan17.snp.Commands.Howl;
 import com.weeryan17.snp.Commands.MainCommand;
 import com.weeryan17.snp.Commands.VampBatCommand;
 import com.weeryan17.snp.Commands.VampBlCommand;
-import com.weeryan17.snp.Events;
+import com.weeryan17.snp.Util.Events;
 import com.weeryan17.snp.PlayerClass;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
+
 
 
 

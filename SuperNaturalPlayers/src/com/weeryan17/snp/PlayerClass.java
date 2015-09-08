@@ -1,8 +1,11 @@
 package com.weeryan17.snp;
 
-import com.weeryan17.snp.EntityHider;
 import com.weeryan17.snp.Main;
+import com.weeryan17.snp.Util.EntityHider;
+import com.weeryan17.snp.Util.Sun;
+
 import net.md_5.bungee.api.ChatColor;
+
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
