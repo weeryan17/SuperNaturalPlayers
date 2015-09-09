@@ -62,7 +62,7 @@ public class PlayerClass {
                 Wolf wolf = (Wolf)loc.getWorld().spawnEntity(loc, EntityType.WOLF);
                 hide.hideEntity(p, wolf);
             	for(Player pl : Bukkit.getOnlinePlayers()) {
-                    pl.playSound(loc, Sound.WOLF_HOWL, 5.0f, 0.0f);
+                    pl.playSound(loc, Sound.WOLF_HOWL, 1.0f, 0.0f);
                     pl.hidePlayer(p);
             	}
                 this.instance.Timer2(p, wolf);

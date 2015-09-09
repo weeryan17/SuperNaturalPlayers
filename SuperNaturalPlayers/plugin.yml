@@ -4,12 +4,12 @@ depend: [ProtocolLib]
 version: 1.0
 commands:
   howl:
-    description: Thing!
+    description: Werewolf command for howling
   bl:
-    description: Thing!
+    description: Vampire blood lust command
   bat:
-    description: Thing!
+    description: Vampire bat transformation command
   snp:
-    description: Thing!
+    description: Main admin command
   class:
-    description: Thing!
+    description: Claas command for giving info on your class.

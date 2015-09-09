@@ -23,7 +23,7 @@ implements CommandExecutor {
             Player p = Bukkit.getServer().getPlayer(player);
             Location loc = p.getLocation();
             for(Player pl : Bukkit.getOnlinePlayers()) {
-            	  pl.playSound(loc, Sound.WOLF_HOWL, 5.0f, 0.0f);
+            	  pl.playSound(loc, Sound.WOLF_HOWL, 1.0f, 0.0f);
         }
     }
         return false;
