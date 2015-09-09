@@ -14,9 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-
-
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
@@ -55,7 +52,7 @@ CommandExecutor {
         this.getCommand("bl").setExecutor(exec2);
         this.getCommand("bat").setExecutor(exec3);
         this.getCommand("howl").setExecutor(exec4);
-        Bukkit.getServer().getPluginManager().registerEvents((Listener)event, (Plugin)this);
+        Bukkit.getServer().getPluginManager().registerEvents(event, this);
         this.getLogger().info("Super Natural Players plugin enabled");
     }
 
