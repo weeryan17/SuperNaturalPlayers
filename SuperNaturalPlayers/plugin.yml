@@ -13,3 +13,5 @@ commands:
     description: Main admin command
   class:
     description: Claas command for giving info on your class.
+  mob:
+    description: Command for spawning mobs as a Necromancer

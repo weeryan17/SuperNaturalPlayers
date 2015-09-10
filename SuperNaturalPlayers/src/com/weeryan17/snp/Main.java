@@ -5,6 +5,7 @@ import com.comphenix.protocol.ProtocolManager;
 import com.weeryan17.snp.Commands.ClassCommand;
 import com.weeryan17.snp.Commands.Howl;
 import com.weeryan17.snp.Commands.MainCommand;
+import com.weeryan17.snp.Commands.MobCommand;
 import com.weeryan17.snp.Commands.VampBatCommand;
 import com.weeryan17.snp.Commands.VampBlCommand;
 import com.weeryan17.snp.Util.Events;
@@ -41,6 +42,7 @@ CommandExecutor {
         this.Timer();
         this.saveConfig();
         plugin = this;
+        MobCommand exec6 = new MobCommand(plugin);
         VampBlCommand exec2 = new VampBlCommand(plugin);
         Howl exec4 = new Howl(plugin);
         ClassCommand exec5 = new ClassCommand(plugin);
@@ -52,6 +54,7 @@ CommandExecutor {
         this.getCommand("bl").setExecutor(exec2);
         this.getCommand("bat").setExecutor(exec3);
         this.getCommand("howl").setExecutor(exec4);
+        this.getCommand("mob").setExecutor(exec6);
         Bukkit.getServer().getPluginManager().registerEvents(event, this);
         this.getLogger().info("Super Natural Players plugin enabled");
     }

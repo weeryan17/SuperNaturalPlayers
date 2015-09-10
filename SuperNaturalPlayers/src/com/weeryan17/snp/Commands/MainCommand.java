@@ -1,7 +1,9 @@
 package com.weeryan17.snp.Commands;
 
 import com.weeryan17.snp.Main;
+
 import net.md_5.bungee.api.ChatColor;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -14,8 +16,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class MainCommand
 implements CommandExecutor {
     private Main instance;
-    public String test;
-    public String test2;
+    public String player;
+    public String player2;
+    VampBatCommand vamp = new VampBatCommand(instance);
 
     public MainCommand(Main instance) {
         this.instance = instance;
@@ -44,18 +47,23 @@ implements CommandExecutor {
             }
             }
             if (args.length == 3 && args[0].equals("toggle")) {
-                this.test = args[1];
-                this.test2 = args[2];
+                player = args[1];
+                player2 = args[2];
                 if (args[2].equals("Demon") || args[2].equals("Werewolf") || args[2].equals("Vampire") || args[2].equals("Angel") || args[2].equals("Necromancer") || args[2].equals("Human")) {
-                    sender.sendMessage("You turned " + this.test + " into a(n) " + this.test2);
-                    this.instance.getConfig().set("Players." + this.test + ".type", this.test2);
-                    p = Bukkit.getServer().getPlayer(this.test);
-                    p.sendMessage("You are now a(n) " + this.test2);
-                    this.instance.getConfig().set("Players." + this.test + ".Wolf", false);
-                    this.instance.getConfig().set("Players." + this.test + ".Blood", 0);
-                    this.instance.getConfig().set("Players." + this.test + ".Kills", 0);
-                    this.instance.getConfig().set("Players." + this.test + ".Souls", 0);
-                    this.instance.getConfig().set("Players." + this.test + ".Bat", false);
+                    sender.sendMessage("You turned " + player + " into a(n) " + player2);
+                    this.instance.getConfig().set("Players." + player + ".type", player2);
+                    p = Bukkit.getServer().getPlayer(this.player);
+                    p.sendMessage("You are now a(n) " + player2);
+                    this.instance.getConfig().set("Players." + player + ".Blood", 0);
+                    this.instance.getConfig().set("Players." + player + ".Kills", 0);
+                    this.instance.getConfig().set("Players." + player + ".Souls", 0);
+                    this.instance.getConfig().set("Players." + player + ".Bat", false);
+                    this.instance.getConfig().set("Players." + player + ".BloodTotal", 0);
+                    this.instance.getConfig().set("Players." + player + ".Vamplvl", 0);
+                    this.instance.getConfig().set("Players." + player + ".FullMoons", 0);
+                    if(this.instance.getConfig().getBoolean("Players." + player + ".Bat") == true){
+                    vamp.untrans(vamp.map(), p);
+                    }
                     this.instance.saveConfig();
                 } else {
                     sender.sendMessage("not a valid race");

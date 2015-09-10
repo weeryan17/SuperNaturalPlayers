@@ -40,6 +40,9 @@ public class ClassCommand implements CommandExecutor {
     				sender.sendMessage(ChatColor.DARK_GRAY + "The next full moon is in " + ChatColor.GOLD + phase + ChatColor.DARK_GRAY + " days.");
     			} else if(this.instance.getConfig().get("Players." + playerName + ".type").toString().equals("Human")){
     				sender.sendMessage(ChatColor.DARK_GRAY + "You are a human so you don't have class info");
+    			} else if(this.instance.getConfig().get("Players." + playerName + ".type").toString().equals("Necromancer")){
+    				int souls = this.instance.getConfig().getInt("Players." + playerName + ".Souls");
+    				sender.sendMessage(ChatColor.DARK_GRAY + "You currently have " + ChatColor.GOLD + souls + ChatColor.DARK_GRAY + " souls."); 
     			}
 				sender.sendMessage("");
 				sender.sendMessage(ChatColor.BLUE + "==========================================");
