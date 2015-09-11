@@ -56,12 +56,12 @@ public class MobCommand implements CommandExecutor {
     						sender.sendMessage(ChatColor.BLACK + "You don't have enough souls to do this");
     					}
     				} else if(args[0].equals("Cavespider") || args[0].equals("cavespider")){
-    					if(this.instance.getConfig().getInt("Players." + player + ".Souls") >= 6){
+    					if(this.instance.getConfig().getInt("Players." + player + ".Souls") >= 20){
     						int souls = this.instance.getConfig().getInt("Players." + player + ".Souls");
     						CaveSpider spidy = (CaveSpider)loc.getWorld().spawnEntity(loc, EntityType.CAVE_SPIDER);
     						spidy.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 3, 0));
     						sender.sendMessage(ChatColor.DARK_BLUE + "You summon a cave spider for 20 souls");
-    						this.instance.getConfig().set("Players." + player + ".Souls", souls - 6);
+    						this.instance.getConfig().set("Players." + player + ".Souls", souls - 20);
     					}else {
     						sender.sendMessage(ChatColor.BLACK + "You don't have enough souls to do this");
     					}
