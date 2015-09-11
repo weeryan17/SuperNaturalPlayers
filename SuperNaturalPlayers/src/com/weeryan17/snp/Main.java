@@ -8,6 +8,7 @@ import com.weeryan17.snp.Commands.MainCommand;
 import com.weeryan17.snp.Commands.MobCommand;
 import com.weeryan17.snp.Commands.VampBatCommand;
 import com.weeryan17.snp.Commands.VampBlCommand;
+import com.weeryan17.snp.Commands.WitherCommand;
 import com.weeryan17.snp.Util.Events;
 import com.weeryan17.snp.PlayerClass;
 
@@ -43,6 +44,7 @@ CommandExecutor {
         this.saveConfig();
         plugin = this;
         MobCommand exec6 = new MobCommand(plugin);
+        WitherCommand exec7 = new WitherCommand(plugin);
         VampBlCommand exec2 = new VampBlCommand(plugin);
         Howl exec4 = new Howl(plugin);
         ClassCommand exec5 = new ClassCommand(plugin);
@@ -50,6 +52,7 @@ CommandExecutor {
         VampBatCommand exec3 = new VampBatCommand(plugin);
         Events event = new Events(plugin);
         this.getCommand("class").setExecutor(exec5);
+        this.getCommand("wither").setExecutor(exec7);
         this.getCommand("snp").setExecutor(exec);
         this.getCommand("bl").setExecutor(exec2);
         this.getCommand("bat").setExecutor(exec3);

@@ -13,6 +13,7 @@ import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Wither;
 import org.bukkit.Material;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -109,6 +110,7 @@ public class Events implements Listener
             this.instance.getConfig().set("Players." + player + ".Vamplvl", 0);
             this.instance.getConfig().set("Players." + player + ".Bat", false);
             this.instance.getConfig().set("Players." + player + ".FullMoons", 0);
+            this.instance.getConfig().set("Players." + player + ".WC", false);
             this.instance.saveConfig();
         }
         else {
@@ -149,13 +151,14 @@ public class Events implements Listener
     }
     @EventHandler
     public void onEntityTarget(EntityTargetEvent event){
+    	Wither wither = WitherStuff.Wither();
     	Entity target = event.getTarget();
     	Entity entity = event.getEntity();
     	EntityType type = entity.getType();
     	if(target instanceof Player){
     		String player = target.getName();
     			if(this.instance.getConfig().get("Players." + player + ".type").toString().equals("Necromancer")){
-    				if(type == EntityType.ZOMBIE || type == EntityType.SKELETON){
+    				if(type == EntityType.ZOMBIE || type == EntityType.SKELETON || type == EntityType.CAVE_SPIDER || entity == wither){
     					event.setCancelled(true);
     				}
     			}
