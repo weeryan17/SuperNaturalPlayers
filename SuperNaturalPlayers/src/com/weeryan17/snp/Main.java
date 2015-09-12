@@ -86,8 +86,13 @@ CommandExecutor {
     }
 
     public void onDisable() {
-        this.getLogger().info("Super Natural Players plugin disabled");
+    	for(Player pl : Bukkit.getOnlinePlayers()){
+    		String name = pl.getName().toString();
+    	this.getConfig().set("Players." + name + ".WC", false);
+    	this.getConfig().set("Players." + name + ".Truce", true);
         this.saveConfig();
+    	}
+        this.getLogger().info("Super Natural Players plugin disabled");
     }
 
     public static void error(String message) {

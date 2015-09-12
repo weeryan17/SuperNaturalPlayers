@@ -34,7 +34,7 @@ public class WitherCommand implements CommandExecutor{
 				final Player player = Bukkit.getPlayer(name);
 				if(this.instance.getConfig().getBoolean("Player." + name + ".WC") == false){
 					Location loc = player.getLocation();
-					Skeleton skely = (Skeleton)loc.getWorld().spawnEntity(loc, EntityType.SKELETON);
+					final Skeleton skely = (Skeleton)loc.getWorld().spawnEntity(loc, EntityType.SKELETON);
 					skely.setSkeletonType(SkeletonType.WITHER);
 					EntityHider hide = new EntityHider(this.instance, EntityHider.Policy.BLACKLIST);
 					hide.hideEntity(player, skely);
@@ -57,7 +57,7 @@ public class WitherCommand implements CommandExecutor{
 
 						@Override
 						public void run() {
-							stop(player);
+							stop(player, skely);
 							
 						}
 						
@@ -81,7 +81,8 @@ public class WitherCommand implements CommandExecutor{
 	public void WC(String name){
 		this.instance.getConfig().set("Player." + name + ".WC", false);
 	}
-	public void stop(Player player){
+	public void stop(Player player, Skeleton skely){
+		skely.remove();
 		for(Player pl : Bukkit.getOnlinePlayers()){
 		pl.showPlayer(player);
 		}
