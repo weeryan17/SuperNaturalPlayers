@@ -35,6 +35,7 @@ public class MobCommand implements CommandExecutor {
     				sender.sendMessage(ChatColor.GOLD + "Cavespider for 20 souls");
     			}
     			if(args.length == 1){
+    				if(this.instance.getConfig().getBoolean("Players." + player + ".Truce") == true){
     				if(args[0].equals("Zombie") || args[0].equals("zombie")){
     					if(this.instance.getConfig().getInt("Players." + player + ".Souls") >= 4){
     						int souls = this.instance.getConfig().getInt("Players." + player + ".Souls");
@@ -66,14 +67,17 @@ public class MobCommand implements CommandExecutor {
     						sender.sendMessage(ChatColor.BLACK + "You don't have enough souls to do this");
     					}
     				}
+    			} else {
+    				sender.sendMessage(ChatColor.DARK_GRAY + "You do not have a truce with the monsters so you can't summon monsters");
     			}
+    		}
     		} else {
     			sender.sendMessage(ChatColor.DARK_BLUE + "This is a Necromancer only command.");
     		}
-    		}
     	}
 
-		return false;
     	
     }
+		return false;
+}
 }

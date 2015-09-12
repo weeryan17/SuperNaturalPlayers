@@ -30,6 +30,7 @@ public class WitherCommand implements CommandExecutor{
 		if(cmd.getName().equalsIgnoreCase("wither")){
 			final String name = sender.getName().toString();
 			if(sender instanceof Player && this.instance.getConfig().get("Players." + name + ".type").toString().equals("Necromancer")){
+				if(this.instance.getConfig().getBoolean("Players." + name + ".Truce") == true){
 				final Player player = Bukkit.getPlayer(name);
 				if(this.instance.getConfig().getBoolean("Player." + name + ".WC") == false){
 					Location loc = player.getLocation();
@@ -65,9 +66,12 @@ public class WitherCommand implements CommandExecutor{
 					sender.sendMessage(ChatColor.DARK_GRAY + "Wither is on cool down.");
 				}
 			} else {
-				sender.sendMessage(ChatColor.DARK_GRAY + "You arn't a necromancer so you can't do this command");
+				sender.sendMessage(ChatColor.DARK_GRAY + "You don't have a truce with the monsters so you can't be a wither");
 			}
 			
+		}else {
+			sender.sendMessage(ChatColor.DARK_GRAY + "You arn't a necromancer so you can't do this command");
+		}
 		}
 		
 		
