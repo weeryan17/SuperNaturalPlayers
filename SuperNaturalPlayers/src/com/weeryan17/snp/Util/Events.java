@@ -13,7 +13,6 @@ import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Wither;
 import org.bukkit.Material;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -39,6 +38,7 @@ public class Events implements Listener
         final String hurt = damagee.getName().toString();
         final String player = damager.getName();
         final double damage = event.getDamage();
+        EntityType type = damagee.getType();
         if (damager instanceof Player && this.instance.getConfig().get("Players." + player + ".type").toString().equals("Vampire")) {
             final Double blood = damage / 2.0;
             final Double bloodfinal = blood + this.instance.getConfig().getDouble("Players." + player + ".Blood");
@@ -67,6 +67,21 @@ public class Events implements Listener
                     event.setDamage(60.0);
                 }
             }
+        }
+        if (damager instanceof Player && this.instance.getConfig().get("Players." + player + ".type").toString().equals("Necromancer")){
+        	if(type == EntityType.SKELETON || type == EntityType.SKELETON || type == EntityType.CAVE_SPIDER){
+        		this.instance.getConfig().set("Players." + player + ".Truce", false);
+        		damager.sendMessage(ChatColor.DARK_GRAY + "You broke you're truce with the monsters for the next 5 mins");
+        		Bukkit.getScheduler().scheduleSyncDelayedTask(this.instance, new Runnable(){
+
+					@Override
+					public void run() {
+						truce(player);
+						
+					}
+        			
+        		}, 6000);
+        	}
         }
     }
     
@@ -111,6 +126,7 @@ public class Events implements Listener
             this.instance.getConfig().set("Players." + player + ".Bat", false);
             this.instance.getConfig().set("Players." + player + ".FullMoons", 0);
             this.instance.getConfig().set("Players." + player + ".WC", false);
+            this.instance.getConfig().set("Players." + player + ".Truce", true);
             this.instance.saveConfig();
         }
         else {
@@ -151,17 +167,19 @@ public class Events implements Listener
     }
     @EventHandler
     public void onEntityTarget(EntityTargetEvent event){
-    	Wither wither = WitherStuff.Wither();
     	Entity target = event.getTarget();
     	Entity entity = event.getEntity();
     	EntityType type = entity.getType();
     	if(target instanceof Player){
     		String player = target.getName();
-    			if(this.instance.getConfig().get("Players." + player + ".type").toString().equals("Necromancer")){
-    				if(type == EntityType.ZOMBIE || type == EntityType.SKELETON || type == EntityType.CAVE_SPIDER || entity == wither){
+    			if(this.instance.getConfig().get("Players." + player + ".type").toString().equals("Necromancer") && this.instance.getConfig().getBoolean("Players." + player + ".Truce") == true){
+    				if(type == EntityType.ZOMBIE || type == EntityType.SKELETON || type == EntityType.CAVE_SPIDER){
     					event.setCancelled(true);
     				}
     			}
     	}
+    }
+    public void truce(String name){
+    	this.instance.getConfig().set("Players." + name + ".Truce", true);
     }
 }

@@ -11,7 +11,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Wither;
+import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.Skeleton.SkeletonType;
 
 import com.weeryan17.snp.Main;
 import com.weeryan17.snp.Util.EntityHider;
@@ -32,11 +33,15 @@ public class WitherCommand implements CommandExecutor{
 				final Player player = Bukkit.getPlayer(name);
 				if(this.instance.getConfig().getBoolean("Player." + name + ".WC") == false){
 					Location loc = player.getLocation();
-					Wither wither = (Wither)loc.getWorld().spawnEntity(loc, EntityType.WITHER);
+					Skeleton skely = (Skeleton)loc.getWorld().spawnEntity(loc, EntityType.SKELETON);
+					skely.setSkeletonType(SkeletonType.WITHER);
 					EntityHider hide = new EntityHider(this.instance, EntityHider.Policy.BLACKLIST);
-					hide.hideEntity(player, wither);
-					int stop1 = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new WitherStuff(player, wither), 1, 0);
+					hide.hideEntity(player, skely);
+					int stop1 = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new WitherStuff(player, skely), 1, 0);
 					map.put(player, stop1);
+					for(Player pl : Bukkit.getOnlinePlayers()){
+						pl.hidePlayer(player);
+					}
 					this.instance.getConfig().set("Player." + name + ".WC", true);
 					Bukkit.getScheduler().scheduleSyncDelayedTask(this.instance, new Runnable(){
 
@@ -56,9 +61,11 @@ public class WitherCommand implements CommandExecutor{
 						}
 						
 					}, 600);
+				} else {
+					sender.sendMessage(ChatColor.DARK_GRAY + "Wither is on cool down.");
 				}
 			} else {
-				sender.sendMessage(ChatColor.DARK_GRAY + "You arn't a necromancer so you can't so this command");
+				sender.sendMessage(ChatColor.DARK_GRAY + "You arn't a necromancer so you can't do this command");
 			}
 			
 		}
@@ -71,6 +78,9 @@ public class WitherCommand implements CommandExecutor{
 		this.instance.getConfig().set("Player." + name + ".WC", false);
 	}
 	public void stop(Player player){
+		for(Player pl : Bukkit.getOnlinePlayers()){
+		pl.showPlayer(player);
+		}
 		Bukkit.getScheduler().cancelTask(map.get(player));
 	}
 

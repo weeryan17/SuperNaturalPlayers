@@ -3,38 +3,37 @@ package com.weeryan17.snp.Util;
 import java.util.ArrayList;
 
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Wither;
+import org.bukkit.entity.Skeleton;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class WitherStuff implements Runnable {
 	Player player;
-	static Wither wither;
-	public WitherStuff(Player player, Wither wither) {
+	static Skeleton skely;
+	public WitherStuff(Player player, Skeleton skely) {
 		this.player = player;
-		WitherStuff.wither = wither;
+		WitherStuff.skely = skely;
 	}
 
 	@Override
 	public void run() {
-		wither.teleport(player);
-		for(Player p : getNearbyPlayers(player, 5)){
-			p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 30, 100));
+		skely.teleport(player);
+		for(Entity e : getNearbyPlayers(player, 5, skely)){
+			if(e != player){
+			((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 30, 15));
+			}
 		}
 		
 	}
-	public ArrayList<Player> getNearbyPlayers(Player pl, double range){
-        ArrayList<Player> nearby = new ArrayList<Player>();
+	public ArrayList<Entity> getNearbyPlayers(Player pl, double range, Skeleton skely){
+        ArrayList<Entity> nearby = new ArrayList<Entity>();
         for (Entity e : pl.getNearbyEntities(range, range, range)){
-            if (e instanceof Player){
-                nearby.add((Player) e);
+            if (e != skely){
+                nearby.add(e);
             }
         }
         return nearby;
     }
-	public static Wither Wither(){
-		
-		return wither;
-	}
 }
