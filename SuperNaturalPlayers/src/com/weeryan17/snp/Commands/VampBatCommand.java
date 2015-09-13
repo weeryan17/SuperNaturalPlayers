@@ -37,6 +37,7 @@ implements CommandExecutor {
                     this.instance.getConfig().set("Players." + playerRaw + ".Bat", true);
                     Location loc = this.player.getLocation();
                     final Bat bat = (Bat)loc.getWorld().spawnEntity(loc, EntityType.BAT);
+                    Main.noAI(bat);
                     for(Player pl : Bukkit.getOnlinePlayers()) {
                     	pl.hidePlayer(player);
                     }

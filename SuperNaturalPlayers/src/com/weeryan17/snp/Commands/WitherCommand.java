@@ -36,6 +36,7 @@ public class WitherCommand implements CommandExecutor{
 					Location loc = player.getLocation();
 					final Skeleton skely = (Skeleton)loc.getWorld().spawnEntity(loc, EntityType.SKELETON);
 					skely.setSkeletonType(SkeletonType.WITHER);
+					Main.noAI(skely);
 					EntityHider hide = new EntityHider(this.instance, EntityHider.Policy.BLACKLIST);
 					hide.hideEntity(player, skely);
 					int stop1 = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new WitherStuff(player, skely), 1, 0);

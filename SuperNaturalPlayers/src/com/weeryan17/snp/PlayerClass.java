@@ -60,6 +60,7 @@ public class PlayerClass {
                 this.instance.getConfig().set("Players." + playerName + ".FullMoons", moon+1);
                 Location loc = p.getLocation();
                 Wolf wolf = (Wolf)loc.getWorld().spawnEntity(loc, EntityType.WOLF);
+                Main.noAI(wolf);
                 hide.hideEntity(p, wolf);
             	for(Player pl : Bukkit.getOnlinePlayers()) {
                     pl.playSound(loc, Sound.WOLF_HOWL, 1.0f, 0.0f);
