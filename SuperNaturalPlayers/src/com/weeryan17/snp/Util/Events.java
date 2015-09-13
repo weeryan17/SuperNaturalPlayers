@@ -3,6 +3,7 @@ package com.weeryan17.snp.Util;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 
 import net.md_5.bungee.api.ChatColor;
@@ -178,6 +179,20 @@ public class Events implements Listener
     				}
     			}
     	}
+    }
+    public void onInteract(PlayerInteractEvent event){
+    	Player player = event.getPlayer();
+    	String name = player.getName().toString();
+    	ItemStack item = player.getItemInHand();
+        if (item.getItemMeta().hasLore()) {
+            if (item.getItemMeta().getLore().get(0).equals(ChatColor.DARK_GRAY + "Used to summon a magical wither sull that will paralize enemies")){
+            	if(this.instance.getConfig().get("Players." + name + ".type").toString().equals("Necromancer")){
+            		
+            	} else {
+            		player.sendMessage(ChatColor.BLACK + "You are not a necromancer so you shouldn't have this item");
+            	}
+            }
+        }
     }
     public void truce(String name){
     	this.instance.getConfig().set("Players." + name + ".Truce", true);

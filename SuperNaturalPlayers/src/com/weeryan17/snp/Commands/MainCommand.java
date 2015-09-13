@@ -43,7 +43,7 @@ implements CommandExecutor {
                     sender.sendMessage(ChatColor.RED + "[SNP Help]");
                     sender.sendMessage(ChatColor.YELLOW + "/snp item <player> <item>");
                     sender.sendMessage(ChatColor.YELLOW + "items:");
-                    sender.sendMessage(ChatColor.YELLOW + "BloodPot");
+                    sender.sendMessage(ChatColor.YELLOW + "BloodPot, Soulstone");
             }
             }
             if (args.length == 3 && args[0].equals("toggle")) {
@@ -78,6 +78,15 @@ implements CommandExecutor {
                 Main.addLore(item, ChatColor.YELLOW + "Used to turn blood into food");
                 Main.addLore(item, ChatColor.YELLOW + "Only useable as a Vampire");
                 p.getInventory().addItem(new ItemStack[]{item});
+            }
+            if(args.length == 3 && args[0].equals("item") && args[2].equals("Soulstone")){
+            	p = Bukkit.getServer().getPlayer(args[1]);
+            	ItemStack item = new ItemStack(Material.CLAY);
+            	ItemMeta meta = item.getItemMeta();
+            	meta.setDisplayName(ChatColor.BLUE + "Soulstone");
+            	Main.addLore(item, ChatColor.DARK_GRAY + "Used to summon a magical wither sull that will paralize enemies");
+            	Main.addLore(item, ChatColor.DARK_GRAY + "only useable by necromancers");
+            	p.getInventory().addItem(new ItemStack[]{item});
             }
         } else {
             sender.sendMessage(ChatColor.RED + "You don't have permision to preform this acction");
