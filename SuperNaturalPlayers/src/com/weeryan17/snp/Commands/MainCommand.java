@@ -13,8 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class MainCommand
-implements CommandExecutor {
+public class MainCommand implements CommandExecutor {
     private Main instance;
     public String player;
     public String player2;
@@ -81,7 +80,7 @@ implements CommandExecutor {
             }
             if(args.length == 3 && args[0].equals("item") && args[2].equals("Soulstone")){
             	p = Bukkit.getServer().getPlayer(args[1]);
-            	ItemStack item = new ItemStack(Material.CLAY);
+            	ItemStack item = new ItemStack(Material.CLAY_BALL);
             	ItemMeta meta = item.getItemMeta();
             	meta.setDisplayName(ChatColor.BLUE + "Soulstone");
             	Main.addLore(item, ChatColor.DARK_GRAY + "Used to summon a magical wither sull that will paralize enemies");

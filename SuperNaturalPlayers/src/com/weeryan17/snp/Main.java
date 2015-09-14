@@ -31,10 +31,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 
-public class Main
-extends JavaPlugin
-implements Listener,
-CommandExecutor {
+public class Main extends JavaPlugin implements Listener, CommandExecutor {
     ProtocolManager protocolManager;
     public static int stop;
     Scoreboard score;

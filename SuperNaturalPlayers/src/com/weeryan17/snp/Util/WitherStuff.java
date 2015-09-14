@@ -3,6 +3,7 @@ package com.weeryan17.snp.Util;
 import java.util.ArrayList;
 
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
@@ -21,7 +22,8 @@ public class WitherStuff implements Runnable {
 	public void run() {
 		skely.teleport(player);
 		for(Entity e : getNearbyPlayers(player, 5, skely)){
-			if(e != player){
+			EntityType type = e.getType();
+			if(e != player && type != EntityType.DROPPED_ITEM){
 			((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 30, 15));
 			}
 		}

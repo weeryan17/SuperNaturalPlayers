@@ -23,8 +23,7 @@ import org.bukkit.event.Listener;
 import com.weeryan17.snp.Main;
 import com.weeryan17.snp.Commands.VampBatCommand;
 
-public class Events implements Listener
-{
+public class Events implements Listener {
     private Main instance;
     VampBatCommand vamp = new VampBatCommand(instance);
     
@@ -89,7 +88,6 @@ public class Events implements Listener
 	@EventHandler
     public void onEntityDeath(final EntityDeathEvent event) {
         final Entity killer = (Entity)event.getEntity().getKiller();
-        Entity killed = event.getEntity();
         if (killer instanceof Player) {
             final String player = killer.getName();
             if (this.instance.getConfig().get("Players." + player + ".type").toString().equals("Necromancer")) {
@@ -99,13 +97,6 @@ public class Events implements Listener
             if(this.instance.getConfig().get("Players." + player + ".type").toString().equals("Demon")){
             	
             }
-        }
-        if(killed instanceof Player){
-        	final String player = killed.getName();
-        	Player p = Bukkit.getPlayer(player);
-        	if(this.instance.getConfig().get("Players." + player + ".type").toString().equals("Vampire")){
-        		vamp.untrans(vamp.map(), p);
-        	}
         }
     }
     
@@ -180,11 +171,13 @@ public class Events implements Listener
     			}
     	}
     }
+    @EventHandler
     public void onInteract(PlayerInteractEvent event){
     	Player player = event.getPlayer();
     	String name = player.getName().toString();
     	ItemStack item = player.getItemInHand();
-        if (item.getItemMeta().hasLore()) {
+    	Material material = item.getType();
+        if (material != Material.AIR && item.getItemMeta().hasLore()) {
             if (item.getItemMeta().getLore().get(0).equals(ChatColor.DARK_GRAY + "Used to summon a magical wither sull that will paralize enemies")){
             	if(this.instance.getConfig().get("Players." + name + ".type").toString().equals("Necromancer")){
             		
