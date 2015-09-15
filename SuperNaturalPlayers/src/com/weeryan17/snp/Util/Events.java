@@ -8,12 +8,14 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 
 import net.md_5.bungee.api.ChatColor;
 
+import org.bukkit.event.block.*;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.WitherSkull;
 import org.bukkit.Material;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -132,10 +134,10 @@ public class Events implements Listener {
         final Player player = event.getPlayer();
         final ItemStack item = event.getItem();
         final String name = player.getName();
-        if (this.instance.getConfig().get("Players." + name + ".type").toString().equals("Vampire")) {
+        if (this.instance.getConfig().get("Players." + name + ".type").toString().equals("Vampire") || item.getItemMeta().getLore().get(0).equals(ChatColor.AQUA + "Admin Blood potion")) {
             event.setCancelled(true);
         if (item.getItemMeta().hasLore()) {
-            if (item.getItemMeta().getLore().get(0).equals(ChatColor.YELLOW + "Used to turn blood into food")) {
+            if (item.getItemMeta().getLore().get(0).equals(ChatColor.YELLOW + "Used to turn blood into food") || item.getItemMeta().getLore().get(0).equals(ChatColor.AQUA + "Admin Blood potion")) {
                     if (this.instance.getConfig().getDouble("Players." + name + ".Blood") >= 1.0) {
                         double blood = this.instance.getConfig().getDouble("Players." + name + ".Blood");
                         blood = blood - 1;
@@ -173,21 +175,59 @@ public class Events implements Listener {
     }
     @EventHandler
     public void onInteract(PlayerInteractEvent event){
-    	Player player = event.getPlayer();
+    	final Player player = event.getPlayer();
     	String name = player.getName().toString();
     	ItemStack item = player.getItemInHand();
     	Material material = item.getType();
+		Action action = event.getAction();
         if (material != Material.AIR && item.getItemMeta().hasLore()) {
-            if (item.getItemMeta().getLore().get(0).equals(ChatColor.DARK_GRAY + "Used to summon a magical wither sull that will paralize enemies")){
-            	if(this.instance.getConfig().get("Players." + name + ".type").toString().equals("Necromancer")){
-            		
+            if (item.getItemMeta().getLore().get(0).equals(ChatColor.DARK_GRAY + "Used to summon a magical wither sull that will paralize enemies") || item.getItemMeta().getLore().get(0).equals(ChatColor.AQUA + "Admin version of the soulstone")){
+            	if(this.instance.getConfig().get("Players." + name + ".type").toString().equals("Necromancer") || item.getItemMeta().getLore().get(0).equals(ChatColor.AQUA + "Admin version of the soulstone")){
+            		if(this.instance.getConfig().getInt("Players." + name + ".Souls") >= 10){
+            			int souls = this.instance.getConfig().getInt("Players." + name + ".Souls");
+            			souls = souls - 10;
+            			this.instance.getConfig().set("Players." + name + ".Souls", souls);
+            			this.instance.saveConfig();
+            		final WitherSkull skull = player.launchProjectile(WitherSkull.class);
+            		Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new Runnable(){
+
+						@Override
+						public void run() {
+							skull(skull, player);
+							
+						}
+            			
+            		}, 1, 0);
+            		} else {
+            			player.sendMessage(ChatColor.DARK_GRAY + "You don't have enough souls to do this");
+            		}
             	} else {
             		player.sendMessage(ChatColor.BLACK + "You are not a necromancer so you shouldn't have this item");
             	}
             }
         }
+        if (material != Material.AIR && item.getItemMeta().hasLore()) {
+        	if (item.getItemMeta().getLore().get(0).equals(ChatColor.AQUA + "Admin tools")){
+        if (material == Material.CHEST && player.isOp()){
+        	if(action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK){
+        		InventoryUtil.AdminInv(player);
+        	}
+        }
+    }
+        }
     }
     public void truce(String name){
     	this.instance.getConfig().set("Players." + name + ".Truce", true);
+    }
+    public Runnable skull(WitherSkull skull, Player player){
+    	Entity entity = (Entity)skull;
+    	for(Entity e : Main.getNearbyEntitys(entity, 5)){
+    		EntityType type = e.getType();
+    		if(e != player && type != EntityType.DROPPED_ITEM){
+    		e.sendMessage("we will do something with this later");
+    		}
+    	}
+		return null;
+    	
     }
 }

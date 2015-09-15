@@ -129,4 +129,11 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         tag.setInt("NoAI", 1);
         nmsEntity.f(tag);
     }
+	public static ArrayList<Entity> getNearbyEntitys(Entity entity, double range){
+        ArrayList<Entity> nearby = new ArrayList<Entity>();
+        for (Entity e : entity.getNearbyEntities(range, range, range)){
+                nearby.add(e);
+        }
+        return nearby;
+    }
 }

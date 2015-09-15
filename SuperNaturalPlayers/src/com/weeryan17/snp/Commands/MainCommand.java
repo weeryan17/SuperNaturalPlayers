@@ -30,7 +30,7 @@ public class MainCommand implements CommandExecutor {
                 sender.sendMessage(ChatColor.RED + "[SNP Help]");
                 sender.sendMessage(ChatColor.YELLOW + "/snp toggle <player> <race>");
                 sender.sendMessage(ChatColor.YELLOW + "/snp item <player> <item>");
-                sender.sendMessage(ChatColor.YELLOW + "/snp reload (reloads config)");
+                sender.sendMessage(ChatColor.YELLOW + "/snp give <player> <thing you're giving> <amount>");
             }
             if(args.length == 1){
                 if (args[0].equals("toggle")) {
@@ -42,7 +42,12 @@ public class MainCommand implements CommandExecutor {
                     sender.sendMessage(ChatColor.RED + "[SNP Help]");
                     sender.sendMessage(ChatColor.YELLOW + "/snp item <player> <item>");
                     sender.sendMessage(ChatColor.YELLOW + "items:");
-                    sender.sendMessage(ChatColor.YELLOW + "BloodPot, Soulstone");
+                    sender.sendMessage(ChatColor.YELLOW + "BloodPot, Soulstone, Tools");
+            } else if (args[0].equals("give")){
+            	sender.sendMessage(ChatColor.RED + "[SNP Help]");
+            	sender.sendMessage(ChatColor.YELLOW + "/snp give <player> <thing you're giving> <amount>");
+            	sender.sendMessage(ChatColor.YELLOW + "things you can give:");
+            	sender.sendMessage(ChatColor.YELLOW + "Blood, Souls");
             }
             }
             if (args.length == 3 && args[0].equals("toggle")) {
@@ -83,9 +88,35 @@ public class MainCommand implements CommandExecutor {
             	ItemStack item = new ItemStack(Material.CLAY_BALL);
             	ItemMeta meta = item.getItemMeta();
             	meta.setDisplayName(ChatColor.BLUE + "Soulstone");
+            	item.setItemMeta(meta);
             	Main.addLore(item, ChatColor.DARK_GRAY + "Used to summon a magical wither sull that will paralize enemies");
             	Main.addLore(item, ChatColor.DARK_GRAY + "only useable by necromancers");
             	p.getInventory().addItem(new ItemStack[]{item});
+            }
+            if(args.length == 3 && args[0].equals("item") && args[2].equals("Tools")){
+            	p = Bukkit.getServer().getPlayer(args[1]);
+            	ItemStack item = new ItemStack(Material.CHEST);
+            	ItemMeta meta = item.getItemMeta();
+            	meta.setDisplayName(ChatColor.GREEN + "Tools");
+            	item.setItemMeta(meta);
+            	Main.addLore(item, ChatColor.AQUA + "Admin tools");
+            	p.getInventory().addItem(new ItemStack[]{item});
+            }
+            if (args.length == 4 && args[0].equals("give")){
+            	Player player = Bukkit.getPlayer(args[1]);
+        		String name = player.getName();
+            	if(args[2].equals("Blood")){
+            		double blood = this.instance.getConfig().getDouble("Players." + name + ".Blood");
+            		double addedBlood = Double.parseDouble(args[3]);
+            		blood = blood + addedBlood;
+            		this.instance.getConfig().set("Players." + name + ".Blood", blood);
+            	} else if(args[2].equals("Souls")){
+            		int souls = this.instance.getConfig().getInt("Players." + name + ".Souls");
+            		int addedSouls = Integer.parseInt(args[3]);
+            		souls = souls + addedSouls;
+            		this.instance.getConfig().set("Players." + name + ".Souls", souls);
+            	}
+            	this.instance.saveConfig();
             }
         } else {
             sender.sendMessage(ChatColor.RED + "You don't have permision to preform this acction");

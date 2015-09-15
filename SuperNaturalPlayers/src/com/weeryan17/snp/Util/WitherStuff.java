@@ -1,7 +1,5 @@
 package com.weeryan17.snp.Util;
 
-import java.util.ArrayList;
-
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -9,6 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import com.weeryan17.snp.Main;
 
 public class WitherStuff implements Runnable {
 	Player player;
@@ -21,21 +21,12 @@ public class WitherStuff implements Runnable {
 	@Override
 	public void run() {
 		skely.teleport(player);
-		for(Entity e : getNearbyPlayers(player, 5, skely)){
+		for(Entity e : Main.getNearbyEntitys(player, 5)){
 			EntityType type = e.getType();
-			if(e != player && type != EntityType.DROPPED_ITEM){
+			if(e != player && type != EntityType.DROPPED_ITEM && e != skely){
 			((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 30, 15));
 			}
 		}
 		
 	}
-	public ArrayList<Entity> getNearbyPlayers(Player pl, double range, Skeleton skely){
-        ArrayList<Entity> nearby = new ArrayList<Entity>();
-        for (Entity e : pl.getNearbyEntities(range, range, range)){
-            if (e != skely){
-                nearby.add(e);
-            }
-        }
-        return nearby;
-    }
 }
