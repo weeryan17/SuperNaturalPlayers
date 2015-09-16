@@ -1,12 +1,15 @@
 package com.weeryan17.snp.Commands;
 
 import net.md_5.bungee.api.ChatColor;
+import net.minecraft.server.v1_8_R3.EntityLiving;
+import net.minecraft.server.v1_8_R3.GenericAttributes;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.CaveSpider;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
@@ -77,6 +80,7 @@ public class MobCommand implements CommandExecutor {
     							horse.setVariant(Horse.Variant.UNDEAD_HORSE);
     							horse.setJumpStrength(10);
     							horse.setPassenger(pl);
+    							((EntityLiving)((CraftEntity)horse).getHandle()).getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(10);
     							sender.sendMessage(ChatColor.DARK_BLUE + "You summon a zombie horse for 100 souls");
     							this.instance.getConfig().set("Players." + player + ".Souls", souls - 100);
     						}
