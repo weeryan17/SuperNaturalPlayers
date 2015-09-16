@@ -38,6 +38,7 @@ public class MobCommand implements CommandExecutor {
     				sender.sendMessage(ChatColor.GOLD + "Zombies for 4 souls");
     				sender.sendMessage(ChatColor.GOLD + "Skeletons for 6 souls");
     				sender.sendMessage(ChatColor.GOLD + "Cavespider for 20 souls");
+    				sender.sendMessage(ChatColor.GOLD + "ZombieHorse for 100 souls");
     			}
     			if(args.length == 1){
     				if(this.instance.getConfig().getBoolean("Players." + player + ".Truce") == true){
@@ -68,7 +69,10 @@ public class MobCommand implements CommandExecutor {
     						spidy.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 3, 0));
     						sender.sendMessage(ChatColor.DARK_BLUE + "You summon a cave spider for 20 souls");
     						this.instance.getConfig().set("Players." + player + ".Souls", souls - 20);
-    					}else if(args[0].equals("ZombieHorse") || args[0].equals("zombiehorse")){
+    					} else {
+        						sender.sendMessage(ChatColor.BLACK + "You don't have enough souls to do this");
+        					}
+    					} else if(args[0].equals("ZombieHorse") || args[0].equals("zombiehorse")){
     						if(this.instance.getConfig().getInt("Players." + player + ".Souls") >= 100){
     							int souls = this.instance.getConfig().getInt("Players." + player + ".Souls");
     							Player pl = Bukkit.getPlayer(player);
@@ -83,9 +87,9 @@ public class MobCommand implements CommandExecutor {
     							((EntityLiving)((CraftEntity)horse).getHandle()).getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(10);
     							sender.sendMessage(ChatColor.DARK_BLUE + "You summon a zombie horse for 100 souls");
     							this.instance.getConfig().set("Players." + player + ".Souls", souls - 100);
-    						}
-    					} else {
-    						sender.sendMessage(ChatColor.BLACK + "You don't have enough souls to do this");
+    						} else {
+        						sender.sendMessage(ChatColor.BLACK + "You don't have enough souls to do this");
+        					}
     					}
     				}
     			} else {
@@ -98,7 +102,6 @@ public class MobCommand implements CommandExecutor {
     	}
 
     	
-    }
 		return false;
-}
+    }
 }
