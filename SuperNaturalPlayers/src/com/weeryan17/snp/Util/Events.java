@@ -1,5 +1,8 @@
 package com.weeryan17.snp.Util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -28,7 +31,7 @@ import com.weeryan17.snp.Commands.VampBatCommand;
 public class Events implements Listener {
     private Main instance;
     VampBatCommand vamp = new VampBatCommand(instance);
-    
+    Map<Entity, Integer> map = new HashMap<Entity, Integer>();
     public Events(final Main instance) {
         this.instance = instance;
     }
@@ -189,7 +192,7 @@ public class Events implements Listener {
             			this.instance.getConfig().set("Players." + name + ".Souls", souls);
             			this.instance.saveConfig();
             		final WitherSkull skull = player.launchProjectile(WitherSkull.class);
-            		Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new Runnable(){
+            		int stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new Runnable(){
 
 						@Override
 						public void run() {
@@ -198,6 +201,7 @@ public class Events implements Listener {
 						}
             			
             		}, 1, 0);
+            		map.put(skull, stop);
             		} else {
             			player.sendMessage(ChatColor.DARK_GRAY + "You don't have enough souls to do this");
             		}
@@ -224,8 +228,12 @@ public class Events implements Listener {
     	for(Entity e : Main.getNearbyEntitys(entity, 5)){
     		EntityType type = e.getType();
     		if(e != player && type != EntityType.DROPPED_ITEM){
-    		e.sendMessage("we will do something with this later");
+    			//stuff will be put here later
     		}
+    	}
+    	if(entity.isDead()){
+    		entity.remove();
+    		Bukkit.getScheduler().cancelTask(map.get(skull));
     	}
 		return null;
     	
