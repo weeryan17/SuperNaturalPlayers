@@ -117,6 +117,44 @@ public class MobCommand implements CommandExecutor {
     						} else {
         						sender.sendMessage(ChatColor.BLACK + "You don't have enough souls to do this");
         					}
+    					} else if(args[0].equals("SkeletonHorse") || args[0].equals("skeletonhorse")){
+    						if(this.instance.getConfig().getInt("Players." + player + ".Souls") >= 100){
+    							int souls = this.instance.getConfig().getInt("Players." + player + ".Souls");
+    							final Player pl = Bukkit.getPlayer(player);
+    							final Horse horse = (Horse)loc.getWorld().spawnEntity(loc, EntityType.HORSE);
+    							horse.setAdult();
+    							horse.setHealth(10);
+    							horse.setTamed(true);
+    							horse.setCarryingChest(true);
+    							horse.setVariant(Horse.Variant.SKELETON_HORSE);
+    							horse.setJumpStrength(1);
+    							horse.setPassenger(pl);
+    							int stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(instance, new Runnable(){
+
+									@Override
+									public void run() {
+										if(horse.getPassenger() != pl){
+											horse.remove();
+											Bukkit.getScheduler().cancelTask(map.get(horse));
+											pl.sendMessage(ChatColor.DARK_GRAY + "You got off you're horse so it died");
+										}
+										if(horse.isDead()){
+											Bukkit.getScheduler().cancelTask(map.get(horse));
+											pl.sendMessage(ChatColor.DARK_GRAY + "You're horse died");
+										}
+									}
+    								
+    							}, 1, 0);
+    							map.put(horse, stop);
+    							HorseInventory inv = horse.getInventory();
+    							ItemStack item = new ItemStack(Material.SADDLE);
+    							inv.addItem(item);
+    							((EntityLiving)((CraftEntity)horse).getHandle()).getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(1);
+    							sender.sendMessage(ChatColor.DARK_BLUE + "You summon a skeleton horse for 100 souls");
+    							this.instance.getConfig().set("Players." + player + ".Souls", souls - 100);
+    						} else {
+        						sender.sendMessage(ChatColor.BLACK + "You don't have enough souls to do this");
+        					}
     					}
     				}
     			} else {
