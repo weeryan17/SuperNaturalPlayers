@@ -46,6 +46,7 @@ public class MobCommand implements CommandExecutor {
     				sender.sendMessage(ChatColor.GOLD + "Skeletons for 6 souls");
     				sender.sendMessage(ChatColor.GOLD + "Cavespider for 20 souls");
     				sender.sendMessage(ChatColor.GOLD + "ZombieHorse for 100 souls");
+    				sender.sendMessage(ChatColor.GOLD + "SkeletonHorse for 100 souls");
     			}
     			if(args.length == 1){
     				if(this.instance.getConfig().getBoolean("Players." + player + ".Truce") == true){
