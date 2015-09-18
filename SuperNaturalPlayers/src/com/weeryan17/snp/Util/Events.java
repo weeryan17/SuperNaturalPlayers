@@ -19,6 +19,7 @@ import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.WitherSkull;
 import org.bukkit.Material;
 import org.bukkit.Bukkit;
@@ -237,7 +238,8 @@ public class Events implements Listener {
     	for(Entity e : Main.getNearbyEntitys(entity, 5)){
     		EntityType type = e.getType();
     		if(e != player && type != EntityType.DROPPED_ITEM){
-    			//stuff will be put here later
+    			LivingEntity living = (LivingEntity)e;
+    			living.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 2));
     		}
     	}
 
