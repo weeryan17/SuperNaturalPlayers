@@ -14,6 +14,7 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.event.block.*;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.entity.Entity;
@@ -137,7 +138,8 @@ public class Events implements Listener {
         final Player player = event.getPlayer();
         final ItemStack item = event.getItem();
         final String name = player.getName();
-        if (this.instance.getConfig().get("Players." + name + ".type").toString().equals("Vampire") || item.getItemMeta().getLore().get(0).equals(ChatColor.AQUA + "Admin Blood potion")) {
+        if (this.instance.getConfig().get("Players." + name + ".type").toString().equals("Vampire") || 
+        		(item.getItemMeta().hasLore() && item.getItemMeta().getLore().get(0).equals(ChatColor.AQUA + "Admin Blood potion"))) {
             event.setCancelled(true);
         if (item.getItemMeta().hasLore()) {
             if (item.getItemMeta().getLore().get(0).equals(ChatColor.YELLOW + "Used to turn blood into food") || item.getItemMeta().getLore().get(0).equals(ChatColor.AQUA + "Admin Blood potion")) {
@@ -220,6 +222,13 @@ public class Events implements Listener {
     }
         }
     }
+    public void onExplode(EntityExplodeEvent event){
+    	Entity entity = event.getEntity();
+    	if(map.containsValue(entity)){
+    		Bukkit.getScheduler().cancelTask(map.get(entity));
+    		entity.remove();
+    	}
+    }
     public void truce(String name){
     	this.instance.getConfig().set("Players." + name + ".Truce", true);
     }
@@ -231,10 +240,7 @@ public class Events implements Listener {
     			//stuff will be put here later
     		}
     	}
-    	if(entity.isDead()){
-    		entity.remove();
-    		Bukkit.getScheduler().cancelTask(map.get(skull));
-    	}
+
 		return null;
     	
     }
