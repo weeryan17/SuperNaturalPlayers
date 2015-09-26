@@ -60,7 +60,7 @@ public class ClassCommand implements CommandExecutor {
     				totalsouls = totalsouls / 2000;
     				int i3 = (int)totalsouls;
     				sender.sendMessage(ChatColor.DARK_GRAY + "You currently have " + ChatColor.GOLD + souls + ChatColor.DARK_GRAY + " souls.");
-    				sender.sendMessage(ChatColor.DARK_GRAY + "You are a lvl " + ChatColor.GOLD + i3 + "Necromancer");
+    				sender.sendMessage(ChatColor.DARK_GRAY + "You are a lvl " + ChatColor.GOLD + i3 + " Necromancer");
     			}
     		} else if(args[0].equals("admin") && player.isOp()){
     			double blood = this.instance.getConfig().getDouble("Players." + playerName + ".Blood");
