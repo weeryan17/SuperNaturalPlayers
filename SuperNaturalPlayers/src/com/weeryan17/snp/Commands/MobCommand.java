@@ -113,7 +113,7 @@ public class MobCommand implements CommandExecutor {
     							HorseInventory inv = horse.getInventory();
     							ItemStack item = new ItemStack(Material.SADDLE);
     							inv.addItem(item);
-    							((EntityLiving)((CraftEntity)horse).getHandle()).getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.9);
+    							((EntityLiving)((CraftEntity)horse).getHandle()).getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.5);
     							sender.sendMessage(ChatColor.DARK_BLUE + "You summon a zombie horse for 100 souls");
     							this.instance.getConfig().set("Players." + player + ".Souls", souls - 100);
     						} else {
@@ -151,7 +151,7 @@ public class MobCommand implements CommandExecutor {
     							HorseInventory inv = horse.getInventory();
     							ItemStack item = new ItemStack(Material.SADDLE);
     							inv.addItem(item);
-    							((EntityLiving)((CraftEntity)horse).getHandle()).getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.9);
+    							((EntityLiving)((CraftEntity)horse).getHandle()).getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.5);
     							sender.sendMessage(ChatColor.DARK_BLUE + "You summon a skeleton horse for 100 souls");
     							this.instance.getConfig().set("Players." + player + ".Souls", souls - 100);
     						} else {

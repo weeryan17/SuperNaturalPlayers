@@ -65,29 +65,34 @@ public class MainCommand implements CommandExecutor {
                     this.instance.getConfig().set("Players." + player + ".BloodTotal", 0);
                     this.instance.getConfig().set("Players." + player + ".Vamplvl", 0);
                     this.instance.getConfig().set("Players." + player + ".FullMoons", 0);
+                    this.instance.getConfig().set("Players." + player + ".Class", "none");
+                    this.instance.saveConfig();
                     int i = Main.randInt(1, 3);
                     if(i == 1){
-                    	if(race == "Necromancer"){
+                        this.instance.getLogger().info("Class number " + i);
+                    	if(args[2].equals("Necromancer")){
                     		this.instance.getConfig().set("Players." + player + ".Class", "Noximperius");
-                    	} else if(race == "Werewolf"){
+                    	} else if(args[2].equals("Werewolf")){
                     		this.instance.getConfig().set("Players." + player + ".Class", "Darkclaw");
-                    	} else if(race == "Vampire"){
+                    	} else if(args[2].equals("Vampire")){
                     		this.instance.getConfig().set("Players." + player + ".Class", "Nightwing");
                     	}
                     } else if(i == 2){
-                    	if(race == "Necromancer"){
+                        this.instance.getLogger().info("Class number " + i);
+                    	if(args[2].equals("Necromancer")){
                     		this.instance.getConfig().set("Players." + player + ".Class", "Witherheart");
-                    	} else if(race == "Werewolf"){
+                    	} else if(args[2].equals("Werewolf")){
                     		this.instance.getConfig().set("Players." + player + ".Class", "Silverclaw");
-                    	} else if(race == "Vampire"){
+                    	} else if(args[2].equals("Vampire")){
                     		this.instance.getConfig().set("Players." + player + ".Class", "Ashborn");
                     	}
                     } else if (i == 3){
-                    	if(race == "Necromancer"){
+                        this.instance.getLogger().info("Class number " + i);
+                    	if(args[2].equals("Necromancer")){
                     		this.instance.getConfig().set("Players." + player + ".Class", "Deathskull");
-                    	} else if(race == "Werewolf"){
+                    	} else if(args[2].equals("Werewolf")){
                     		this.instance.getConfig().set("Players." + player + ".Class", "Bloodvenom");
-                    	} else if(race == "Vampire"){
+                    	} else if(args[2].equals("Vampire")){
                     		this.instance.getConfig().set("Players." + player + ".Class", "Darkblood");
                     	}
                     }
