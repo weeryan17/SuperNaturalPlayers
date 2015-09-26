@@ -91,6 +91,7 @@ public class MobCommand implements CommandExecutor {
     							horse.setCarryingChest(true);
     							horse.setVariant(Horse.Variant.UNDEAD_HORSE);
     							horse.setJumpStrength(1);
+    							horse.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 1000000, 10));
     							horse.setPassenger(pl);
     							int stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(instance, new Runnable(){
 
@@ -112,7 +113,7 @@ public class MobCommand implements CommandExecutor {
     							HorseInventory inv = horse.getInventory();
     							ItemStack item = new ItemStack(Material.SADDLE);
     							inv.addItem(item);
-    							((EntityLiving)((CraftEntity)horse).getHandle()).getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(1);
+    							((EntityLiving)((CraftEntity)horse).getHandle()).getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.9);
     							sender.sendMessage(ChatColor.DARK_BLUE + "You summon a zombie horse for 100 souls");
     							this.instance.getConfig().set("Players." + player + ".Souls", souls - 100);
     						} else {
@@ -129,6 +130,7 @@ public class MobCommand implements CommandExecutor {
     							horse.setCarryingChest(true);
     							horse.setVariant(Horse.Variant.SKELETON_HORSE);
     							horse.setJumpStrength(1);
+    							horse.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 1000000, 10));
     							horse.setPassenger(pl);
     							int stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(instance, new Runnable(){
 
@@ -137,9 +139,8 @@ public class MobCommand implements CommandExecutor {
 										if(horse.getPassenger() != pl){
 											horse.remove();
 											Bukkit.getScheduler().cancelTask(map.get(horse));
-											pl.sendMessage(ChatColor.DARK_GRAY + "You got off you're horse so it died");
-										}
-										if(horse.isDead()){
+											pl.sendMessage(ChatColor.DARK_GRAY + "You unsummon your horse");
+										} else if(horse.isDead()){
 											Bukkit.getScheduler().cancelTask(map.get(horse));
 											pl.sendMessage(ChatColor.DARK_GRAY + "You're horse died");
 										}
@@ -150,7 +151,7 @@ public class MobCommand implements CommandExecutor {
     							HorseInventory inv = horse.getInventory();
     							ItemStack item = new ItemStack(Material.SADDLE);
     							inv.addItem(item);
-    							((EntityLiving)((CraftEntity)horse).getHandle()).getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(1);
+    							((EntityLiving)((CraftEntity)horse).getHandle()).getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.9);
     							sender.sendMessage(ChatColor.DARK_BLUE + "You summon a skeleton horse for 100 souls");
     							this.instance.getConfig().set("Players." + player + ".Souls", souls - 100);
     						} else {
@@ -158,9 +159,7 @@ public class MobCommand implements CommandExecutor {
         					}
     					}
     				}
-    			} else {
-    				sender.sendMessage(ChatColor.DARK_GRAY + "You do not have a truce with the monsters so you can't summon monsters");
-    			}
+    			} 
     		}
     		} else {
     			sender.sendMessage(ChatColor.DARK_BLUE + "This is a Necromancer only command.");

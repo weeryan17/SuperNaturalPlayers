@@ -23,7 +23,7 @@ public class WitherStuff implements Runnable {
 		skely.teleport(player);
 		for(Entity e : Main.getNearbyEntitys(player, 5)){
 			EntityType type = e.getType();
-			if(e != player && type != EntityType.DROPPED_ITEM && e != skely){
+			if(e != player && Main.isAlive(type) == true && e != skely){
 			((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 30, 15));
 			}
 		}

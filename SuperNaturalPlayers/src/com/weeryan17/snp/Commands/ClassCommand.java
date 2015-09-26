@@ -68,6 +68,7 @@ public class ClassCommand implements CommandExecutor {
     		} else {
     			sender.sendMessage(ChatColor.DARK_GRAY + "That is not proper use of this command");
     		}
+				sender.sendMessage(ChatColor.DARK_GRAY + "You are currently in the " + ChatColor.GOLD + this.instance.getConfig().getString("Players." + playerName + ".Class") + ChatColor.DARK_GRAY + " clan.");
 				sender.sendMessage("");
 				sender.sendMessage(ChatColor.BLUE + "==========================================");
     		}

@@ -1,5 +1,7 @@
 package com.weeryan17.snp;
 
+import java.util.ArrayList;
+
 import com.weeryan17.snp.Main;
 import com.weeryan17.snp.Util.EntityHider;
 import com.weeryan17.snp.Util.Sun;
@@ -11,6 +13,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -19,6 +22,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class PlayerClass {
+	ArrayList<Entity> wolves = new ArrayList<Entity>();
     public int stop;
     Player p;
     String playerString;
@@ -62,6 +66,7 @@ public class PlayerClass {
                 Wolf wolf = (Wolf)loc.getWorld().spawnEntity(loc, EntityType.WOLF);
                 Main.noAI(wolf);
                 hide.hideEntity(p, wolf);
+                wolves.add(wolf);
             	for(Player pl : Bukkit.getOnlinePlayers()) {
                     pl.playSound(loc, Sound.WOLF_HOWL, 1.0f, 0.0f);
                     pl.hidePlayer(p);
@@ -77,9 +82,14 @@ public class PlayerClass {
             	for(Player pl : Bukkit.getOnlinePlayers()) {
             		pl.showPlayer(p);
             	}
+            	if(wolves.size() >= 1){
+            		for(Entity wolf : wolves){
+            			wolf.remove();
+            		}
+            	}
+                this.instance.getConfig().set("Players." + playerName + ".Wolf", false);
+                this.instance.saveConfig();
             Bukkit.getScheduler().cancelTask(Main.stop);
-            this.instance.getConfig().set("Players." + playerName + ".Wolf", false);
-            this.instance.saveConfig();
             }
         }
         }

@@ -14,6 +14,7 @@ import com.weeryan17.snp.PlayerClass;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
@@ -22,6 +23,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.Listener;
@@ -136,4 +138,19 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         }
         return nearby;
     }
+	public static boolean isAlive(EntityType type){
+		if(type != EntityType.ARMOR_STAND && type != EntityType.ARROW && type != EntityType.BOAT && type != EntityType.COMPLEX_PART && type != EntityType.DROPPED_ITEM && type != EntityType.EGG && type != EntityType.ENDER_CRYSTAL && type != EntityType.ENDER_PEARL && type != EntityType.ENDER_SIGNAL && type != EntityType.EXPERIENCE_ORB && type != EntityType.FALLING_BLOCK && type != EntityType.FIREBALL && type != EntityType.FIREWORK && type != EntityType.FISHING_HOOK && type != EntityType.ITEM_FRAME && type != EntityType.LEASH_HITCH && type != EntityType.LIGHTNING && type != EntityType.MINECART && type != EntityType.MINECART_CHEST && type != EntityType.MINECART_COMMAND && type != EntityType.MINECART_FURNACE && type != EntityType.MINECART_HOPPER && type != EntityType.MINECART_MOB_SPAWNER && type != EntityType.MINECART_TNT && type != EntityType.PAINTING && type != EntityType.PRIMED_TNT && type != EntityType.SMALL_FIREBALL && type != EntityType.SNOWBALL && type != EntityType.SPLASH_POTION && type != EntityType.THROWN_EXP_BOTTLE && type != EntityType.UNKNOWN && type != EntityType.WEATHER && type != EntityType.WITHER_SKULL){
+		return true;
+		} else {
+			return false;
+		}
+	}
+	public static int randInt(int min, int max) {
+
+	    Random rand = new Random();
+
+	    int randomNum = rand.nextInt((max - min) + 1) + min;
+
+	    return randomNum;
+	}
 }

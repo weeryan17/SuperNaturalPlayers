@@ -16,7 +16,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class MainCommand implements CommandExecutor {
     private Main instance;
     public String player;
-    public String player2;
+    public String race;
     VampBatCommand vamp = new VampBatCommand(instance);
 
     public MainCommand(Main instance) {
@@ -37,7 +37,7 @@ public class MainCommand implements CommandExecutor {
                     sender.sendMessage(ChatColor.RED + "[SNP Help]");
                     sender.sendMessage(ChatColor.YELLOW + "/snp toggle <player> <race>");
                     sender.sendMessage(ChatColor.YELLOW + "Races:");
-                    sender.sendMessage(ChatColor.YELLOW + "Demon, Werewolf, Vampire, Angel, Necromancer, and Ghoul");
+                    sender.sendMessage(ChatColor.YELLOW + "Demon, Werewolf, Vampire, Angel, and Necromancer");
                 } else if (args[0].equals("item")) {
                     sender.sendMessage(ChatColor.RED + "[SNP Help]");
                     sender.sendMessage(ChatColor.YELLOW + "/snp item <player> <item>");
@@ -52,12 +52,12 @@ public class MainCommand implements CommandExecutor {
             }
             if (args.length == 3 && args[0].equals("toggle")) {
                 player = args[1];
-                player2 = args[2];
+                race = args[2];
                 if (args[2].equals("Demon") || args[2].equals("Werewolf") || args[2].equals("Vampire") || args[2].equals("Angel") || args[2].equals("Necromancer") || args[2].equals("Human")) {
-                    sender.sendMessage("You turned " + player + " into a(n) " + player2);
-                    this.instance.getConfig().set("Players." + player + ".type", player2);
+                    sender.sendMessage("You turned " + player + " into a(n) " + race);
+                    this.instance.getConfig().set("Players." + player + ".type", race);
                     p = Bukkit.getServer().getPlayer(this.player);
-                    p.sendMessage("You are now a(n) " + player2);
+                    p.sendMessage("You are now a(n) " + race);
                     this.instance.getConfig().set("Players." + player + ".Blood", 0);
                     this.instance.getConfig().set("Players." + player + ".Kills", 0);
                     this.instance.getConfig().set("Players." + player + ".Souls", 0);
@@ -65,6 +65,32 @@ public class MainCommand implements CommandExecutor {
                     this.instance.getConfig().set("Players." + player + ".BloodTotal", 0);
                     this.instance.getConfig().set("Players." + player + ".Vamplvl", 0);
                     this.instance.getConfig().set("Players." + player + ".FullMoons", 0);
+                    int i = Main.randInt(1, 3);
+                    if(i == 1){
+                    	if(race == "Necromancer"){
+                    		this.instance.getConfig().set("Players." + player + ".Class", "Noximperius");
+                    	} else if(race == "Werewolf"){
+                    		this.instance.getConfig().set("Players." + player + ".Class", "Darkclaw");
+                    	} else if(race == "Vampire"){
+                    		this.instance.getConfig().set("Players." + player + ".Class", "Nightwing");
+                    	}
+                    } else if(i == 2){
+                    	if(race == "Necromancer"){
+                    		this.instance.getConfig().set("Players." + player + ".Class", "Witherheart");
+                    	} else if(race == "Werewolf"){
+                    		this.instance.getConfig().set("Players." + player + ".Class", "Silverclaw");
+                    	} else if(race == "Vampire"){
+                    		this.instance.getConfig().set("Players." + player + ".Class", "Ashborn");
+                    	}
+                    } else if (i == 3){
+                    	if(race == "Necromancer"){
+                    		this.instance.getConfig().set("Players." + player + ".Class", "Deathskull");
+                    	} else if(race == "Werewolf"){
+                    		this.instance.getConfig().set("Players." + player + ".Class", "Bloodvenom");
+                    	} else if(race == "Vampire"){
+                    		this.instance.getConfig().set("Players." + player + ".Class", "Darkblood");
+                    	}
+                    }
                     if(this.instance.getConfig().getBoolean("Players." + player + ".Bat") == true){
                     vamp.untrans(vamp.map(), p);
                     }

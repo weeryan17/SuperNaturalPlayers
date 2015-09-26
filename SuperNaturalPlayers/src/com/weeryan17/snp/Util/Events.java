@@ -6,10 +6,13 @@ import java.util.Map;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 
 import net.md_5.bungee.api.ChatColor;
+import net.minecraft.server.v1_8_R3.EntityLiving;
+import net.minecraft.server.v1_8_R3.GenericAttributes;
 
 import org.bukkit.event.block.*;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -19,7 +22,6 @@ import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.WitherSkull;
 import org.bukkit.Material;
 import org.bukkit.Bukkit;
@@ -34,6 +36,7 @@ public class Events implements Listener {
     private Main instance;
     VampBatCommand vamp = new VampBatCommand(instance);
     Map<Entity, Integer> map = new HashMap<Entity, Integer>();
+    Map<Entity, Integer> map2 = new HashMap<Entity, Integer>();
     public Events(final Main instance) {
         this.instance = instance;
     }
@@ -235,11 +238,19 @@ public class Events implements Listener {
     }
     public Runnable skull(WitherSkull skull, Player player){
     	Entity entity = (Entity)skull;
-    	for(Entity e : Main.getNearbyEntitys(entity, 5)){
+    	for(final Entity e : Main.getNearbyEntitys(entity, 5)){
     		EntityType type = e.getType();
-    		if(e != player && type != EntityType.DROPPED_ITEM){
-    			LivingEntity living = (LivingEntity)e;
-    			living.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 2));
+    		if(e != player && Main.isAlive(type) == true){
+				((EntityLiving)((CraftEntity)e).getHandle()).getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(-1);
+    			Bukkit.getScheduler().scheduleSyncDelayedTask(instance, new Runnable(){
+
+					@Override
+					public void run() {
+						
+						((EntityLiving)((CraftEntity)e).getHandle()).getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.02);
+					}
+    				
+    			}, 10);
     		}
     	}
 
