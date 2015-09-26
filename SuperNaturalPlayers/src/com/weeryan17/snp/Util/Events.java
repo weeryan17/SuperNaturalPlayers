@@ -102,7 +102,9 @@ public class Events implements Listener {
             final String player = killer.getName();
             if (this.instance.getConfig().get("Players." + player + ".type").toString().equals("Necromancer")) {
             	int souls = this.instance.getConfig().getInt("Players." + player + ".Souls");
+            	int totalsouls = this.instance.getConfig().getInt("Players." + player + ".TotalSouls");
             	this.instance.getConfig().set("Players." + player + ".Souls", souls + 1);
+            	this.instance.getConfig().set("Players." + player + ".TotalSouls", totalsouls + 1);
             }
             if(this.instance.getConfig().get("Players." + player + ".type").toString().equals("Demon")){
             	

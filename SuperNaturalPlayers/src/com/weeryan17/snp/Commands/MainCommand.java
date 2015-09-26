@@ -66,6 +66,7 @@ public class MainCommand implements CommandExecutor {
                     this.instance.getConfig().set("Players." + player + ".Vamplvl", 0);
                     this.instance.getConfig().set("Players." + player + ".FullMoons", 0);
                     this.instance.getConfig().set("Players." + player + ".Class", "none");
+                    this.instance.getConfig().set("Players." + player + ".TotalSouls", 0);
                     this.instance.saveConfig();
                     int i = Main.randInt(1, 3);
                     if(i == 1){
