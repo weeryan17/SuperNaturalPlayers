@@ -31,8 +31,13 @@ public class VampBlCommand implements CommandExecutor {
         if (sender instanceof Player) {
             if (cmd.getName().equalsIgnoreCase("bl") && this.instance.getConfig().get("Players." + playerName + ".type").toString().equals("Vampire")) {
                 if (args.length == 0) {
+                	if(this.instance.getConfig().getBoolean("Players." + playerName + ".BL") == false){
                     blood(playerName, p);
                     sender.sendMessage(ChatColor.RED + "You went into blood lust mode. This will drain your blood");
+                } else {
+                	stop(p);
+                	p.sendMessage(ChatColor.RED + "You exited bloodlust mode");
+                }
                 }
             } else {
                 sender.sendMessage("You are not a Vampire");
@@ -59,6 +64,7 @@ public class VampBlCommand implements CommandExecutor {
             }, 0, 1);
             map.put(p, stop);
         } else {
+        	map.put(p, stop);
             stop(p);
             p.sendMessage(ChatColor.DARK_RED + "no blood left");
         }

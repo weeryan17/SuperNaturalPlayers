@@ -131,6 +131,7 @@ public class Events implements Listener {
             this.instance.getConfig().set("Players." + player + ".FullMoons", 0);
             this.instance.getConfig().set("Players." + player + ".WC", false);
             this.instance.getConfig().set("Players." + player + ".Truce", true);
+            this.instance.getConfig().set("Players." + player + ".BL", false);
             this.instance.saveConfig();
         }
         else {
