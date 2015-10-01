@@ -32,6 +32,7 @@ public class VampBlCommand implements CommandExecutor {
             if (cmd.getName().equalsIgnoreCase("bl") && this.instance.getConfig().get("Players." + playerName + ".type").toString().equals("Vampire")) {
                 if (args.length == 0) {
                 	if(this.instance.getConfig().getBoolean("Players." + playerName + ".BL") == false){
+                		this.instance.getConfig().set("Players." + playerName + ".BL", true);
                     blood(playerName, p);
                     sender.sendMessage(ChatColor.RED + "You went into blood lust mode. This will drain your blood");
                 } else {
