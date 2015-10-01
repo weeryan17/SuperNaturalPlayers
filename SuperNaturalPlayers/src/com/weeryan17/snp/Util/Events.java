@@ -209,7 +209,7 @@ public class Events implements Listener {
 							
 						}
             			
-            		}, 1, 0);
+            		}, 10, 0);
             		map.put(skull, stop);
             		} else {
             			player.sendMessage(ChatColor.DARK_GRAY + "You don't have enough souls to do this");

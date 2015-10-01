@@ -66,15 +66,14 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
     }
 
     public void Timer() {
-        @SuppressWarnings("unused")
-		int thing = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
 
             @Override
             public void run() {
                 PlayerClass playerClass = new PlayerClass(Main.plugin);
                 playerClass.run();
             }
-        }, 0, 10);
+        }, 0, 100);
     }
 
     public void Timer2(final Player player, final Wolf wolf) {
@@ -85,7 +84,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
                 PlayerClass playerClass = new PlayerClass(Main.plugin);
                 playerClass.run2(player, wolf);
             }
-        }, 0, 1);
+        }, 0, 10);
     }
 
     public void onDisable() {

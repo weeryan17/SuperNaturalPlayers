@@ -36,6 +36,7 @@ public class VampBlCommand implements CommandExecutor {
                     blood(playerName, p);
                     sender.sendMessage(ChatColor.RED + "You went into blood lust mode. This will drain your blood");
                 } else {
+                	this.instance.getConfig().set("Players." + playerName + ".BL", false);
                 	stop(p);
                 	p.sendMessage(ChatColor.RED + "You exited bloodlust mode");
                 }
@@ -53,16 +54,16 @@ public class VampBlCommand implements CommandExecutor {
     public void blood(final String sender, final Player p) {
         double blood = this.instance.getConfig().getDouble("Players." + sender + ".Blood");
         if (blood >= 0.1) {
-            this.instance.getConfig().set("Players." + sender + ".Blood", (blood - 0.2));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 3, 1));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 3, 1));
+            this.instance.getConfig().set("Players." + sender + ".Blood", (blood - 0.8));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 3, 5));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 3, 5));
             stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new Runnable(){
 
                 @Override
                 public void run() {
                     VampBlCommand.this.blood2(sender, p);
                 }
-            }, 0, 1);
+            }, 0, 10);
             map.put(p, stop);
         } else {
         	map.put(p, stop);
