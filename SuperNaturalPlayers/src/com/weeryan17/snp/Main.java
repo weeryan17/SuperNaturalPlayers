@@ -2,6 +2,7 @@ package com.weeryan17.snp;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
+import com.weeryan17.snp.Commands.ClanCommand;
 import com.weeryan17.snp.Commands.ClassCommand;
 import com.weeryan17.snp.Commands.Howl;
 import com.weeryan17.snp.Commands.MainCommand;
@@ -46,6 +47,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         this.Timer();
         this.saveConfig();
         plugin = this;
+        ClanCommand exec8 = new ClanCommand(plugin);
         MobCommand exec6 = new MobCommand(plugin);
         WitherCommand exec7 = new WitherCommand(plugin);
         VampBlCommand exec2 = new VampBlCommand(plugin);
@@ -61,6 +63,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         this.getCommand("bat").setExecutor(exec3);
         this.getCommand("howl").setExecutor(exec4);
         this.getCommand("mob").setExecutor(exec6);
+        this.getCommand("clan").setExecutor(exec8);
         Bukkit.getServer().getPluginManager().registerEvents(event, this);
         this.getLogger().info("Super Natural Players plugin enabled");
     }
