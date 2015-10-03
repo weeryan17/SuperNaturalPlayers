@@ -31,6 +31,9 @@ public class ClanCommand implements CommandExecutor {
 				sender.sendMessage(ChatColor.YELLOW + "/clan options");
 				sender.sendMessage(ChatColor.YELLOW + "   brings up the clan options that you can set if you made the clan");
 			}
+			if(args.length == 1 && args[0].equals("list")){
+				
+			}
 		}
 		return false;
 	}

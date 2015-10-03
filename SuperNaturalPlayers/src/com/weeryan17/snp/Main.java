@@ -66,6 +66,13 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         this.getCommand("clan").setExecutor(exec8);
         Bukkit.getServer().getPluginManager().registerEvents(event, this);
         this.getLogger().info("Super Natural Players plugin enabled");
+        if(!this.getConfig().contains("Clan.")){
+        	this.getLogger().info("Clan info not found adding clan info and default clans");
+        	this.getConfig().set("Clan." + "Noximperius" + ".Open", true);
+        	this.getConfig().set("Clan." + "Noximperius" + ".Race", "Necromancer");
+        	this.getConfig().set("Clan." + "Darkclaw" + ".Open", true);
+        	this.getConfig().set("Clan." + "Darkclaw" + ".Race", "Werewolf");
+        }
     }
 
     public void Timer() {
