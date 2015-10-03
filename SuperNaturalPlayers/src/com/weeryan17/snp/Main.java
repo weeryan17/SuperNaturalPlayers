@@ -45,7 +45,6 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
     public void onEnable() {
         this.protocolManager = ProtocolLibrary.getProtocolManager();
         this.Timer();
-        this.saveConfig();
         plugin = this;
         ClanCommand exec8 = new ClanCommand(plugin);
         MobCommand exec6 = new MobCommand(plugin);
@@ -65,14 +64,20 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         this.getCommand("mob").setExecutor(exec6);
         this.getCommand("clan").setExecutor(exec8);
         Bukkit.getServer().getPluginManager().registerEvents(event, this);
-        this.getLogger().info("Super Natural Players plugin enabled");
-        if(!this.getConfig().contains("Clan.")){
+        if(!this.getConfig().contains("Clans.")){
         	this.getLogger().info("Clan info not found adding clan info and default clans");
-        	this.getConfig().set("Clan." + "Noximperius" + ".Open", true);
-        	this.getConfig().set("Clan." + "Noximperius" + ".Race", "Necromancer");
-        	this.getConfig().set("Clan." + "Darkclaw" + ".Open", true);
-        	this.getConfig().set("Clan." + "Darkclaw" + ".Race", "Werewolf");
+        	this.getConfig().set("Clans." + "Necromancer" + ".Clan" + ".Noximperius" + ".Open" , true);
+        	this.getConfig().set("Clans." + "Necromancer" + ".Clan" + ".Witherheart" + ".Open" , true);
+        	this.getConfig().set("Clans." + "Necromancer" + ".Clan" + ".Deathskull" + ".Open" , true);
+        	this.getConfig().set("Clans." + "Werewolf" + ".Clan" + ".Darkclaw" + ".Open" , true);
+        	this.getConfig().set("Clans." + "Werewolf" + ".Clan" + ".Silverclaw" + ".Open" , true);
+        	this.getConfig().set("Clans." + "Werewolf" + ".Clan" + ".Bloodvenom" + ".Open" , true);
+        	this.getConfig().set("Clans." + "Vampire" + ".Clan" + ".Nightwing" + ".Open" , true);
+        	this.getConfig().set("Clans." + "Vampire" + ".Clan" + ".Ashborn" + ".Open" , true);
+        	this.getConfig().set("Clans." + "Vampire" + ".Clan" + ".Darkblood" + ".Open" , true);
         }
+        this.saveConfig();
+        this.getLogger().info("Super Natural Players plugin enabled");
     }
 
     public void Timer() {

@@ -17,3 +17,5 @@ commands:
     description: Command for spawning mobs as a Necromancer
   wither:
     description: Necromancer wither transform command
+  clan:
+    description: Command for clans

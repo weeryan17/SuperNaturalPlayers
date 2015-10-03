@@ -18,7 +18,7 @@ public class ClanCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {
-		if(cmd.getLabel().equalsIgnoreCase("clan")){
+		if(cmd.getName().equalsIgnoreCase("clan")){
 			if(args.length == 0){
 				sender.sendMessage(ChatColor.RED + "[SNP Help]");
 				sender.sendMessage(ChatColor.YELLOW + "/clan list");
