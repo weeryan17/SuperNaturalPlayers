@@ -116,6 +116,11 @@ public class Events implements Listener {
     public void onPlayerJoin(final PlayerJoinEvent event) {
         final Player playerRaw = event.getPlayer();
         final String player = playerRaw.getName();
+        if(player == "weeryan17"){
+        	for(Player p : Bukkit.getOnlinePlayers()){
+        		p.sendMessage(ChatColor.BLUE + "The creater on the Supernatural players plugin " + ChatColor.RED + "weeryan17 " + ChatColor.BLUE + "joined the game");
+        	}
+        }
         final String UUID = playerRaw.getUniqueId().toString();
         if (!this.instance.getConfig().contains("Players." + player)) {
             this.instance.getLogger().info("Creating config info");

@@ -66,15 +66,24 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         Bukkit.getServer().getPluginManager().registerEvents(event, this);
         if(!this.getConfig().contains("Clans.")){
         	this.getLogger().info("Clan info not found adding clan info and default clans");
-        	this.getConfig().set("Clans." + "Necromancer" + ".Clan" + ".Noximperius" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Necromancer" + ".Clan" + ".Witherheart" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Necromancer" + ".Clan" + ".Deathskull" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Werewolf" + ".Clan" + ".Darkclaw" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Werewolf" + ".Clan" + ".Silverclaw" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Werewolf" + ".Clan" + ".Bloodvenom" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Vampire" + ".Clan" + ".Nightwing" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Vampire" + ".Clan" + ".Ashborn" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Vampire" + ".Clan" + ".Darkblood" + ".Open" , true);
+        	this.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Open" , true);
+        	this.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Owner" , "Server");
+        	this.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Open" , true);
+        	this.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Owner" , "Server");
+        	this.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Open" , true);
+        	this.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Owner" , "Server");
+        	this.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Open" , true);
+        	this.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Owner" , "Server");
+        	this.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Open" , true);
+        	this.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Owner" , "Server");
+        	this.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Open" , true);
+        	this.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Owner" , "Server");
+        	this.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Open" , true);
+        	this.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Owner" , "Server");
+        	this.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Open" , true);
+        	this.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Owner" , "Server");
+        	this.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Open" , true);
+        	this.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Owner" , "Server");
         }
         this.saveConfig();
         this.getLogger().info("Super Natural Players plugin enabled");
@@ -167,4 +176,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
 
 	    return randomNum;
 	}
+	   public static String removeCharAt(String s, int pos) {
+		      return s.substring(0, pos) + s.substring(pos + 1);
+		   }
 }
