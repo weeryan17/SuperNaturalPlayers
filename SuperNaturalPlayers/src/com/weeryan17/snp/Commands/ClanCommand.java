@@ -65,6 +65,7 @@ public class ClanCommand implements CommandExecutor {
 		} else if(args.length == 1 && args[0].equals("join")){
 				sender.sendMessage(ChatColor.YELLOW + "Please specify a clan name.");
 			} else if(args.length == 2 && args[0].equals("join")){
+				if(!args[1].equals(this.instance.getConfig().getString("Players." + playerName + ".Clan") )){
 				List<String> list = new ArrayList<String>();
 				Map<String, Boolean> map = new HashMap<String, Boolean>();
 				ConfigurationSection Race = this.instance.getConfig().getConfigurationSection("Clans." + race + ".Clans");
@@ -74,14 +75,15 @@ public class ClanCommand implements CommandExecutor {
 		        	list.add(key);
 		        	map.put(key, open);
 		        }
-		        if(list.contains(args[0])){
-		        	if(map.get(args[0].toString()) == true){
-		        		this.instance.getConfig().set("Players." + playerName + ".Clan", args[0].toString());
+		        if(list.contains(args[1])){
+		        	if(map.get(args[1].toString()) == true){
+		        		this.instance.getConfig().set("Players." + playerName + ".Clan", args[1].toString());
+		        		sender.sendMessage(ChatColor.YELLOW + "You joined the " + args[1].toString() + " clan.");
 		        	} else {
-		        		String configKey = "." + args[0];
+		        		String configKey = "." + args[1];
 		        		sender.sendMessage(ChatColor.YELLOW + "This clan isn't open so a request to join the clan has been sent to the owner");
-		        		this.instance.getConfig().set("Players." + playerName + ".requesting", args[0]);
-		        		String owner = this.instance.getConfig().getString("Clans." + race + ".Clans" + configKey + ".Open");
+		        		this.instance.getConfig().set("Players." + playerName + ".requesting", args[1]);
+		        		String owner = this.instance.getConfig().getString("Clans." + race + ".Clans" + configKey + ".Owner");
 		        		Player playerOwner = Bukkit.getPlayer(owner);
 		        		playerOwner.sendMessage(ChatColor.YELLOW + playerName + " is trying to join your clan.");
 		        		playerOwner.sendMessage(ChatColor.YELLOW + "You can accept them in by doing /clan accept " + playerName);
@@ -89,11 +91,27 @@ public class ClanCommand implements CommandExecutor {
 		        } else {
 		        	sender.sendMessage(ChatColor.YELLOW + "That clan doesn't exist");
 		        }
+			} else {
+				sender.sendMessage(ChatColor.YELLOW + "You are alredy in that clan");
+			}
+			} else if(args.length == 1 && args[0].equals("accept")){
+				if(this.instance.getConfig().getBoolean("Players." + playerName + ".ClanOwner") == true){
+				sender.sendMessage(ChatColor.YELLOW + "Please specify a player name to allow into your clan");
+				} else {
+					sender.sendMessage(ChatColor.YELLOW + "You arn't a clan owner so you can't accept anyone");
+				}
+			} else if(args.length == 2 && args[0].equals("accept")){
+				if(this.instance.getConfig().getBoolean("Players." + playerName + ".ClanOwner") == true){
+					
+				} else {
+					sender.sendMessage(ChatColor.YELLOW + "You arn't a clan owner so you can't accept anyone");
+				}
 			}
 		}
 		
 	}
 		}
+		this.instance.saveConfig();
 		return false;
 	}
 
