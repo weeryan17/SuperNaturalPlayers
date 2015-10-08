@@ -4,8 +4,6 @@ import com.weeryan17.snp.Main;
 
 import net.md_5.bungee.api.ChatColor;
 
-import java.io.IOException;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -57,62 +55,52 @@ public class MainCommand implements CommandExecutor {
                 race = args[2];
                 if (args[2].equals("Demon") || args[2].equals("Werewolf") || args[2].equals("Vampire") || args[2].equals("Angel") || args[2].equals("Necromancer") || args[2].equals("Human")) {
                     sender.sendMessage("You turned " + player + " into a(n) " + race);
-                    Main.dataConfig().set("Players." + player + ".type", race);
+                    this.instance.getConfig().set("Players." + player + ".type", race);
                     p = Bukkit.getServer().getPlayer(this.player);
                     p.sendMessage("You are now a(n) " + race);
-                    Main.dataConfig().set("Players." + player + ".Blood", 0);
-                    Main.dataConfig().set("Players." + player + ".Kills", 0);
-                    Main.dataConfig().set("Players." + player + ".Souls", 0);
-                    Main.dataConfig().set("Players." + player + ".Bat", false);
-                    Main.dataConfig().set("Players." + player + ".BloodTotal", 0);
-                    Main.dataConfig().set("Players." + player + ".Vamplvl", 0);
-                    Main.dataConfig().set("Players." + player + ".FullMoons", 0);
-                    Main.dataConfig().set("Players." + player + ".Clan", "none");
-                    Main.dataConfig().set("Players." + player + ".TotalSouls", 0);
-            		try {
-            			Main.dataConfig().save(Main.dataFolder());
-            		} catch (IOException e) {
-            			// TODO Auto-generated catch block
-            			e.printStackTrace();
-            		}
+                    this.instance.getConfig().set("Players." + player + ".Blood", 0);
+                    this.instance.getConfig().set("Players." + player + ".Kills", 0);
+                    this.instance.getConfig().set("Players." + player + ".Souls", 0);
+                    this.instance.getConfig().set("Players." + player + ".Bat", false);
+                    this.instance.getConfig().set("Players." + player + ".BloodTotal", 0);
+                    this.instance.getConfig().set("Players." + player + ".Vamplvl", 0);
+                    this.instance.getConfig().set("Players." + player + ".FullMoons", 0);
+                    this.instance.getConfig().set("Players." + player + ".Clan", "none");
+                    this.instance.getConfig().set("Players." + player + ".TotalSouls", 0);
+                    this.instance.saveConfig();
                     int i = Main.randInt(1, 3);
                     if(i == 1){
                         this.instance.getLogger().info("Class number " + i);
                     	if(args[2].equals("Necromancer")){
-                    		Main.dataConfig().set("Players." + player + ".Clan", "Noximperius");
+                    		this.instance.getConfig().set("Players." + player + ".Clan", "Noximperius");
                     	} else if(args[2].equals("Werewolf")){
-                    		Main.dataConfig().set("Players." + player + ".Clan", "Darkclaw");
+                    		this.instance.getConfig().set("Players." + player + ".Clan", "Darkclaw");
                     	} else if(args[2].equals("Vampire")){
-                    		Main.dataConfig().set("Players." + player + ".Clan", "Nightwing");
+                    		this.instance.getConfig().set("Players." + player + ".Clan", "Nightwing");
                     	}
                     } else if(i == 2){
                         this.instance.getLogger().info("Class number " + i);
                     	if(args[2].equals("Necromancer")){
-                    		Main.dataConfig().set("Players." + player + ".Clan", "Witherheart");
+                    		this.instance.getConfig().set("Players." + player + ".Clan", "Witherheart");
                     	} else if(args[2].equals("Werewolf")){
-                    		Main.dataConfig().set("Players." + player + ".Clan", "Silverclaw");
+                    		this.instance.getConfig().set("Players." + player + ".Clan", "Silverclaw");
                     	} else if(args[2].equals("Vampire")){
-                    		Main.dataConfig().set("Players." + player + ".Clan", "Ashborn");
+                    		this.instance.getConfig().set("Players." + player + ".Clan", "Ashborn");
                     	}
                     } else if (i == 3){
                         this.instance.getLogger().info("Class number " + i);
                     	if(args[2].equals("Necromancer")){
-                    		Main.dataConfig().set("Players." + player + ".Clan", "Deathskull");
+                    		this.instance.getConfig().set("Players." + player + ".Clan", "Deathskull");
                     	} else if(args[2].equals("Werewolf")){
-                    		Main.dataConfig().set("Players." + player + ".Clan", "Bloodvenom");
+                    		this.instance.getConfig().set("Players." + player + ".Clan", "Bloodvenom");
                     	} else if(args[2].equals("Vampire")){
-                    		Main.dataConfig().set("Players." + player + ".Clan", "Darkblood");
+                    		this.instance.getConfig().set("Players." + player + ".Clan", "Darkblood");
                     	}
                     }
-                    if(Main.dataConfig().getBoolean("Players." + player + ".Bat") == true){
+                    if(this.instance.getConfig().getBoolean("Players." + player + ".Bat") == true){
                     vamp.untrans(vamp.map(), p);
                     }
-            		try {
-            			Main.dataConfig().save(Main.dataFolder());
-            		} catch (IOException e) {
-            			// TODO Auto-generated catch block
-            			e.printStackTrace();
-            		}
+                    this.instance.saveConfig();
                 } else {
                     sender.sendMessage("not a valid race");
                 }
@@ -150,26 +138,21 @@ public class MainCommand implements CommandExecutor {
             	Player player = Bukkit.getPlayer(args[1]);
         		String name = player.getName();
             	if(args[2].equals("Blood")){
-            		double blood = Main.dataConfig().getDouble("Players." + name + ".Blood");
+            		double blood = this.instance.getConfig().getDouble("Players." + name + ".Blood");
             		double addedBlood = Double.parseDouble(args[3]);
             		blood = blood + addedBlood;
-            		Main.dataConfig().set("Players." + name + ".Blood", blood);
+            		this.instance.getConfig().set("Players." + name + ".Blood", blood);
             	} else if(args[2].equals("Souls")){
-            		int souls = Main.dataConfig().getInt("Players." + name + ".Souls");
+            		int souls = this.instance.getConfig().getInt("Players." + name + ".Souls");
             		int addedSouls = Integer.parseInt(args[3]);
             		souls = souls + addedSouls;
-            		Main.dataConfig().set("Players." + name + ".Souls", souls);
+            		this.instance.getConfig().set("Players." + name + ".Souls", souls);
             	}
-        		try {
-        			Main.dataConfig().save(Main.dataFolder());
-        		} catch (IOException e) {
-        			// TODO Auto-generated catch block
-        			e.printStackTrace();
-        		}
-            }
+            	this.instance.saveConfig();
         } else {
             sender.sendMessage(ChatColor.RED + "You don't have permision to preform this acction");
         }
-        return false;
     }
+		return false;
+}
 }
