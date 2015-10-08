@@ -13,6 +13,7 @@ import com.weeryan17.snp.Commands.WitherCommand;
 import com.weeryan17.snp.Util.Events;
 import com.weeryan17.snp.PlayerClass;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,6 +23,8 @@ import net.minecraft.server.v1_8_R3.NBTTagCompound;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -41,6 +44,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
     public static Main plugin;
     String type;
     String player;
+    static Main main = new Main();
 
     public void onEnable() {
         this.protocolManager = ProtocolLibrary.getProtocolManager();
@@ -50,8 +54,8 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         MobCommand exec6 = new MobCommand(plugin);
         WitherCommand exec7 = new WitherCommand(plugin);
         VampBlCommand exec2 = new VampBlCommand(plugin);
-        Howl exec4 = new Howl(plugin);
-        ClassCommand exec5 = new ClassCommand(plugin);
+        Howl exec4 = new Howl();
+        ClassCommand exec5 = new ClassCommand();
         MainCommand exec = new MainCommand(plugin);
         VampBatCommand exec3 = new VampBatCommand(plugin);
         Events event = new Events(plugin);
@@ -64,26 +68,26 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         this.getCommand("mob").setExecutor(exec6);
         this.getCommand("clan").setExecutor(exec8);
         Bukkit.getServer().getPluginManager().registerEvents(event, this);
-        if(!this.getConfig().contains("Clans.")){
+        if(!dataConfig().contains("Clans.")){
         	this.getLogger().info("Clan info not found adding clan info and default clans");
-        	this.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Owner" , "Server");
-        	this.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Owner" , "Server");
-        	this.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Owner" , "Server");
-        	this.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Owner" , "Server");
-        	this.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Owner" , "Server");
-        	this.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Owner" , "Server");
-        	this.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Owner" , "Server");
-        	this.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Owner" , "Server");
-        	this.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Owner" , "Server");
+        	dataConfig().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Open" , true);
+        	dataConfig().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Owner" , "Server");
+        	dataConfig().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Open" , true);
+        	dataConfig().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Owner" , "Server");
+        	dataConfig().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Open" , true);
+        	dataConfig().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Owner" , "Server");
+        	dataConfig().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Open" , true);
+        	dataConfig().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Owner" , "Server");
+        	dataConfig().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Open" , true);
+        	dataConfig().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Owner" , "Server");
+        	dataConfig().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Open" , true);
+        	dataConfig().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Owner" , "Server");
+        	dataConfig().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Open" , true);
+        	dataConfig().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Owner" , "Server");
+        	dataConfig().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Open" , true);
+        	dataConfig().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Owner" , "Server");
+        	dataConfig().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Open" , true);
+        	dataConfig().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Owner" , "Server");
         }
         this.saveConfig();
         this.getLogger().info("Super Natural Players plugin enabled");
@@ -114,8 +118,8 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
     public void onDisable() {
     	for(Player pl : Bukkit.getOnlinePlayers()){
     		String name = pl.getName().toString();
-    	this.getConfig().set("Players." + name + ".WC", false);
-    	this.getConfig().set("Players." + name + ".Truce", true);
+    	dataConfig().set("Players." + name + ".WC", false);
+    	dataConfig().set("Players." + name + ".Truce", true);
         this.saveConfig();
     	}
         this.getLogger().info("Super Natural Players plugin disabled");
@@ -179,4 +183,15 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
 	   public static String removeCharAt(String s, int pos) {
 		      return s.substring(0, pos) + s.substring(pos + 1);
 		   }
+	   public static FileConfiguration dataConfig(){
+		   File data = main.getFile();
+	    	FileConfiguration datacfg = YamlConfiguration.loadConfiguration(data);
+			return datacfg;
+	   }
+	   public File getFile(){
+		   File folder = plugin.getDataFolder();
+	    	File data = new File(folder, "data.yml");
+		return data;
+		   
+	   }
 }

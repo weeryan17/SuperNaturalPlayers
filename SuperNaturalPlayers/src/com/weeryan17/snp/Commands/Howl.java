@@ -10,15 +10,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class Howl implements CommandExecutor {
-    private Main instance;
-
-    public Howl(Main instance) {
-        this.instance = instance;
-    }
-
     public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {
         String player = sender.getName();
-        if (cmd.getName().equalsIgnoreCase("howl") && this.instance.getConfig().get("Players." + player + ".type").toString().equals("Werewolf")) {
+        if (cmd.getName().equalsIgnoreCase("howl") && Main.dataConfig().get("Players." + player + ".type").toString().equals("Werewolf")) {
             Player p = Bukkit.getServer().getPlayer(player);
             Location loc = p.getLocation();
             for(Player pl : Bukkit.getOnlinePlayers()) {

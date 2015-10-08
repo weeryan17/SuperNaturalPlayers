@@ -29,10 +29,10 @@ public class WitherCommand implements CommandExecutor{
 	public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {
 		if(cmd.getName().equalsIgnoreCase("wither")){
 			final String name = sender.getName().toString();
-			if(sender instanceof Player && this.instance.getConfig().get("Players." + name + ".type").toString().equals("Necromancer")){
-				if(this.instance.getConfig().getBoolean("Players." + name + ".Truce") == true){
+			if(sender instanceof Player && Main.dataConfig().get("Players." + name + ".type").toString().equals("Necromancer")){
+				if(Main.dataConfig().getBoolean("Players." + name + ".Truce") == true){
 				final Player player = Bukkit.getPlayer(name);
-				if(this.instance.getConfig().getBoolean("Player." + name + ".WC") == false){
+				if(Main.dataConfig().getBoolean("Player." + name + ".WC") == false){
 					Location loc = player.getLocation();
 					final Skeleton skely = (Skeleton)loc.getWorld().spawnEntity(loc, EntityType.SKELETON);
 					skely.setSkeletonType(SkeletonType.WITHER);
@@ -44,7 +44,7 @@ public class WitherCommand implements CommandExecutor{
 					for(Player pl : Bukkit.getOnlinePlayers()){
 						pl.hidePlayer(player);
 					}
-					this.instance.getConfig().set("Player." + name + ".WC", true);
+					Main.dataConfig().set("Player." + name + ".WC", true);
 					Bukkit.getScheduler().scheduleSyncDelayedTask(this.instance, new Runnable(){
 
 						@Override
@@ -80,7 +80,7 @@ public class WitherCommand implements CommandExecutor{
 		return false;
 	}
 	public void WC(String name){
-		this.instance.getConfig().set("Player." + name + ".WC", false);
+		Main.dataConfig().set("Player." + name + ".WC", false);
 	}
 	public void stop(Player player, Skeleton skely){
 		skely.remove();
