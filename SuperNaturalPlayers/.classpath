@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="C:/Users/Tyler/Desktop/Server stuff/Spigot/Spigot-API/target/spigot-api-1.8.8-R0.1-SNAPSHOT-shaded.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Tyler/Desktop/Server stuff/Spigot/Spigot-API/target/ProtocolLib.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Tyler/Desktop/Server stuff/Spigot/Spigot-Server/target/spigot-1.8.8-R0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ryan/Desktop/Server stuff/Spigot/Spigot-API/target/spigot-api-1.8.8-R0.1-SNAPSHOT-shaded.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ryan/Desktop/Server stuff/Spigot/Spigot-API/target/ProtocolLib.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ryan/Desktop/Server stuff/spigot-1.8.8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
