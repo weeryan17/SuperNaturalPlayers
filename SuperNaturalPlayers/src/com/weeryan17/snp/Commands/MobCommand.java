@@ -39,7 +39,7 @@ public class MobCommand implements CommandExecutor {
     		String player = sender.getName().toString();
     		if(sender instanceof Player){
     			Location loc = ((Player) sender).getLocation();
-    			if(this.instance.getConfig().get("Players." + player + ".type").toString().equals("Necromancer")){
+    			if(this.instance.config().get("Players." + player + ".type").toString().equals("Necromancer")){
     			if(args.length == 0){
     				sender.sendMessage(ChatColor.DARK_BLUE + "Necromancers can summon:");
     				sender.sendMessage(ChatColor.GOLD + "Zombies for 4 souls");
@@ -49,40 +49,40 @@ public class MobCommand implements CommandExecutor {
     				sender.sendMessage(ChatColor.GOLD + "SkeletonHorse for 100 souls");
     			}
     			if(args.length == 1){
-    				if(this.instance.getConfig().getBoolean("Players." + player + ".Truce") == true){
+    				if(this.instance.config().getBoolean("Players." + player + ".Truce") == true){
     				if(args[0].equals("Zombie") || args[0].equals("zombie")){
-    					if(this.instance.getConfig().getInt("Players." + player + ".Souls") >= 4){
-    						int souls = this.instance.getConfig().getInt("Players." + player + ".Souls");
+    					if(this.instance.config().getInt("Players." + player + ".Souls") >= 4){
+    						int souls = this.instance.config().getInt("Players." + player + ".Souls");
     					Zombie zombie = (Zombie)loc.getWorld().spawnEntity(loc, EntityType.ZOMBIE);
     					zombie.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 3, 0));
     					sender.sendMessage(ChatColor.DARK_BLUE + "You summon a zombie for 4 souls");
-    					this.instance.getConfig().set("Players." + player + ".Souls", souls - 4);
+    					this.instance.config().set("Players." + player + ".Souls", souls - 4);
     					} else {
     						sender.sendMessage(ChatColor.BLACK + "You don't have enough souls to do this");
     					}
     				} else if(args[0].equals("Skeleton") || args[0].equals("skeleton")){
-    					if(this.instance.getConfig().getInt("Players." + player + ".Souls") >= 6){
-    						int souls = this.instance.getConfig().getInt("Players." + player + ".Souls");
+    					if(this.instance.config().getInt("Players." + player + ".Souls") >= 6){
+    						int souls = this.instance.config().getInt("Players." + player + ".Souls");
     						Skeleton skely = (Skeleton)loc.getWorld().spawnEntity(loc, EntityType.SKELETON);
     						skely.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 3, 0));
     						sender.sendMessage(ChatColor.DARK_BLUE + "You summon a skeleton for 6 souls");
-    						this.instance.getConfig().set("Players." + player + ".Souls", souls - 6);
+    						this.instance.config().set("Players." + player + ".Souls", souls - 6);
     					} else {
     						sender.sendMessage(ChatColor.BLACK + "You don't have enough souls to do this");
     					}
     				} else if(args[0].equals("Cavespider") || args[0].equals("cavespider")){
-    					if(this.instance.getConfig().getInt("Players." + player + ".Souls") >= 20){
-    						int souls = this.instance.getConfig().getInt("Players." + player + ".Souls");
+    					if(this.instance.config().getInt("Players." + player + ".Souls") >= 20){
+    						int souls = this.instance.config().getInt("Players." + player + ".Souls");
     						CaveSpider spidy = (CaveSpider)loc.getWorld().spawnEntity(loc, EntityType.CAVE_SPIDER);
     						spidy.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 3, 0));
     						sender.sendMessage(ChatColor.DARK_BLUE + "You summon a cave spider for 20 souls");
-    						this.instance.getConfig().set("Players." + player + ".Souls", souls - 20);
+    						this.instance.config().set("Players." + player + ".Souls", souls - 20);
     					} else {
         						sender.sendMessage(ChatColor.BLACK + "You don't have enough souls to do this");
         					}
     					} else if(args[0].equals("ZombieHorse") || args[0].equals("zombiehorse")){
-    						if(this.instance.getConfig().getInt("Players." + player + ".Souls") >= 100){
-    							int souls = this.instance.getConfig().getInt("Players." + player + ".Souls");
+    						if(this.instance.config().getInt("Players." + player + ".Souls") >= 100){
+    							int souls = this.instance.config().getInt("Players." + player + ".Souls");
     							final Player pl = Bukkit.getPlayer(player);
     							final Horse horse = (Horse)loc.getWorld().spawnEntity(loc, EntityType.HORSE);
     							horse.setAdult();
@@ -115,13 +115,13 @@ public class MobCommand implements CommandExecutor {
     							inv.addItem(item);
     							((EntityLiving)((CraftEntity)horse).getHandle()).getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.5);
     							sender.sendMessage(ChatColor.DARK_BLUE + "You summon a zombie horse for 100 souls");
-    							this.instance.getConfig().set("Players." + player + ".Souls", souls - 100);
+    							this.instance.config().set("Players." + player + ".Souls", souls - 100);
     						} else {
         						sender.sendMessage(ChatColor.BLACK + "You don't have enough souls to do this");
         					}
     					} else if(args[0].equals("SkeletonHorse") || args[0].equals("skeletonhorse")){
-    						if(this.instance.getConfig().getInt("Players." + player + ".Souls") >= 100){
-    							int souls = this.instance.getConfig().getInt("Players." + player + ".Souls");
+    						if(this.instance.config().getInt("Players." + player + ".Souls") >= 100){
+    							int souls = this.instance.config().getInt("Players." + player + ".Souls");
     							final Player pl = Bukkit.getPlayer(player);
     							final Horse horse = (Horse)loc.getWorld().spawnEntity(loc, EntityType.HORSE);
     							horse.setAdult();
@@ -153,7 +153,7 @@ public class MobCommand implements CommandExecutor {
     							inv.addItem(item);
     							((EntityLiving)((CraftEntity)horse).getHandle()).getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.5);
     							sender.sendMessage(ChatColor.DARK_BLUE + "You summon a skeleton horse for 100 souls");
-    							this.instance.getConfig().set("Players." + player + ".Souls", souls - 100);
+    							this.instance.config().set("Players." + player + ".Souls", souls - 100);
     						} else {
         						sender.sendMessage(ChatColor.BLACK + "You don't have enough souls to do this");
         					}

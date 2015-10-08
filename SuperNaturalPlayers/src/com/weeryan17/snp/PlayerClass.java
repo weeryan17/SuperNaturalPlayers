@@ -39,7 +39,7 @@ public class PlayerClass {
             World world = p.getWorld();
             int days = (int)world.getFullTime() / 24000;
             int phase = days % 8;
-            if (this.instance.getConfig().get("Players." + playerName + ".type").toString().equals("Vampire")) {
+            if (this.instance.config().get("Players." + playerName + ".type").toString().equals("Vampire")) {
                 double rad = Sun.calcPlayerIrradiation(p);
                 if (rad >= 0.25 && p.getGameMode() != GameMode.CREATIVE && p.getGameMode() != GameMode.SPECTATOR) {
                     p.damage(rad);
@@ -49,7 +49,7 @@ public class PlayerClass {
                 
             }
             	EntityHider hide = new EntityHider((Plugin)this.instance, EntityHider.Policy.BLACKLIST);
-            if (this.instance.getConfig().get("Players." + playerName + ".type").toString().equals("Werewolf")){
+            if (this.instance.config().get("Players." + playerName + ".type").toString().equals("Werewolf")){
             if (phase == 0 && world.getTime() >= 13000) {
                 p.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
                 p.removePotionEffect(PotionEffectType.SPEED);
@@ -58,10 +58,10 @@ public class PlayerClass {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 300, 4));
                 p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 4));
                 p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 300, 0));
-                if (this.instance.getConfig().getBoolean("Players." + playerName + ".Wolf") == false){
+                if (this.instance.config().getBoolean("Players." + playerName + ".Wolf") == false){
                 p.sendMessage(ChatColor.DARK_PURPLE + "The moon is full and bright tonight...");
-                int moon = this.instance.getConfig().getInt("Players." + playerName + ".FullMoons");
-                this.instance.getConfig().set("Players." + playerName + ".FullMoons", moon+1);
+                int moon = this.instance.config().getInt("Players." + playerName + ".FullMoons");
+                this.instance.config().set("Players." + playerName + ".FullMoons", moon+1);
                 Location loc = p.getLocation();
                 Wolf wolf = (Wolf)loc.getWorld().spawnEntity(loc, EntityType.WOLF);
                 Main.noAI(wolf);
@@ -72,13 +72,13 @@ public class PlayerClass {
                     pl.hidePlayer(p);
             	}
                 this.instance.Timer2(p, wolf);
-                this.instance.getConfig().set("Players." + playerName + ".Wolf", true);
+                this.instance.config().set("Players." + playerName + ".Wolf", true);
         			this.instance.saveConfig();
             }
         } else {
         	p.removePotionEffect(PotionEffectType.SPEED);
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 0));
-            if (this.instance.getConfig().getBoolean("Players." + playerName + ".Wolf") == true){
+            if (this.instance.config().getBoolean("Players." + playerName + ".Wolf") == true){
             	for(Player pl : Bukkit.getOnlinePlayers()) {
             		pl.showPlayer(p);
             	}
@@ -87,7 +87,7 @@ public class PlayerClass {
             			wolf.remove();
             		}
             	}
-                this.instance.getConfig().set("Players." + playerName + ".Wolf", false);
+                this.instance.config().set("Players." + playerName + ".Wolf", false);
         			this.instance.saveConfig();
             Bukkit.getScheduler().cancelTask(Main.stop);
             }

@@ -29,14 +29,14 @@ public class VampBlCommand implements CommandExecutor {
         String playerName = sender.getName().toString();
     	Player p = Bukkit.getPlayer(playerName);
         if (sender instanceof Player) {
-            if (cmd.getName().equalsIgnoreCase("bl") && this.instance.getConfig().get("Players." + playerName + ".type").toString().equals("Vampire")) {
+            if (cmd.getName().equalsIgnoreCase("bl") && this.instance.config().get("Players." + playerName + ".type").toString().equals("Vampire")) {
                 if (args.length == 0) {
-                	if(this.instance.getConfig().getBoolean("Players." + playerName + ".BL") == false){
-                		this.instance.getConfig().set("Players." + playerName + ".BL", true);
+                	if(this.instance.config().getBoolean("Players." + playerName + ".BL") == false){
+                		this.instance.config().set("Players." + playerName + ".BL", true);
                     blood(playerName, p);
                     sender.sendMessage(ChatColor.RED + "You went into blood lust mode. This will drain your blood");
                 } else {
-                	this.instance.getConfig().set("Players." + playerName + ".BL", false);
+                	this.instance.config().set("Players." + playerName + ".BL", false);
                 	stop(p);
                 	p.sendMessage(ChatColor.RED + "You exited bloodlust mode");
                 }
@@ -52,9 +52,9 @@ public class VampBlCommand implements CommandExecutor {
     }
 
     public void blood(final String sender, final Player p) {
-        double blood = this.instance.getConfig().getDouble("Players." + sender + ".Blood");
+        double blood = this.instance.config().getDouble("Players." + sender + ".Blood");
         if (blood >= 0.1) {
-            this.instance.getConfig().set("Players." + sender + ".Blood", (blood - 0.8));
+            this.instance.config().set("Players." + sender + ".Blood", (blood - 0.8));
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 3, 5));
             p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 3, 5));
             stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new Runnable(){
@@ -73,9 +73,9 @@ public class VampBlCommand implements CommandExecutor {
     }
 
     public void blood2(String sender, Player p) {
-        double blood = this.instance.getConfig().getDouble("Players." + sender + ".Blood");
+        double blood = this.instance.config().getDouble("Players." + sender + ".Blood");
         if (blood >= 0.1) {
-            this.instance.getConfig().set("Players." + sender + ".Blood", (blood - 0.2));
+            this.instance.config().set("Players." + sender + ".Blood", (blood - 0.2));
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1, 1));
             p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1, 1));
         } else {

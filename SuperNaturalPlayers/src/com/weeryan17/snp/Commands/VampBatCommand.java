@@ -30,10 +30,10 @@ public class VampBatCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         String playerRaw = sender.getName().toString();
         player = Bukkit.getServer().getPlayer(playerRaw);
-        if (sender instanceof Player && this.instance.getConfig().get("Players." + playerRaw + ".type").toString().equals("Vampire")) {
+        if (sender instanceof Player && this.instance.config().get("Players." + playerRaw + ".type").toString().equals("Vampire")) {
             if (cmd.getName().equalsIgnoreCase("bat")) {
-                if (this.instance.getConfig().getBoolean("Players." + playerRaw + ".Bat") == false && args.length == 0) {
-                    this.instance.getConfig().set("Players." + playerRaw + ".Bat", true);
+                if (this.instance.config().getBoolean("Players." + playerRaw + ".Bat") == false && args.length == 0) {
+                    this.instance.config().set("Players." + playerRaw + ".Bat", true);
                     Location loc = this.player.getLocation();
                     final Bat bat = (Bat)loc.getWorld().spawnEntity(loc, EntityType.BAT);
                     for(Player pl : Bukkit.getOnlinePlayers()) {
@@ -61,7 +61,7 @@ public class VampBatCommand implements CommandExecutor {
     	for(Player pl : Bukkit.getOnlinePlayers()) {
         	pl.showPlayer(player);
         }
-        this.instance.getConfig().set("Players." + playerRaw + ".Bat", false);
+        this.instance.config().set("Players." + playerRaw + ".Bat", false);
         this.player.setAllowFlight(false);
         this.player.setMaxHealth(20.0);
         this.player.sendMessage(ChatColor.RED + "You are no longer a bat");

@@ -13,6 +13,8 @@ import com.weeryan17.snp.Commands.WitherCommand;
 import com.weeryan17.snp.Util.Events;
 import com.weeryan17.snp.PlayerClass;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,6 +24,8 @@ import net.minecraft.server.v1_8_R3.NBTTagCompound;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -63,28 +67,33 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         this.getCommand("mob").setExecutor(exec6);
         this.getCommand("clan").setExecutor(exec8);
         Bukkit.getServer().getPluginManager().registerEvents(event, this);
-        if(!this.getConfig().contains("Clans.")){
+        if(!this.config().contains("Clans.")){
         	this.getLogger().info("Clan info not found adding clan info and default clans");
-        	this.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Owner" , "Server");
-        	this.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Owner" , "Server");
-        	this.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Owner" , "Server");
-        	this.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Owner" , "Server");
-        	this.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Owner" , "Server");
-        	this.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Owner" , "Server");
-        	this.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Owner" , "Server");
-        	this.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Owner" , "Server");
-        	this.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Open" , true);
-        	this.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Owner" , "Server");
+        	this.config().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Open" , true);
+        	this.config().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Owner" , "Server");
+        	this.config().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Open" , true);
+        	this.config().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Owner" , "Server");
+        	this.config().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Open" , true);
+        	this.config().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Owner" , "Server");
+        	this.config().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Open" , true);
+        	this.config().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Owner" , "Server");
+        	this.config().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Open" , true);
+        	this.config().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Owner" , "Server");
+        	this.config().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Open" , true);
+        	this.config().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Owner" , "Server");
+        	this.config().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Open" , true);
+        	this.config().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Owner" , "Server");
+        	this.config().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Open" , true);
+        	this.config().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Owner" , "Server");
+        	this.config().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Open" , true);
+        	this.config().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Owner" , "Server");
         }
-        this.saveConfig();
+        try {
+			this.config().save(getFile());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         this.getLogger().info("Super Natural Players plugin enabled");
     }
 
@@ -93,7 +102,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
 
             @Override
             public void run() {
-                PlayerClass playerClass = new PlayerClass(Main.plugin);
+                PlayerClass playerClass = new PlayerClass(plugin);
                 playerClass.run();
             }
         }, 0, 100);
@@ -113,8 +122,8 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
     public void onDisable() {
     	for(Player pl : Bukkit.getOnlinePlayers()){
     		String name = pl.getName().toString();
-    	this.getConfig().set("Players." + name + ".WC", false);
-    	this.getConfig().set("Players." + name + ".Truce", true);
+    	this.config().set("Players." + name + ".WC", false);
+    	this.config().set("Players." + name + ".Truce", true);
         this.saveConfig();
     	}
         this.getLogger().info("Super Natural Players plugin disabled");
@@ -177,4 +186,8 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
 	   public static String removeCharAt(String s, int pos) {
 		      return s.substring(0, pos) + s.substring(pos + 1);
 		   }
+	   public FileConfiguration config(){
+		   FileConfiguration data = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "data.yml"));
+		return data;
+	   }
 }
