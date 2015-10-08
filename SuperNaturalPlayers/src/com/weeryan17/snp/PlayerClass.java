@@ -74,7 +74,12 @@ public class PlayerClass {
             	}
                 this.instance.Timer2(p, wolf);
                 Main.dataConfig().set("Players." + playerName + ".Wolf", true);
-                this.instance.saveConfig();
+                try {
+        			Main.dataConfig().save(Main.dataFolder());
+        		} catch (IOException e) {
+        			// TODO Auto-generated catch block
+        			e.printStackTrace();
+        		}
             }
         } else {
         	p.removePotionEffect(PotionEffectType.SPEED);
@@ -90,7 +95,7 @@ public class PlayerClass {
             	}
                 Main.dataConfig().set("Players." + playerName + ".Wolf", false);
         		try {
-        			Main.dataConfig().save(instance.getDataFolder());
+        			Main.dataConfig().save(Main.dataFolder());
         		} catch (IOException e) {
         			// TODO Auto-generated catch block
         			e.printStackTrace();

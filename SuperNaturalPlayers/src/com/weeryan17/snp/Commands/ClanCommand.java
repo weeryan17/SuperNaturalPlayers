@@ -18,11 +18,6 @@ import org.bukkit.entity.Player;
 import com.weeryan17.snp.Main;
 
 public class ClanCommand implements CommandExecutor {
-	private Main instance;
-	
-	public ClanCommand(Main instance){
-		this.instance = instance;
-	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {
@@ -113,7 +108,7 @@ public class ClanCommand implements CommandExecutor {
 	}
 		}
 		try {
-			Main.dataConfig().save(instance.getDataFolder());
+			Main.dataConfig().save(Main.dataFolder());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

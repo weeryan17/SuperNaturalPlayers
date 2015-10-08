@@ -70,7 +70,7 @@ public class MainCommand implements CommandExecutor {
                     Main.dataConfig().set("Players." + player + ".Clan", "none");
                     Main.dataConfig().set("Players." + player + ".TotalSouls", 0);
             		try {
-            			Main.dataConfig().save(instance.getDataFolder());
+            			Main.dataConfig().save(Main.dataFolder());
             		} catch (IOException e) {
             			// TODO Auto-generated catch block
             			e.printStackTrace();
@@ -108,7 +108,7 @@ public class MainCommand implements CommandExecutor {
                     vamp.untrans(vamp.map(), p);
                     }
             		try {
-            			Main.dataConfig().save(instance.getDataFolder());
+            			Main.dataConfig().save(Main.dataFolder());
             		} catch (IOException e) {
             			// TODO Auto-generated catch block
             			e.printStackTrace();
@@ -161,7 +161,7 @@ public class MainCommand implements CommandExecutor {
             		Main.dataConfig().set("Players." + name + ".Souls", souls);
             	}
         		try {
-        			Main.dataConfig().save(instance.getDataFolder());
+        			Main.dataConfig().save(Main.dataFolder());
         		} catch (IOException e) {
         			// TODO Auto-generated catch block
         			e.printStackTrace();

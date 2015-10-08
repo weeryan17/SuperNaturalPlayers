@@ -58,7 +58,7 @@ public class Events implements Listener {
             Main.dataConfig().set("Players." + player + ".BloodTotal", bloodTotal);
             Main.dataConfig().set("Players." + player + ".Vamplvl", bloodTotal/1000);
     		try {
-    			Main.dataConfig().save(instance.getDataFolder());
+    			Main.dataConfig().save(Main.dataFolder());
     		} catch (IOException e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
@@ -144,7 +144,7 @@ public class Events implements Listener {
             Main.dataConfig().set("Players." + player + ".Truce", true);
             Main.dataConfig().set("Players." + player + ".BL", false);
     		try {
-    			Main.dataConfig().save(instance.getDataFolder());
+    			Main.dataConfig().save(Main.dataFolder());
     		} catch (IOException e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
@@ -216,7 +216,7 @@ public class Events implements Listener {
             			souls = souls - 10;
             			Main.dataConfig().set("Players." + name + ".Souls", souls);
             			try {
-            				Main.dataConfig().save(instance.getDataFolder());
+            				Main.dataConfig().save(Main.dataFolder());
             			} catch (IOException e) {
             				// TODO Auto-generated catch block
             				e.printStackTrace();
