@@ -45,8 +45,6 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
     public static Main plugin;
     String type;
     String player;
-    static FileConfiguration config;
-    static File file = new File(plugin.getDataFolder(), "data.yml");
     public void onEnable() {
         this.protocolManager = ProtocolLibrary.getProtocolManager();
         this.Timer();
@@ -58,9 +56,9 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         Howl exec4 = new Howl();
         ClassCommand exec5 = new ClassCommand();
         MainCommand exec = new MainCommand(plugin);
-        if(!file.exists()) {
+        if(!dataFolder().exists()) {
           try {
-          file.createNewFile();
+        	  dataFolder().createNewFile();
           } catch(IOException e) {
           e.printStackTrace();
           }
@@ -76,26 +74,26 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         this.getCommand("mob").setExecutor(exec6);
         this.getCommand("clan").setExecutor(exec8);
         Bukkit.getServer().getPluginManager().registerEvents(event, this);
-        if(!config.contains("Clans.")){
+        if(!dataConfig().contains("Clans.")){
         	this.getLogger().info("Clan info not found adding clan info and default clans");
-        	config.set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Open" , true);
-        	config.set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Owner" , "Server");
-        	config.set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Open" , true);
-        	config.set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Owner" , "Server");
-        	config.set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Open" , true);
-        	config.set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Owner" , "Server");
-        	config.set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Open" , true);
-        	config.set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Owner" , "Server");
-        	config.set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Open" , true);
-        	config.set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Owner" , "Server");
-        	config.set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Open" , true);
-        	config.set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Owner" , "Server");
-        	config.set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Open" , true);
-        	config.set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Owner" , "Server");
-        	config.set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Open" , true);
-        	config.set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Owner" , "Server");
-        	config.set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Open" , true);
-        	config.set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Owner" , "Server");
+        	dataConfig().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Open" , true);
+        	dataConfig().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Owner" , "Server");
+        	dataConfig().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Open" , true);
+        	dataConfig().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Owner" , "Server");
+        	dataConfig().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Open" , true);
+        	dataConfig().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Owner" , "Server");
+        	dataConfig().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Open" , true);
+        	dataConfig().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Owner" , "Server");
+        	dataConfig().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Open" , true);
+        	dataConfig().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Owner" , "Server");
+        	dataConfig().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Open" , true);
+        	dataConfig().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Owner" , "Server");
+        	dataConfig().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Open" , true);
+        	dataConfig().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Owner" , "Server");
+        	dataConfig().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Open" , true);
+        	dataConfig().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Owner" , "Server");
+        	dataConfig().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Open" , true);
+        	dataConfig().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Owner" , "Server");
         }
         this.saveConfig();
         this.getLogger().info("Super Natural Players plugin enabled");
@@ -126,8 +124,8 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
     public void onDisable() {
     	for(Player pl : Bukkit.getOnlinePlayers()){
     		String name = pl.getName().toString();
-    	config.set("Players." + name + ".WC", false);
-    	config.set("Players." + name + ".Truce", true);
+    	dataConfig().set("Players." + name + ".WC", false);
+    	dataConfig().set("Players." + name + ".Truce", true);
         this.saveConfig();
     	}
         this.getLogger().info("Super Natural Players plugin disabled");
@@ -190,16 +188,4 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
 	   public static String removeCharAt(String s, int pos) {
 		      return s.substring(0, pos) + s.substring(pos + 1);
 		   }
-	   public static void loadConfig(File file){
-		   YamlConfiguration.loadConfiguration(file);
-		   
-	   }
-	   public static FileConfiguration dataConfig(){
-		return config;
-		   
-	   }
-	   public static File dataFolder(){
-		return file;
-		   
-	   }
 }
