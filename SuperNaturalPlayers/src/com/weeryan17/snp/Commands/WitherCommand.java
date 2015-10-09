@@ -15,24 +15,26 @@ import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Skeleton.SkeletonType;
 
 import com.weeryan17.snp.Main;
+import com.weeryan17.snp.Util.CustomConfig;
 import com.weeryan17.snp.Util.EntityHider;
 import com.weeryan17.snp.Util.WitherStuff;
 
 public class WitherCommand implements CommandExecutor{
 	Map<Player, Integer> map = new HashMap<Player, Integer>();
 	private Main instance;
-    
+    CustomConfig data;
     public WitherCommand(Main instance) {
         this.instance = instance;
+        this.data = new CustomConfig(instance, "data");
     }
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {
 		if(cmd.getName().equalsIgnoreCase("wither")){
 			final String name = sender.getName().toString();
-			if(sender instanceof Player && this.instance.config().get("Players." + name + ".type").toString().equals("Necromancer")){
-				if(this.instance.config().getBoolean("Players." + name + ".Truce") == true){
+			if(sender instanceof Player && data.getConfig().get("Players." + name + ".type").toString().equals("Necromancer")){
+				if(data.getConfig().getBoolean("Players." + name + ".Truce") == true){
 				final Player player = Bukkit.getPlayer(name);
-				if(this.instance.config().getBoolean("Player." + name + ".WC") == false){
+				if(data.getConfig().getBoolean("Player." + name + ".WC") == false){
 					Location loc = player.getLocation();
 					final Skeleton skely = (Skeleton)loc.getWorld().spawnEntity(loc, EntityType.SKELETON);
 					skely.setSkeletonType(SkeletonType.WITHER);
@@ -44,7 +46,7 @@ public class WitherCommand implements CommandExecutor{
 					for(Player pl : Bukkit.getOnlinePlayers()){
 						pl.hidePlayer(player);
 					}
-					this.instance.config().set("Player." + name + ".WC", true);
+					data.getConfig().set("Player." + name + ".WC", true);
 					Bukkit.getScheduler().scheduleSyncDelayedTask(this.instance, new Runnable(){
 
 						@Override
@@ -80,7 +82,7 @@ public class WitherCommand implements CommandExecutor{
 		return false;
 	}
 	public void WC(String name){
-		this.instance.config().set("Player." + name + ".WC", false);
+		data.getConfig().set("Player." + name + ".WC", false);
 	}
 	public void stop(Player player, Skeleton skely){
 		skely.remove();

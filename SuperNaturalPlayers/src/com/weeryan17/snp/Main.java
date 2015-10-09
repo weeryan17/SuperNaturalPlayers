@@ -10,11 +10,10 @@ import com.weeryan17.snp.Commands.MobCommand;
 import com.weeryan17.snp.Commands.VampBatCommand;
 import com.weeryan17.snp.Commands.VampBlCommand;
 import com.weeryan17.snp.Commands.WitherCommand;
+import com.weeryan17.snp.Util.CustomConfig;
 import com.weeryan17.snp.Util.Events;
 import com.weeryan17.snp.PlayerClass;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -24,8 +23,6 @@ import net.minecraft.server.v1_8_R3.NBTTagCompound;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -49,6 +46,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         this.protocolManager = ProtocolLibrary.getProtocolManager();
         this.Timer();
         plugin = this;
+        CustomConfig data = new CustomConfig(plugin, "data");
         ClanCommand exec8 = new ClanCommand(plugin);
         MobCommand exec6 = new MobCommand(plugin);
         WitherCommand exec7 = new WitherCommand(plugin);
@@ -67,33 +65,28 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         this.getCommand("mob").setExecutor(exec6);
         this.getCommand("clan").setExecutor(exec8);
         Bukkit.getServer().getPluginManager().registerEvents(event, this);
-        if(!this.config().contains("Clans.")){
+        if(!data.getConfig().contains("Clans.")){
         	this.getLogger().info("Clan info not found adding clan info and default clans");
-        	this.config().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Open" , true);
-        	this.config().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Owner" , "Server");
-        	this.config().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Open" , true);
-        	this.config().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Owner" , "Server");
-        	this.config().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Open" , true);
-        	this.config().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Owner" , "Server");
-        	this.config().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Open" , true);
-        	this.config().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Owner" , "Server");
-        	this.config().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Open" , true);
-        	this.config().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Owner" , "Server");
-        	this.config().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Open" , true);
-        	this.config().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Owner" , "Server");
-        	this.config().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Open" , true);
-        	this.config().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Owner" , "Server");
-        	this.config().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Open" , true);
-        	this.config().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Owner" , "Server");
-        	this.config().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Open" , true);
-        	this.config().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Owner" , "Server");
+        	data.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Open" , true);
+        	data.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Owner" , "Server");
+        	data.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Open" , true);
+        	data.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Owner" , "Server");
+        	data.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Open" , true);
+        	data.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Owner" , "Server");
+        	data.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Open" , true);
+        	data.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Owner" , "Server");
+        	data.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Open" , true);
+        	data.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Owner" , "Server");
+        	data.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Open" , true);
+        	data.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Owner" , "Server");
+        	data.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Open" , true);
+        	data.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Owner" , "Server");
+        	data.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Open" , true);
+        	data.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Owner" , "Server");
+        	data.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Open" , true);
+        	data.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Owner" , "Server");
         }
-        try {
-			this.config().save(this.File());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			data.saveConfig();
         this.getLogger().info("Super Natural Players plugin enabled");
     }
 
@@ -102,8 +95,8 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
 
             @Override
             public void run() {
-                //PlayerClass playerClass = new PlayerClass(Main.plugin);
-                //playerClass.runClass();
+                PlayerClass playerClass = new PlayerClass(plugin);
+                playerClass.runClass();
             }
         }, 0, 10);
     }
@@ -113,18 +106,19 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
 
             @Override
             public void run() {
-                PlayerClass playerClass = new PlayerClass(Main.plugin);
+                PlayerClass playerClass = new PlayerClass(plugin);
                 playerClass.run2(player, wolf);
             }
         }, 0, 10);
     }
 
     public void onDisable() {
+        CustomConfig data = new CustomConfig(plugin, "data");
     	for(Player pl : Bukkit.getOnlinePlayers()){
     		String name = pl.getName().toString();
-    	this.config().set("Players." + name + ".WC", false);
-    	this.config().set("Players." + name + ".Truce", true);
-        this.saveConfig();
+    	data.getConfig().set("Players." + name + ".WC", false);
+    	data.getConfig().set("Players." + name + ".Truce", true);
+        data.saveConfig();
     	}
         this.getLogger().info("Super Natural Players plugin disabled");
     }
@@ -134,7 +128,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
     }
 
     public static void log(Level level, String message) {
-        plugin.getLogger().log(level, message);
+    	Main.plugin.getLogger().log(level, message);
     }
     public static void addLore(ItemStack i, String s) {
         if (i.getItemMeta().getLore() == null) {
@@ -186,30 +180,4 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
 	   public static String removeCharAt(String s, int pos) {
 		      return s.substring(0, pos) + s.substring(pos + 1);
 		   }
-	   public FileConfiguration config(){
-		   File dir = plugin.getDataFolder();
-		   if (!dir.isDirectory()) {
-				dir.mkdirs();
-			}
-		   File file = new File(dir, "data.yml");
-		   if (!file.exists()) {
-				try {
-					file.createNewFile();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		   FileConfiguration data = YamlConfiguration.loadConfiguration(file);
-		return data;
-	   }
-	   public File File(){
-		   File dir = plugin.getDataFolder();
-		   if (!dir.isDirectory()) {
-				dir.mkdirs();
-			}
-		   File file = new File(dir, "data.yml");
-		return file;
-		   
-	   }
 }

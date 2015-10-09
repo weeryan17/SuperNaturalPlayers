@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.weeryan17.snp.Main;
 import com.weeryan17.snp.Util.BatTimer;
+import com.weeryan17.snp.Util.CustomConfig;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -22,18 +23,18 @@ public class VampBatCommand implements CommandExecutor {
     Map<Player, Integer> map = new HashMap<Player, Integer>();
     Player player;
     private Main instance;
-
     public VampBatCommand(Main instance) {
         this.instance = instance;
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        CustomConfig data = new CustomConfig(this.instance, "data");
         String playerRaw = sender.getName().toString();
         player = Bukkit.getServer().getPlayer(playerRaw);
-        if (sender instanceof Player && this.instance.config().get("Players." + playerRaw + ".type").toString().equals("Vampire")) {
+        if (sender instanceof Player && data.getConfig().get("Players." + playerRaw + ".type").toString().equals("Vampire")) {
             if (cmd.getName().equalsIgnoreCase("bat")) {
-                if (this.instance.config().getBoolean("Players." + playerRaw + ".Bat") == false && args.length == 0) {
-                    this.instance.config().set("Players." + playerRaw + ".Bat", true);
+                if (data.getConfig().getBoolean("Players." + playerRaw + ".Bat") == false && args.length == 0) {
+                    data.getConfig().set("Players." + playerRaw + ".Bat", true);
                     Location loc = this.player.getLocation();
                     final Bat bat = (Bat)loc.getWorld().spawnEntity(loc, EntityType.BAT);
                     for(Player pl : Bukkit.getOnlinePlayers()) {
@@ -61,7 +62,8 @@ public class VampBatCommand implements CommandExecutor {
     	for(Player pl : Bukkit.getOnlinePlayers()) {
         	pl.showPlayer(player);
         }
-        this.instance.config().set("Players." + playerRaw + ".Bat", false);
+        CustomConfig data = new CustomConfig(this.instance, "data");
+        data.getConfig().set("Players." + playerRaw + ".Bat", false);
         this.player.setAllowFlight(false);
         this.player.setMaxHealth(20.0);
         this.player.sendMessage(ChatColor.RED + "You are no longer a bat");

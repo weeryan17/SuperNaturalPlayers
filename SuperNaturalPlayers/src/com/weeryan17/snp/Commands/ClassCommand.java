@@ -10,11 +10,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.weeryan17.snp.Main;
+import com.weeryan17.snp.Util.CustomConfig;
 
 public class ClassCommand implements CommandExecutor {
-	private Main instance;
+    CustomConfig data;
 	public ClassCommand(Main instance){
-		this.instance = instance;
+        this.data = new CustomConfig(instance, "data");
 	}
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
     	if(sender instanceof Player){
@@ -41,38 +42,38 @@ public class ClassCommand implements CommandExecutor {
 	            	phase = 1;
 	            }
 				if(args.length == 0){
-    			if(this.instance.config().get("Players." + playerName + ".type").toString().equals("Vampire")){
-    				double lvl = this.instance.config().getDouble("Players." + playerName + ".Vamplvl");
+    			if(data.getConfig().get("Players." + playerName + ".type").toString().equals("Vampire")){
+    				double lvl = data.getConfig().getDouble("Players." + playerName + ".Vamplvl");
     				int i = (int) lvl;
-    				double blood = this.instance.config().getDouble("Players." + playerName + ".Blood");
+    				double blood = data.getConfig().getDouble("Players." + playerName + ".Blood");
     				int i2 = (int) blood;
     				sender.sendMessage(ChatColor.DARK_GRAY + "You are currently a lvl " + ChatColor.GOLD + i + " Vampire");
     				sender.sendMessage(ChatColor.DARK_GRAY + "You curently have " + ChatColor.GOLD + i2 + ChatColor.DARK_GRAY + " blood");
-    			} else if(this.instance.config().get("Players." + playerName + ".type").toString().equals("Werewolf")){
-    				int lvl = this.instance.config().getInt("Players." + playerName + ".FullMoons");
+    			} else if(data.getConfig().get("Players." + playerName + ".type").toString().equals("Werewolf")){
+    				int lvl = data.getConfig().getInt("Players." + playerName + ".FullMoons");
     				sender.sendMessage(ChatColor.DARK_GRAY + "You are currently a lvl " + ChatColor.GOLD + lvl + " Werewolf");
     				sender.sendMessage(ChatColor.DARK_GRAY + "The full moon is in " + ChatColor.GOLD + phase + ChatColor.DARK_GRAY + " days.");
-    			} else if(this.instance.config().get("Players." + playerName + ".type").toString().equals("Human")){
+    			} else if(data.getConfig().get("Players." + playerName + ".type").toString().equals("Human")){
     				sender.sendMessage(ChatColor.DARK_GRAY + "You are a human so you don't have class info");
-    			} else if(this.instance.config().get("Players." + playerName + ".type").toString().equals("Necromancer")){
-    				int souls = this.instance.config().getInt("Players." + playerName + ".Souls");
-    				int totalsouls = this.instance.config().getInt("Players." + playerName + ".TotalSouls");
+    			} else if(data.getConfig().get("Players." + playerName + ".type").toString().equals("Necromancer")){
+    				int souls = data.getConfig().getInt("Players." + playerName + ".Souls");
+    				int totalsouls = data.getConfig().getInt("Players." + playerName + ".TotalSouls");
     				totalsouls = totalsouls / 2000;
     				int i3 = (int)totalsouls;
     				sender.sendMessage(ChatColor.DARK_GRAY + "You currently have " + ChatColor.GOLD + souls + ChatColor.DARK_GRAY + " souls.");
     				sender.sendMessage(ChatColor.DARK_GRAY + "You are a lvl " + ChatColor.GOLD + i3 + " Necromancer");
     			}
     		} else if(args[0].equals("admin") && player.isOp()){
-    			double blood = this.instance.config().getDouble("Players." + playerName + ".Blood");
+    			double blood = data.getConfig().getDouble("Players." + playerName + ".Blood");
 				int i2 = (int) blood;
-				int souls = this.instance.config().getInt("Players." + playerName + ".Souls");
+				int souls = data.getConfig().getInt("Players." + playerName + ".Souls");
 				sender.sendMessage(ChatColor.DARK_GRAY + "You curently have " + ChatColor.GOLD + i2 + ChatColor.DARK_GRAY + " blood");
 				sender.sendMessage(ChatColor.DARK_GRAY + "You currently have " + ChatColor.GOLD + souls + ChatColor.DARK_GRAY + " souls.");
 				sender.sendMessage(ChatColor.DARK_GRAY + "The full moon is in " + ChatColor.GOLD + phase + ChatColor.DARK_GRAY + " days.");
     		} else {
     			sender.sendMessage(ChatColor.DARK_GRAY + "That is not proper use of this command");
     		}
-				sender.sendMessage(ChatColor.DARK_GRAY + "You are currently in the " + ChatColor.GOLD + this.instance.config().getString("Players." + playerName + ".Clan") + ChatColor.DARK_GRAY + " clan.");
+				sender.sendMessage(ChatColor.DARK_GRAY + "You are currently in the " + ChatColor.GOLD + data.getConfig().getString("Players." + playerName + ".Clan") + ChatColor.DARK_GRAY + " clan.");
 				sender.sendMessage("");
 				sender.sendMessage(ChatColor.BLUE + "==========================================");
     		}
