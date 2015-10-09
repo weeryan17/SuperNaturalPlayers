@@ -89,7 +89,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         	this.config().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Owner" , "Server");
         }
         try {
-			this.config().save(getFile());
+			this.config().save(this.File());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -102,10 +102,10 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
 
             @Override
             public void run() {
-                PlayerClass playerClass = new PlayerClass(plugin);
-                playerClass.run();
+                //PlayerClass playerClass = new PlayerClass(Main.plugin);
+                //playerClass.runClass();
             }
-        }, 0, 100);
+        }, 0, 10);
     }
 
     public void Timer2(final Player player, final Wolf wolf) {
@@ -187,7 +187,29 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
 		      return s.substring(0, pos) + s.substring(pos + 1);
 		   }
 	   public FileConfiguration config(){
-		   FileConfiguration data = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "data.yml"));
+		   File dir = plugin.getDataFolder();
+		   if (!dir.isDirectory()) {
+				dir.mkdirs();
+			}
+		   File file = new File(dir, "data.yml");
+		   if (!file.exists()) {
+				try {
+					file.createNewFile();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		   FileConfiguration data = YamlConfiguration.loadConfiguration(file);
 		return data;
+	   }
+	   public File File(){
+		   File dir = plugin.getDataFolder();
+		   if (!dir.isDirectory()) {
+				dir.mkdirs();
+			}
+		   File file = new File(dir, "data.yml");
+		return file;
+		   
 	   }
 }

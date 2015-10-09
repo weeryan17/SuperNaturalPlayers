@@ -33,7 +33,7 @@ public class PlayerClass {
         this.instance = instance;
     }
 
-    void run() {
+    void runClass() {
     	for(Player p : Bukkit.getOnlinePlayers()) {
     		playerName = p.getName();
             World world = p.getWorld();
