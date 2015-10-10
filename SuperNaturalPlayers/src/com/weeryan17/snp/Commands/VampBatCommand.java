@@ -43,7 +43,7 @@ public class VampBatCommand implements CommandExecutor {
                     player.setAllowFlight(true);
                     player.setMaxHealth(2.0);
                     player.sendMessage(ChatColor.BLACK + "you became a bat");
-                    int stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new BatTimer(player, bat),0L,1L);
+                    int stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new BatTimer(player, bat),0,this.instance.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
                     map.put(player, stop);
                 } else {
                 	untrans(map.get(player), player);

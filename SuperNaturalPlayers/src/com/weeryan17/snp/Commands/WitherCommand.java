@@ -41,7 +41,7 @@ public class WitherCommand implements CommandExecutor{
 					Main.noAI(skely);
 					EntityHider hide = new EntityHider(this.instance, EntityHider.Policy.BLACKLIST);
 					hide.hideEntity(player, skely);
-					int stop1 = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new WitherStuff(player, skely), 10, 0);
+					int stop1 = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new WitherStuff(player, skely), 0, this.instance.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
 					map.put(player, stop1);
 					for(Player pl : Bukkit.getOnlinePlayers()){
 						pl.hidePlayer(player);

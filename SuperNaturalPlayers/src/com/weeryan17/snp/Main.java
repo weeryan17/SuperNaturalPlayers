@@ -46,7 +46,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         this.protocolManager = ProtocolLibrary.getProtocolManager();
         this.Timer();
         plugin = this;
-        CustomConfig data = new CustomConfig(plugin, "data");
+        CustomConfig clans = new CustomConfig(plugin, "clans");
         ClanCommand exec8 = new ClanCommand(plugin);
         MobCommand exec6 = new MobCommand(plugin);
         WitherCommand exec7 = new WitherCommand(plugin);
@@ -63,30 +63,38 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         this.getCommand("bat").setExecutor(exec3);
         this.getCommand("howl").setExecutor(exec4);
         this.getCommand("mob").setExecutor(exec6);
-        this.getCommand("clan").setExecutor(exec8);
         Bukkit.getServer().getPluginManager().registerEvents(event, this);
-        if(!data.getConfig().contains("Clans.")){
-        	this.getLogger().info("Clan info not found adding clan info and default clans");
-        	data.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Open" , true);
-        	data.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Owner" , "Server");
-        	data.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Open" , true);
-        	data.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Owner" , "Server");
-        	data.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Open" , true);
-        	data.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Owner" , "Server");
-        	data.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Open" , true);
-        	data.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Owner" , "Server");
-        	data.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Open" , true);
-        	data.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Owner" , "Server");
-        	data.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Open" , true);
-        	data.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Owner" , "Server");
-        	data.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Open" , true);
-        	data.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Owner" , "Server");
-        	data.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Open" , true);
-        	data.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Owner" , "Server");
-        	data.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Open" , true);
-        	data.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Owner" , "Server");
+        if(!this.getConfig().contains("General.")){
+        	this.getLogger().info("General info not found creating it");
+        	this.getConfig().set("General." + "Clans" + ".Enabled", true);
+        	this.getConfig().set("General." + "Timings" + ".Player Cheaker(ticks)", 10);
+        	this.getConfig().set("General." + "Timings" + ".Entity Discusier Teloporting(ticks)", 10);
         }
-			data.saveConfig();
+        if(this.getConfig().getBoolean("General." + "Clans" + ".Enabled") == true){
+        	this.getCommand("clan").setExecutor(exec8);
+        if(!clans.getConfig().contains("Clans.")){
+        	this.getLogger().info("Clan info not found adding clan info and default clans");
+        	clans.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Open" , true);
+        	clans.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Owner" , "Server");
+        	clans.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Open" , true);
+        	clans.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Owner" , "Server");
+        	clans.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Open" , true);
+        	clans.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Owner" , "Server");
+        	clans.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Open" , true);
+        	clans.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Owner" , "Server");
+        	clans.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Open" , true);
+        	clans.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Owner" , "Server");
+        	clans.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Open" , true);
+        	clans.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Owner" , "Server");
+        	clans.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Open" , true);
+        	clans.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Owner" , "Server");
+        	clans.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Open" , true);
+        	clans.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Owner" , "Server");
+        	clans.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Open" , true);
+        	clans.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Owner" , "Server");
+        }
+        }
+        clans.saveConfig();
         this.getLogger().info("Super Natural Players plugin enabled");
     }
 
@@ -98,7 +106,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
                 PlayerClass playerClass = new PlayerClass(plugin);
                 playerClass.runClass();
             }
-        }, 0, 10);
+        }, 0, this.getConfig().getInt("General." + "Timings" + ".Player Cheaker(ticks)"));
     }
 
     public void Timer2(final Player player, final Wolf wolf) {
@@ -109,17 +117,20 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
                 PlayerClass playerClass = new PlayerClass(plugin);
                 playerClass.run2(player, wolf);
             }
-        }, 0, 10);
+        }, 0, this.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
     }
 
     public void onDisable() {
         CustomConfig data = new CustomConfig(plugin, "data");
+        CustomConfig clans = new CustomConfig(plugin, "clans");
     	for(Player pl : Bukkit.getOnlinePlayers()){
     		String name = pl.getName().toString();
     	data.getConfig().set("Players." + name + ".WC", false);
     	data.getConfig().set("Players." + name + ".Truce", true);
-        data.saveConfig();
     	}
+    	data.saveConfig();
+    	clans.saveConfig();
+    	this.saveConfig();
         this.getLogger().info("Super Natural Players plugin disabled");
     }
 
