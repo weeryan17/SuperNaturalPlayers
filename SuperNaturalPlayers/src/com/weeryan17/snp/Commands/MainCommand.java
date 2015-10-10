@@ -56,7 +56,6 @@ public class MainCommand implements CommandExecutor {
                 race = args[2];
                 if (args[2].equals("Demon") || args[2].equals("Werewolf") || args[2].equals("Vampire") || args[2].equals("Angel") || args[2].equals("Necromancer") || args[2].equals("Human")) {
                     sender.sendMessage("You turned " + player + " into a(n) " + race);
-                    data.getConfig().set("Players." + player + ".type", race);
                     p = Bukkit.getServer().getPlayer(this.player);
                     p.sendMessage("You are now a(n) " + race);
                     data.getConfig().set("Players." + player + ".Blood", 0);
@@ -68,39 +67,10 @@ public class MainCommand implements CommandExecutor {
                     data.getConfig().set("Players." + player + ".FullMoons", 0);
                     data.getConfig().set("Players." + player + ".Clan", "none");
                     data.getConfig().set("Players." + player + ".TotalSouls", 0);
-                    data.saveConfig();
-                    int i = Main.randInt(1, 3);
-                    if(i == 1){
-                        this.instance.getLogger().info("Class number " + i);
-                    	if(args[2].equals("Necromancer")){
-                    		data.getConfig().set("Players." + player + ".Clan", "Noximperius");
-                    	} else if(args[2].equals("Werewolf")){
-                    		data.getConfig().set("Players." + player + ".Clan", "Darkclaw");
-                    	} else if(args[2].equals("Vampire")){
-                    		data.getConfig().set("Players." + player + ".Clan", "Nightwing");
-                    	}
-                    } else if(i == 2){
-                        this.instance.getLogger().info("Class number " + i);
-                    	if(args[2].equals("Necromancer")){
-                    		data.getConfig().set("Players." + player + ".Clan", "Witherheart");
-                    	} else if(args[2].equals("Werewolf")){
-                    		data.getConfig().set("Players." + player + ".Clan", "Silverclaw");
-                    	} else if(args[2].equals("Vampire")){
-                    		data.getConfig().set("Players." + player + ".Clan", "Ashborn");
-                    	}
-                    } else if (i == 3){
-                        this.instance.getLogger().info("Class number " + i);
-                    	if(args[2].equals("Necromancer")){
-                    		data.getConfig().set("Players." + player + ".Clan", "Deathskull");
-                    	} else if(args[2].equals("Werewolf")){
-                    		data.getConfig().set("Players." + player + ".Clan", "Bloodvenom");
-                    	} else if(args[2].equals("Vampire")){
-                    		data.getConfig().set("Players." + player + ".Clan", "Darkblood");
-                    	}
-                    }
                     if(data.getConfig().getBoolean("Players." + player + ".Bat") == true){
                     vamp.untrans(vamp.map(), p);
                     }
+                    data.getConfig().set("Players." + player + ".type", race);
                     data.saveConfig();
                 } else {
                     sender.sendMessage("not a valid race");
