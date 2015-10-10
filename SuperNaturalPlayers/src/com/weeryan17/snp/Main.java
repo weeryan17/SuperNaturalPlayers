@@ -96,6 +96,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         }
         }
         clans.saveConfig();
+        config.saveConfig();
         this.getLogger().info("Super Natural Players plugin enabled");
     }
 

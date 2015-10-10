@@ -14,8 +14,10 @@ import com.weeryan17.snp.Util.CustomConfig;
 
 public class ClassCommand implements CommandExecutor {
     CustomConfig data;
+    CustomConfig config;
 	public ClassCommand(Main instance){
         this.data = new CustomConfig(instance, "data");
+        this.config = new CustomConfig(instance, "config");
 	}
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
     	if(sender instanceof Player){
@@ -73,7 +75,9 @@ public class ClassCommand implements CommandExecutor {
     		} else {
     			sender.sendMessage(ChatColor.DARK_GRAY + "That is not proper use of this command");
     		}
+				if(config.getConfig().getBoolean("General." + "Clans" + ".Enabled") == true){
 				sender.sendMessage(ChatColor.DARK_GRAY + "You are currently in the " + ChatColor.GOLD + data.getConfig().getString("Players." + playerName + ".Clan") + ChatColor.DARK_GRAY + " clan.");
+				}
 				sender.sendMessage("");
 				sender.sendMessage(ChatColor.BLUE + "==========================================");
     		}
