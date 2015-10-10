@@ -24,7 +24,8 @@ public class MainCommand implements CommandExecutor {
     VampBatCommand vamp = new VampBatCommand(instance);
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         CustomConfig data = new CustomConfig(this.instance, "data");
-        if (cmd.getName().equalsIgnoreCase("snp") && sender.hasPermission("snp.command")) {
+        if (cmd.getName().equalsIgnoreCase("snp") && 
+        		sender.hasPermission("snp.command") || sender.isOp()) {
             Player p;
             if (args.length == 0) {
                 sender.sendMessage(ChatColor.RED + "[SNP Help]");
@@ -149,9 +150,9 @@ public class MainCommand implements CommandExecutor {
             		data.getConfig().set("Players." + name + ".Souls", souls);
             	}
             	data.saveConfig();
-        } else {
-            sender.sendMessage(ChatColor.RED + "You don't have permision to preform this acction");
         }
+    }else {
+        sender.sendMessage(ChatColor.RED + "You don't have permision to preform this acction");
     }
 		return false;
 }

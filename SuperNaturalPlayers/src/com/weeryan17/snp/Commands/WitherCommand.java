@@ -31,6 +31,7 @@ public class WitherCommand implements CommandExecutor{
 	public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {
 		if(cmd.getName().equalsIgnoreCase("wither")){
 			final String name = sender.getName().toString();
+			CustomConfig config = new CustomConfig(this.instance, "config");
 			if(sender instanceof Player && data.getConfig().get("Players." + name + ".type").toString().equals("Necromancer")){
 				if(data.getConfig().getBoolean("Players." + name + ".Truce") == true){
 				final Player player = Bukkit.getPlayer(name);
@@ -41,7 +42,7 @@ public class WitherCommand implements CommandExecutor{
 					Main.noAI(skely);
 					EntityHider hide = new EntityHider(this.instance, EntityHider.Policy.BLACKLIST);
 					hide.hideEntity(player, skely);
-					int stop1 = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new WitherStuff(player, skely), 0, this.instance.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
+					int stop1 = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new WitherStuff(player, skely), 0, config.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
 					map.put(player, stop1);
 					for(Player pl : Bukkit.getOnlinePlayers()){
 						pl.hidePlayer(player);

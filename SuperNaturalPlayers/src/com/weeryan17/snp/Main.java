@@ -47,6 +47,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         this.Timer();
         plugin = this;
         CustomConfig clans = new CustomConfig(plugin, "clans");
+        CustomConfig config = new CustomConfig(plugin, "config");
         ClanCommand exec8 = new ClanCommand(plugin);
         MobCommand exec6 = new MobCommand(plugin);
         WitherCommand exec7 = new WitherCommand(plugin);
@@ -64,13 +65,13 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         this.getCommand("howl").setExecutor(exec4);
         this.getCommand("mob").setExecutor(exec6);
         Bukkit.getServer().getPluginManager().registerEvents(event, this);
-        if(!this.getConfig().contains("General.")){
+        if(!config.getConfig().contains("General.")){
         	this.getLogger().info("General info not found creating it");
-        	this.getConfig().set("General." + "Clans" + ".Enabled", true);
-        	this.getConfig().set("General." + "Timings" + ".Player Cheaker(ticks)", 10);
-        	this.getConfig().set("General." + "Timings" + ".Entity Discusier Teloporting(ticks)", 10);
+        	config.getConfig().set("General." + "Clans" + ".Enabled", true);
+        	config.getConfig().set("General." + "Timings" + ".Player Cheaker(ticks)", 10);
+        	config.getConfig().set("General." + "Timings" + ".Entity Discusier Teloporting(ticks)", 10);
         }
-        if(this.getConfig().getBoolean("General." + "Clans" + ".Enabled") == true){
+        if(config.getConfig().getBoolean("General." + "Clans" + ".Enabled") == true){
         	this.getCommand("clan").setExecutor(exec8);
         if(!clans.getConfig().contains("Clans.")){
         	this.getLogger().info("Clan info not found adding clan info and default clans");
@@ -99,6 +100,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
     }
 
     public void Timer() {
+        CustomConfig config = new CustomConfig(this, "config");
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
 
             @Override
@@ -106,10 +108,11 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
                 PlayerClass playerClass = new PlayerClass(plugin);
                 playerClass.runClass();
             }
-        }, 0, this.getConfig().getInt("General." + "Timings" + ".Player Cheaker(ticks)"));
+        }, 0, config.getConfig().getInt("General." + "Timings" + ".Player Cheaker(ticks)"));
     }
 
     public void Timer2(final Player player, final Wolf wolf) {
+        CustomConfig config = new CustomConfig(this, "config");
         stop = Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)this, new Runnable(){
 
             @Override
@@ -117,12 +120,12 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
                 PlayerClass playerClass = new PlayerClass(plugin);
                 playerClass.run2(player, wolf);
             }
-        }, 0, this.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
+        }, 0, config.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
     }
 
     public void onDisable() {
-        CustomConfig data = new CustomConfig(plugin, "data");
-        CustomConfig clans = new CustomConfig(plugin, "clans");
+        CustomConfig data = new CustomConfig(this, "data");
+        CustomConfig clans = new CustomConfig(this, "clans");
     	for(Player pl : Bukkit.getOnlinePlayers()){
     		String name = pl.getName().toString();
     	data.getConfig().set("Players." + name + ".WC", false);

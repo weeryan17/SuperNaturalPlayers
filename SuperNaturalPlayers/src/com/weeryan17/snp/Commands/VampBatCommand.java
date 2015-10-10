@@ -29,6 +29,7 @@ public class VampBatCommand implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         CustomConfig data = new CustomConfig(this.instance, "data");
+        CustomConfig config = new CustomConfig(this.instance, "config");
         String playerRaw = sender.getName().toString();
         player = Bukkit.getServer().getPlayer(playerRaw);
         if (sender instanceof Player && data.getConfig().get("Players." + playerRaw + ".type").toString().equals("Vampire")) {
@@ -43,7 +44,7 @@ public class VampBatCommand implements CommandExecutor {
                     player.setAllowFlight(true);
                     player.setMaxHealth(2.0);
                     player.sendMessage(ChatColor.BLACK + "you became a bat");
-                    int stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new BatTimer(player, bat),0,this.instance.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
+                    int stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new BatTimer(player, bat), 0, config.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
                     map.put(player, stop);
                 } else {
                 	untrans(map.get(player), player);
