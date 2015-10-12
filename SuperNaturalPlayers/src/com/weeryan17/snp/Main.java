@@ -67,7 +67,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         Bukkit.getServer().getPluginManager().registerEvents(event, this);
         if(!config.getConfig().contains("General.")){
         	this.getLogger().info("General info not found creating it");
-        	config.getConfig().set("General." + "Clans" + ".Enabled", true);
+        	config.getConfig().set("General." + "Clans" + ".Enabled", false);
         	config.getConfig().set("General." + "Timings" + ".Player Cheaker(ticks)", 10);
         	config.getConfig().set("General." + "Timings" + ".Entity Discusier Teloporting(ticks)", 10);
         }
