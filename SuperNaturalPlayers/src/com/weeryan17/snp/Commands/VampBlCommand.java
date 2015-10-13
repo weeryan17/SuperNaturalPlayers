@@ -50,6 +50,7 @@ public class VampBlCommand implements CommandExecutor {
         if (args.length == 1 && args[0].equals("stop")) {
             stop(p);
         }
+        data.saveConfig();
         return true;
     }
 
@@ -78,6 +79,7 @@ public class VampBlCommand implements CommandExecutor {
         double blood = data.getConfig().getDouble("Players." + sender + ".Blood");
         if (blood >= 0.1) {
             data.getConfig().set("Players." + sender + ".Blood", (blood - 0.2));
+            data.saveConfig();
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1, 1));
             p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1, 1));
         } else {

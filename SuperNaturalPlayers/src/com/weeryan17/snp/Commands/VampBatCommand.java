@@ -36,6 +36,7 @@ public class VampBatCommand implements CommandExecutor {
             if (cmd.getName().equalsIgnoreCase("bat")) {
                 if (data.getConfig().getBoolean("Players." + playerRaw + ".Bat") == false && args.length == 0) {
                     data.getConfig().set("Players." + playerRaw + ".Bat", true);
+                    data.saveConfig();
                     Location loc = this.player.getLocation();
                     final Bat bat = (Bat)loc.getWorld().spawnEntity(loc, EntityType.BAT);
                     for(Player pl : Bukkit.getOnlinePlayers()) {
@@ -65,6 +66,7 @@ public class VampBatCommand implements CommandExecutor {
         }
         CustomConfig data = new CustomConfig(this.instance, "data");
         data.getConfig().set("Players." + playerRaw + ".Bat", false);
+        data.saveConfig();
         this.player.setAllowFlight(false);
         this.player.setMaxHealth(20.0);
         this.player.sendMessage(ChatColor.RED + "You are no longer a bat");

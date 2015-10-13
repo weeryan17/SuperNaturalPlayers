@@ -107,6 +107,7 @@ public class Events implements Listener {
             	int totalsouls = data.getConfig().getInt("Players." + player + ".TotalSouls");
             	data.getConfig().set("Players." + player + ".Souls", souls + 1);
             	data.getConfig().set("Players." + player + ".TotalSouls", totalsouls + 1);
+            	data.saveConfig();
             }
             if(data.getConfig().get("Players." + player + ".type").toString().equals("Demon")){
             	
@@ -177,6 +178,7 @@ public class Events implements Listener {
                 }
         	}
         }
+        data.saveConfig();
     }
     @EventHandler
     public void onEntityTarget(EntityTargetEvent event){
@@ -245,6 +247,7 @@ public class Events implements Listener {
     }
     public void truce(String name){
     	data.getConfig().set("Players." + name + ".Truce", true);
+    	data.saveConfig();
     }
     public Runnable skull(WitherSkull skull, Player player){
     	Entity entity = (Entity)skull;

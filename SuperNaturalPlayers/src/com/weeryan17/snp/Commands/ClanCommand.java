@@ -113,6 +113,7 @@ public class ClanCommand implements CommandExecutor {
 	}
 		}
 			data.saveConfig();
+			clans.saveConfig();
 		return false;
 	}
 

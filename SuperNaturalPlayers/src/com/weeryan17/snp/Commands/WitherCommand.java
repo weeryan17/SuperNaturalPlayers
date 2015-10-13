@@ -79,11 +79,12 @@ public class WitherCommand implements CommandExecutor{
 		}
 		
 		
-		
+		data.saveConfig();
 		return false;
 	}
 	public void WC(String name){
 		data.getConfig().set("Player." + name + ".WC", false);
+		data.saveConfig();
 	}
 	public void stop(Player player, Skeleton skely){
 		skely.remove();

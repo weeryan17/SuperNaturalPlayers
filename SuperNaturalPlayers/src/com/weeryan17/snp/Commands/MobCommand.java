@@ -169,7 +169,7 @@ public class MobCommand implements CommandExecutor {
     		}
     	}
 
-    	
+    	data.saveConfig();
 		return false;
     }
 }

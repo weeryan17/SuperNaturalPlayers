@@ -4,7 +4,7 @@ import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-
+//this came from the vampire plugin. it was slightly modified to work in my plugin
 
 public class Sun {
 		// -------------------------------------------- //
