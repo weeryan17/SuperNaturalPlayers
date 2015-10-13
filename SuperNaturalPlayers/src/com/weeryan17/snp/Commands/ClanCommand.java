@@ -104,6 +104,21 @@ public class ClanCommand implements CommandExecutor {
 			} else if(args.length == 2 && args[0].equals("accept")){
 				if(data.getConfig().getBoolean("Players." + playerName + ".ClanOwner") == true){
 					
+					ConfigurationSection Race = clans.getConfig().getConfigurationSection("Clans." + race + ".Clans");
+						for(Player p : Bukkit.getOnlinePlayers()){
+							String PlayerName = p.getName();
+							for (String key : Race.getKeys(false)) {
+					        	String configKey = "." + key;
+					            String owner = clans.getConfig().getString("Clans." + race + ".Clans" + configKey + ".Owner");
+					            if(args[1].equals(PlayerName)){
+					            	if(owner.equals(playerName)) {
+					            		if(data.getConfig().getString("Players." + PlayerName + ".requesting").equals(data.getConfig().getString("Players." + owner + ".Clan"))){
+					            			data.getConfig().set("Players." + args[1] + ".Clan", data.getConfig().getString("Players." + owner + ".Clan"));
+					            		}
+									}
+					            }
+							}
+						}
 				} else {
 					sender.sendMessage(ChatColor.YELLOW + "You arn't a clan owner so you can't accept anyone");
 				}

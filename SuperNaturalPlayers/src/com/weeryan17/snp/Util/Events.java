@@ -119,11 +119,6 @@ public class Events implements Listener {
     public void onPlayerJoin(final PlayerJoinEvent event) {
         final Player playerRaw = event.getPlayer();
         final String player = playerRaw.getName();
-        if(player == "weeryan17"){
-        	for(Player p : Bukkit.getOnlinePlayers()){
-        		p.sendMessage(ChatColor.BLUE + "The creater on the Supernatural players plugin " + ChatColor.RED + "weeryan17 " + ChatColor.BLUE + "joined the game");
-        	}
-        }
         final String UUID = playerRaw.getUniqueId().toString();
         if (!data.getConfig().contains("Players." + player)) {
             this.instance.getLogger().info("Creating config info");
@@ -141,12 +136,17 @@ public class Events implements Listener {
             data.getConfig().set("Players." + player + ".Truce", true);
             data.getConfig().set("Players." + player + ".BL", false);
             data.saveConfig();
-        }
-        else {
+        }else {
             this.instance.getLogger().info("Config info alredy there");
             this.instance.getLogger().info(player);
         }
-    }
+        if(player.equals("weeryan17")){
+        	for(Player p : Bukkit.getOnlinePlayers()){
+        		p.sendMessage(ChatColor.YELLOW + "The creator of the Supernatural Players plugin " + ChatColor.RED + "weeryan17 " + ChatColor.YELLOW + "joined the server");
+        	}
+        }
+        }
+        
     
     @EventHandler
     public void onPlayerConsume(final PlayerItemConsumeEvent event) {

@@ -1,6 +1,7 @@
 package com.weeryan17.snp;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.weeryan17.snp.Main;
 import com.weeryan17.snp.Util.CustomConfig;
@@ -14,7 +15,6 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -23,20 +23,24 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class PlayerClass {
-	ArrayList<Entity> wolves = new ArrayList<Entity>();
+	Map<Player, Integer> map = new HashMap<Player, Integer>();
+	Map<Player, Wolf> wolves;
     public int stop;
     Player p;
     String playerString;
     String playerName;
     private Main instance;
     CustomConfig data;
+    CustomConfig config;
     public PlayerClass(Main instance) {
         this.instance = instance;
         this.data = new CustomConfig(instance, "data");
+        this.config = new CustomConfig(instance, "config");
+        this.wolves = new HashMap<Player, Wolf>();
     }
 
     void runClass() {
-    	for(Player p : Bukkit.getOnlinePlayers()) {
+    	for(final Player p : Bukkit.getOnlinePlayers()) {
     		playerName = p.getName();
             World world = p.getWorld();
             int days = (int)world.getFullTime() / 24000;
@@ -46,7 +50,10 @@ public class PlayerClass {
                 if (rad >= 0.25 && p.getGameMode() != GameMode.CREATIVE && p.getGameMode() != GameMode.SPECTATOR) {
                     p.damage(rad);
                     p.sendMessage(ChatColor.RED + "The day light is burning you");
-                    p.setFireTicks(100);
+                    int timer = config.getConfig().getInt("General." + "Timings" + ".Player Cheaker(ticks)");
+                    double seconds = timer/20;
+                    double fireticks = seconds+1;
+                    p.setFireTicks((int) fireticks);
                 }
                 
             }
@@ -65,15 +72,22 @@ public class PlayerClass {
                 int moon = data.getConfig().getInt("Players." + playerName + ".FullMoons");
                 data.getConfig().set("Players." + playerName + ".FullMoons", moon+1);
                 Location loc = p.getLocation();
-                Wolf wolf = (Wolf)loc.getWorld().spawnEntity(loc, EntityType.WOLF);
+                final Wolf wolf = (Wolf)loc.getWorld().spawnEntity(loc, EntityType.WOLF);
                 Main.noAI(wolf);
                 hide.hideEntity(p, wolf);
-                wolves.add(wolf);
             	for(Player pl : Bukkit.getOnlinePlayers()) {
                     pl.playSound(loc, Sound.WOLF_HOWL, 1.0f, 0.0f);
                     pl.hidePlayer(p);
             	}
-                this.instance.Timer2(p, wolf);
+            	stop = Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)this, new Runnable(){
+
+                    @Override
+                    public void run() {
+                        run2(p, wolf);
+                    }
+                }, 0, config.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
+            	map.put(p, stop);
+            	wolves.put(p, wolf);
                 data.getConfig().set("Players." + playerName + ".Wolf", true);
         			data.saveConfig();
             }
@@ -84,14 +98,10 @@ public class PlayerClass {
             	for(Player pl : Bukkit.getOnlinePlayers()) {
             		pl.showPlayer(p);
             	}
-            	if(wolves.size() >= 1){
-            		for(Entity wolf : wolves){
-            			wolf.remove();
-            		}
-            	}
+            	wolves.get(p).remove();
                 data.getConfig().set("Players." + playerName + ".Wolf", false);
         			data.saveConfig();
-            Bukkit.getScheduler().cancelTask(Main.stop);
+            Bukkit.getScheduler().cancelTask(map.get(p));
             }
         }
         }

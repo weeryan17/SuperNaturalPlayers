@@ -39,6 +39,15 @@ public class VampBatCommand implements CommandExecutor {
                     data.saveConfig();
                     Location loc = this.player.getLocation();
                     final Bat bat = (Bat)loc.getWorld().spawnEntity(loc, EntityType.BAT);
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(instance, new Runnable(){
+
+						@Override
+						public void run() {
+							Main.noAI(bat);
+							
+						}
+                    	
+                    }, 10);
                     for(Player pl : Bukkit.getOnlinePlayers()) {
                     	pl.hidePlayer(player);
                     }
