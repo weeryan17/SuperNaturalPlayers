@@ -33,12 +33,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.Scoreboard;
 
 public class Main extends JavaPlugin implements Listener, CommandExecutor {
     ProtocolManager protocolManager;
     public static int stop;
-    Scoreboard score;
     public static Main plugin;
     String type;
     String player;
