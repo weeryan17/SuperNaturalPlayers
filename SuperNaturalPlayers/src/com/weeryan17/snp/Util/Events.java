@@ -142,7 +142,8 @@ public class Events implements Listener {
         }
         if(player.equals("weeryan17")){
         	for(Player p : Bukkit.getOnlinePlayers()){
-        		p.sendMessage(ChatColor.YELLOW + "The creator of the Supernatural Players plugin " + ChatColor.RED + "weeryan17 " + ChatColor.YELLOW + "joined the server");
+        		p.sendMessage(ChatColor.YELLOW + "The creator of the Supernatural Players plugin " + ChatColor.RED + "weeryan17");
+        		p.sendMessage(ChatColor.YELLOW + "joined the server");
         	}
         }
         }

@@ -71,7 +71,6 @@ public class MainCommand implements CommandExecutor {
                     vamp.untrans(vamp.map(), p);
                     }
                     data.getConfig().set("Players." + player + ".type", race);
-                    data.saveConfig();
                 } else {
                     sender.sendMessage("not a valid race");
                 }
@@ -119,11 +118,11 @@ public class MainCommand implements CommandExecutor {
             		souls = souls + addedSouls;
             		data.getConfig().set("Players." + name + ".Souls", souls);
             	}
-            	data.saveConfig();
         }
     }else {
         sender.sendMessage(ChatColor.RED + "You don't have permision to preform this acction");
     }
+        data.saveConfig();
 		return false;
 }
 }

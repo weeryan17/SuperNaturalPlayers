@@ -13,18 +13,22 @@ import com.weeryan17.snp.Main;
 public class WitherStuff implements Runnable {
 	Player player;
 	static Skeleton skely;
-	public WitherStuff(Player player, Skeleton skely) {
+	int ticks;
+	public WitherStuff(Player player, Skeleton skely, Integer ticks) {
 		this.player = player;
 		WitherStuff.skely = skely;
+		this.ticks = ticks;
 	}
 
 	@Override
 	public void run() {
 		skely.teleport(player);
+		int seconds = ticks / 20;
 		for(Entity e : Main.getNearbyEntitys(player, 5)){
 			EntityType type = e.getType();
 			if(e != player && Main.isAlive(type) == true && e != skely){
-			((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 30, 15));
+				((LivingEntity) e).removePotionEffect(PotionEffectType.WITHER);
+			((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, seconds + 1, 15));
 			}
 		}
 		

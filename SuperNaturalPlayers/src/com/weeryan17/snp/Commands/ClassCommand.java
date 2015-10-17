@@ -27,6 +27,7 @@ public class ClassCommand implements CommandExecutor {
 				sender.sendMessage(ChatColor.BLUE + "==========================================");
 				sender.sendMessage(ChatColor.RED + "[Super natural players class info]");
 				sender.sendMessage("");
+				data.saveConfig();
 				World world = player.getWorld();
 	            int days = (int)world.getFullTime() / 24000;
 	            int phase = days % 8;
