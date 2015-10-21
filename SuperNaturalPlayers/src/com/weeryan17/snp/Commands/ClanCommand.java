@@ -19,15 +19,15 @@ import com.weeryan17.snp.Config.Config;
 import com.weeryan17.snp.Config.CustomConfig;
 
 public class ClanCommand implements CommandExecutor {
-    CustomConfig clans;
-    CustomConfig data;
+	Main instance;
     public ClanCommand(Main instance) {
-    	Config MainConfig = new Config(instance);
-    	this.data = MainConfig.data();
-    	this.clans = MainConfig.clans();
+    	this.instance = instance;
     }
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {
+    	Config MainConfig = new Config(instance);
+    	CustomConfig data = MainConfig.data();
+    	CustomConfig clans = MainConfig.clans();
 		if(cmd.getName().equalsIgnoreCase("clan")){
 			String playerName = sender.getName();
 			if(args.length == 0){

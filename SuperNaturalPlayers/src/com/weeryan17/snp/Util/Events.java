@@ -30,24 +30,21 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.Listener;
 
 import com.weeryan17.snp.Main;
-import com.weeryan17.snp.Commands.VampBatCommand;
 import com.weeryan17.snp.Config.Config;
 import com.weeryan17.snp.Config.CustomConfig;
 
 public class Events implements Listener {
     private Main instance;
-    VampBatCommand vamp = new VampBatCommand(instance);
     Map<Entity, Integer> map = new HashMap<Entity, Integer>();
     Map<Entity, Integer> map2 = new HashMap<Entity, Integer>();
-    CustomConfig data;
     public Events(final Main instance) {
         this.instance = instance;
-    	Config MainConfig = new Config(instance);
-    	this.data = MainConfig.data();
     }
     
     @EventHandler
     public void onDamage(final EntityDamageByEntityEvent event) {
+    	Config MainConfig = new Config(instance);
+    	CustomConfig data = MainConfig.data();
         final Entity damager = event.getDamager();
         final Entity damagee = event.getEntity();
         final String hurt = damagee.getName().toString();
@@ -102,6 +99,8 @@ public class Events implements Listener {
     
 	@EventHandler
     public void onEntityDeath(final EntityDeathEvent event) {
+    	Config MainConfig = new Config(instance);
+    	CustomConfig data = MainConfig.data();
         final Entity killer = (Entity)event.getEntity().getKiller();
         if (killer instanceof Player) {
             final String player = killer.getName();
@@ -120,6 +119,8 @@ public class Events implements Listener {
     
     @EventHandler
     public void onPlayerJoin(final PlayerJoinEvent event) {
+    	Config MainConfig = new Config(instance);
+    	CustomConfig data = MainConfig.data();
         final Player playerRaw = event.getPlayer();
         final String player = playerRaw.getName();
         final String UUID = playerRaw.getUniqueId().toString();
@@ -154,6 +155,8 @@ public class Events implements Listener {
     
     @EventHandler
     public void onPlayerConsume(final PlayerItemConsumeEvent event) {
+    	Config MainConfig = new Config(instance);
+    	CustomConfig data = MainConfig.data();
         final Player player = event.getPlayer();
         final ItemStack item = event.getItem();
         final String name = player.getName();
@@ -186,6 +189,8 @@ public class Events implements Listener {
     }
     @EventHandler
     public void onEntityTarget(EntityTargetEvent event){
+    	Config MainConfig = new Config(instance);
+    	CustomConfig data = MainConfig.data();
     	Entity target = event.getTarget();
     	Entity entity = event.getEntity();
     	EntityType type = entity.getType();
@@ -200,6 +205,8 @@ public class Events implements Listener {
     }
     @EventHandler
     public void onInteract(PlayerInteractEvent event){
+    	Config MainConfig = new Config(instance);
+    	CustomConfig data = MainConfig.data();
     	final Player player = event.getPlayer();
     	String name = player.getName().toString();
     	ItemStack item = player.getItemInHand();
@@ -250,6 +257,8 @@ public class Events implements Listener {
     	}
     }
     public void truce(String name){
+    	Config MainConfig = new Config(instance);
+    	CustomConfig data = MainConfig.data();
     	data.getConfig().set("Players." + name + ".Truce", true);
     	data.saveConfig();
     }

@@ -31,16 +31,14 @@ public class PlayerClass {
     String playerString;
     String playerName;
     private Main instance;
-    CustomConfig data;
-    CustomConfig config;
     public PlayerClass(Main instance) {
         this.instance = instance;
-    	Config MainConfig = new Config(instance);
-    	this.data = MainConfig.data();
-    	this.config = MainConfig.config();
     }
 
     void runClass() {
+    	Config MainConfig = new Config(instance);
+    	CustomConfig data = MainConfig.data();
+    	CustomConfig config = MainConfig.config();
     	for(final Player p : Bukkit.getOnlinePlayers()) {
     		playerName = p.getName();
             World world = p.getWorld();

@@ -32,14 +32,13 @@ import com.weeryan17.snp.Config.CustomConfig;
 
 public class MobCommand implements CommandExecutor {
     private Main instance;
-    CustomConfig data;
     Map<Entity, Integer> map = new HashMap<Entity, Integer>();
     public MobCommand(Main instance) {
         this.instance = instance;
-    	Config MainConfig = new Config(instance);
-    	this.data = MainConfig.data();
     }
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
+    	Config MainConfig = new Config(instance);
+    	CustomConfig data = MainConfig.data();
     	if(cmd.getName().equalsIgnoreCase("mob")){
     		String player = sender.getName().toString();
     		if(sender instanceof Player){

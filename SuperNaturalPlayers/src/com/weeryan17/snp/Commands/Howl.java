@@ -13,12 +13,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class Howl implements CommandExecutor {
-    CustomConfig data;
+	Main instance;
 	public Howl(Main instance){
-    	Config MainConfig = new Config(instance);
-    	this.data = MainConfig.data();
+		this.instance = instance;
 	}
     public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {
+    	Config MainConfig = new Config(instance);
+    	CustomConfig data = MainConfig.data();
         String player = sender.getName();
         if (cmd.getName().equalsIgnoreCase("howl") && data.getConfig().get("Players." + player + ".type").toString().equals("Werewolf")) {
             Player p = Bukkit.getServer().getPlayer(player);

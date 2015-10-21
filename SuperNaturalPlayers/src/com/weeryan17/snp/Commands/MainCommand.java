@@ -22,7 +22,6 @@ public class MainCommand implements CommandExecutor {
     public MainCommand(Main instance) {
         this.instance = instance;
     }
-    VampBatCommand vamp = new VampBatCommand(instance);
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
     	Config MainConfig = new Config(instance);
     	CustomConfig data = MainConfig.data();
@@ -70,7 +69,6 @@ public class MainCommand implements CommandExecutor {
                     data.getConfig().set("Players." + player + ".Clan", "none");
                     data.getConfig().set("Players." + player + ".TotalSouls", 0);
                     if(data.getConfig().getBoolean("Players." + player + ".Bat") == true){
-                    vamp.untrans(vamp.map(), p);
                     }
                     data.getConfig().set("Players." + player + ".type", race);
                 } else {

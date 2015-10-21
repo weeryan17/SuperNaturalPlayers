@@ -22,16 +22,13 @@ public class VampBlCommand implements CommandExecutor {
     int stop;
     int thing2;
     private Main instance;
-    CustomConfig data;
-    CustomConfig config;
     public VampBlCommand(Main instance) {
         this.instance = instance;
-    	Config MainConfig = new Config(instance);
-    	this.data = MainConfig.data();
-        this.config = MainConfig.config();
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    	Config MainConfig = new Config(this.instance);
+    	CustomConfig data = MainConfig.data();
         String playerName = sender.getName().toString();
     	Player p = Bukkit.getPlayer(playerName);
         if (sender instanceof Player) {
@@ -59,6 +56,9 @@ public class VampBlCommand implements CommandExecutor {
     }
 
     public void blood(final String sender, final Player p) {
+    	Config MainConfig = new Config(instance);
+    	CustomConfig data = MainConfig.data();
+    	CustomConfig config = MainConfig.config();
         double blood = data.getConfig().getDouble("Players." + sender + ".Blood");
         if (blood >= 0.1) {
         	int ticks = config.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)");
@@ -84,6 +84,9 @@ public class VampBlCommand implements CommandExecutor {
     }
 
     public void blood2(String sender, Player p) {
+    	Config MainConfig = new Config(instance);
+    	CustomConfig data = MainConfig.data();
+    	CustomConfig config = MainConfig.config();
         double blood = data.getConfig().getDouble("Players." + sender + ".Blood");
         if (blood >= 0.1) {
         	int ticks = config.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)");

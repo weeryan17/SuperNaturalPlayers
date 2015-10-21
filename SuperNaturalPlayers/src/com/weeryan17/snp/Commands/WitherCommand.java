@@ -23,17 +23,16 @@ import com.weeryan17.snp.Util.WitherStuff;
 public class WitherCommand implements CommandExecutor{
 	Map<Player, Integer> map = new HashMap<Player, Integer>();
 	private Main instance;
-    CustomConfig data;
     public WitherCommand(Main instance) {
         this.instance = instance;
-    	Config MainConfig = new Config(instance);
-    	this.data = MainConfig.data();
     }
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {
+    	Config MainConfig = new Config(instance);
+    	CustomConfig data = MainConfig.data();
+    	CustomConfig config = MainConfig.config();
 		if(cmd.getName().equalsIgnoreCase("wither")){
 			final String name = sender.getName().toString();
-			CustomConfig config = new CustomConfig(this.instance, "config");
 			if(sender instanceof Player && data.getConfig().get("Players." + name + ".type").toString().equals("Necromancer")){
 				if(data.getConfig().getBoolean("Players." + name + ".Truce") == true){
 				final Player player = Bukkit.getPlayer(name);
@@ -86,6 +85,8 @@ public class WitherCommand implements CommandExecutor{
 		return false;
 	}
 	public void WC(String name){
+    	Config MainConfig = new Config(instance);
+    	CustomConfig data = MainConfig.data();
 		data.getConfig().set("Player." + name + ".WC", false);
 		data.saveConfig();
 	}

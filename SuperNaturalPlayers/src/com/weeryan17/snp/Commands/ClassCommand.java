@@ -14,17 +14,17 @@ import com.weeryan17.snp.Config.Config;
 import com.weeryan17.snp.Config.CustomConfig;
 
 public class ClassCommand implements CommandExecutor {
-    CustomConfig data;
-    CustomConfig config;
+    Main instance;
 	public ClassCommand(Main instance){
-    	Config MainConfig = new Config(instance);
-    	this.data = MainConfig.data();
-    	this.config = MainConfig.config();
+		this.instance = instance;
 	}
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
     	if(sender instanceof Player){
     		if(cmd.getName().equalsIgnoreCase("class")){
     			String playerName = sender.getName().toString();
+    	    	Config MainConfig = new Config(instance);
+    	    	CustomConfig data = MainConfig.data();
+    	    	CustomConfig config = MainConfig.config();
     			Player player = Bukkit.getPlayer(playerName);
 				sender.sendMessage(ChatColor.BLUE + "==========================================");
 				sender.sendMessage(ChatColor.RED + "[Super natural players class info]");
