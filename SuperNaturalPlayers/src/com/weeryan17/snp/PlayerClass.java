@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.weeryan17.snp.Main;
+import com.weeryan17.snp.Config.Config;
 import com.weeryan17.snp.Config.CustomConfig;
 import com.weeryan17.snp.Util.EntityHider;
 import com.weeryan17.snp.Util.Sun;
@@ -34,9 +35,9 @@ public class PlayerClass {
     CustomConfig config;
     public PlayerClass(Main instance) {
         this.instance = instance;
-        this.data = new CustomConfig(instance, "data");
-        this.config = new CustomConfig(instance, "config");
-        this.wolves = new HashMap<Player, Wolf>();
+    	Config MainConfig = new Config(instance);
+    	this.data = MainConfig.data();
+    	this.config = MainConfig.config();
     }
 
     void runClass() {

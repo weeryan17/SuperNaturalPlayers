@@ -31,6 +31,7 @@ import org.bukkit.event.Listener;
 
 import com.weeryan17.snp.Main;
 import com.weeryan17.snp.Commands.VampBatCommand;
+import com.weeryan17.snp.Config.Config;
 import com.weeryan17.snp.Config.CustomConfig;
 
 public class Events implements Listener {
@@ -41,7 +42,8 @@ public class Events implements Listener {
     CustomConfig data;
     public Events(final Main instance) {
         this.instance = instance;
-        this.data = new CustomConfig(instance, "data");
+    	Config MainConfig = new Config(instance);
+    	this.data = MainConfig.data();
     }
     
     @EventHandler

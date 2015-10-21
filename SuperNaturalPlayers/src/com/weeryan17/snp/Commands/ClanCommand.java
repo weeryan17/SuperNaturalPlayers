@@ -15,14 +15,16 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import com.weeryan17.snp.Main;
+import com.weeryan17.snp.Config.Config;
 import com.weeryan17.snp.Config.CustomConfig;
 
 public class ClanCommand implements CommandExecutor {
     CustomConfig clans;
     CustomConfig data;
     public ClanCommand(Main instance) {
-        this.clans = new CustomConfig(instance, "clans");
-        this.data = new CustomConfig(instance, "data");
+    	Config MainConfig = new Config(instance);
+    	this.data = MainConfig.data();
+    	this.clans = MainConfig.clans();
     }
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {

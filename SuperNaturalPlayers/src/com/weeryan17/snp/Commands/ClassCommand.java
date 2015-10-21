@@ -10,14 +10,16 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.weeryan17.snp.Main;
+import com.weeryan17.snp.Config.Config;
 import com.weeryan17.snp.Config.CustomConfig;
 
 public class ClassCommand implements CommandExecutor {
     CustomConfig data;
     CustomConfig config;
 	public ClassCommand(Main instance){
-        this.data = new CustomConfig(instance, "data");
-        this.config = new CustomConfig(instance, "config");
+    	Config MainConfig = new Config(instance);
+    	this.data = MainConfig.data();
+    	this.config = MainConfig.config();
 	}
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
     	if(sender instanceof Player){

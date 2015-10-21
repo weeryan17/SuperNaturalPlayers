@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.weeryan17.snp.Main;
+import com.weeryan17.snp.Config.Config;
 import com.weeryan17.snp.Config.CustomConfig;
 
 import net.md_5.bungee.api.ChatColor;
@@ -25,8 +26,9 @@ public class VampBlCommand implements CommandExecutor {
     CustomConfig config;
     public VampBlCommand(Main instance) {
         this.instance = instance;
-        this.data = new CustomConfig(instance, "data");
-        this.config = new CustomConfig(instance, "config");
+    	Config MainConfig = new Config(instance);
+    	this.data = MainConfig.data();
+        this.config = MainConfig.config();
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

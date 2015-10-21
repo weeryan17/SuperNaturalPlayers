@@ -1,6 +1,7 @@
 package com.weeryan17.snp.Commands;
 
 import com.weeryan17.snp.Main;
+import com.weeryan17.snp.Config.Config;
 import com.weeryan17.snp.Config.CustomConfig;
 
 import net.md_5.bungee.api.ChatColor;
@@ -23,7 +24,8 @@ public class MainCommand implements CommandExecutor {
     }
     VampBatCommand vamp = new VampBatCommand(instance);
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        CustomConfig data = new CustomConfig(this.instance, "data");
+    	Config MainConfig = new Config(instance);
+    	CustomConfig data = MainConfig.data();
         if (cmd.getName().equalsIgnoreCase("snp") && 
         		sender.hasPermission("snp.command") || sender.isOp()) {
             Player p;

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.weeryan17.snp.Main;
+import com.weeryan17.snp.Config.Config;
 import com.weeryan17.snp.Config.CustomConfig;
 import com.weeryan17.snp.Util.BatTimer;
 
@@ -23,13 +24,16 @@ public class VampBatCommand implements CommandExecutor {
     Map<Player, Integer> map = new HashMap<Player, Integer>();
     Player player;
     private Main instance;
+    CustomConfig data;
+    CustomConfig config;
     public VampBatCommand(Main instance) {
         this.instance = instance;
+    	Config MainConfig = new Config(instance);
+    	this.data = MainConfig.data();
+    	this.config = MainConfig.config();
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        CustomConfig data = new CustomConfig(this.instance, "data");
-        CustomConfig config = new CustomConfig(this.instance, "config");
         String playerRaw = sender.getName().toString();
         player = Bukkit.getServer().getPlayer(playerRaw);
         if (sender instanceof Player && data.getConfig().get("Players." + playerRaw + ".type").toString().equals("Vampire")) {

@@ -15,6 +15,7 @@ import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Skeleton.SkeletonType;
 
 import com.weeryan17.snp.Main;
+import com.weeryan17.snp.Config.Config;
 import com.weeryan17.snp.Config.CustomConfig;
 import com.weeryan17.snp.Util.EntityHider;
 import com.weeryan17.snp.Util.WitherStuff;
@@ -25,7 +26,8 @@ public class WitherCommand implements CommandExecutor{
     CustomConfig data;
     public WitherCommand(Main instance) {
         this.instance = instance;
-        this.data = new CustomConfig(instance, "data");
+    	Config MainConfig = new Config(instance);
+    	this.data = MainConfig.data();
     }
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {

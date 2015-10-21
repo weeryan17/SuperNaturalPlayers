@@ -27,6 +27,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.weeryan17.snp.Main;
+import com.weeryan17.snp.Config.Config;
 import com.weeryan17.snp.Config.CustomConfig;
 
 public class MobCommand implements CommandExecutor {
@@ -35,7 +36,8 @@ public class MobCommand implements CommandExecutor {
     Map<Entity, Integer> map = new HashMap<Entity, Integer>();
     public MobCommand(Main instance) {
         this.instance = instance;
-        this.data = new CustomConfig(instance, "data");
+    	Config MainConfig = new Config(instance);
+    	this.data = MainConfig.data();
     }
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
     	if(cmd.getName().equalsIgnoreCase("mob")){

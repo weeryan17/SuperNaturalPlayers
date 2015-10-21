@@ -1,6 +1,7 @@
 package com.weeryan17.snp.Commands;
 
 import com.weeryan17.snp.Main;
+import com.weeryan17.snp.Config.Config;
 import com.weeryan17.snp.Config.CustomConfig;
 
 import org.bukkit.Bukkit;
@@ -14,7 +15,8 @@ import org.bukkit.entity.Player;
 public class Howl implements CommandExecutor {
     CustomConfig data;
 	public Howl(Main instance){
-        this.data = new CustomConfig(instance, "data");
+    	Config MainConfig = new Config(instance);
+    	this.data = MainConfig.data();
 	}
     public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {
         String player = sender.getName();
