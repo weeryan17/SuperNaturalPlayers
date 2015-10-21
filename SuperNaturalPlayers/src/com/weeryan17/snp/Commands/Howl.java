@@ -1,7 +1,7 @@
 package com.weeryan17.snp.Commands;
 
 import com.weeryan17.snp.Main;
-import com.weeryan17.snp.Util.CustomConfig;
+import com.weeryan17.snp.Config.CustomConfig;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

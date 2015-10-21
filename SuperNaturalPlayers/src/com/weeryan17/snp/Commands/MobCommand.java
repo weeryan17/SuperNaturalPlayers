@@ -27,7 +27,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.weeryan17.snp.Main;
-import com.weeryan17.snp.Util.CustomConfig;
+import com.weeryan17.snp.Config.CustomConfig;
 
 public class MobCommand implements CommandExecutor {
     private Main instance;

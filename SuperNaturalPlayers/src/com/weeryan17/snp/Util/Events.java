@@ -31,6 +31,7 @@ import org.bukkit.event.Listener;
 
 import com.weeryan17.snp.Main;
 import com.weeryan17.snp.Commands.VampBatCommand;
+import com.weeryan17.snp.Config.CustomConfig;
 
 public class Events implements Listener {
     private Main instance;

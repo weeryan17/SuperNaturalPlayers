@@ -15,7 +15,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import com.weeryan17.snp.Main;
-import com.weeryan17.snp.Util.CustomConfig;
+import com.weeryan17.snp.Config.CustomConfig;
 
 public class ClanCommand implements CommandExecutor {
     CustomConfig clans;

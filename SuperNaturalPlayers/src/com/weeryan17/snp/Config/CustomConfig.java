@@ -1,4 +1,4 @@
-package com.weeryan17.snp.Util;
+package com.weeryan17.snp.Config;
 
 import java.io.File;
 import java.io.IOException;

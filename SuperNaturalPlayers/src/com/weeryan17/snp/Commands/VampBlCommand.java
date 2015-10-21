@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.weeryan17.snp.Main;
-import com.weeryan17.snp.Util.CustomConfig;
+import com.weeryan17.snp.Config.CustomConfig;
 
 import net.md_5.bungee.api.ChatColor;
 

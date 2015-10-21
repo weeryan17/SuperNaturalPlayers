@@ -15,7 +15,7 @@ import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Skeleton.SkeletonType;
 
 import com.weeryan17.snp.Main;
-import com.weeryan17.snp.Util.CustomConfig;
+import com.weeryan17.snp.Config.CustomConfig;
 import com.weeryan17.snp.Util.EntityHider;
 import com.weeryan17.snp.Util.WitherStuff;
 

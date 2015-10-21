@@ -10,7 +10,7 @@ import com.weeryan17.snp.Commands.MobCommand;
 import com.weeryan17.snp.Commands.VampBatCommand;
 import com.weeryan17.snp.Commands.VampBlCommand;
 import com.weeryan17.snp.Commands.WitherCommand;
-import com.weeryan17.snp.Util.CustomConfig;
+import com.weeryan17.snp.Config.CustomConfig;
 import com.weeryan17.snp.Util.Events;
 import com.weeryan17.snp.PlayerClass;
 
