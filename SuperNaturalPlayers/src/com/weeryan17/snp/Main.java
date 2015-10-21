@@ -10,6 +10,7 @@ import com.weeryan17.snp.Commands.MobCommand;
 import com.weeryan17.snp.Commands.VampBatCommand;
 import com.weeryan17.snp.Commands.VampBlCommand;
 import com.weeryan17.snp.Commands.WitherCommand;
+import com.weeryan17.snp.Config.Config;
 import com.weeryan17.snp.Config.CustomConfig;
 import com.weeryan17.snp.Util.Events;
 import com.weeryan17.snp.PlayerClass;
@@ -44,9 +45,10 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         this.protocolManager = ProtocolLibrary.getProtocolManager();
         this.Timer();
         plugin = this;
-        CustomConfig clans = new CustomConfig(plugin, "clans");
-        CustomConfig config = new CustomConfig(plugin, "config");
         ClanCommand exec8 = new ClanCommand(plugin);
+        Config MainConfig = new Config(plugin);
+        CustomConfig config = MainConfig.config();
+        CustomConfig clans = MainConfig.clans();
         MobCommand exec6 = new MobCommand(plugin);
         WitherCommand exec7 = new WitherCommand(plugin);
         VampBlCommand exec2 = new VampBlCommand(plugin);
@@ -99,7 +101,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
     }
 
     public void Timer() {
-        CustomConfig config = new CustomConfig(this, "config");
+    	Config MainConfig = new Config(plugin);
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
 
             @Override
@@ -107,11 +109,11 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
                 PlayerClass playerClass = new PlayerClass(plugin);
                 playerClass.runClass();
             }
-        }, 0, config.getConfig().getInt("General." + "Timings" + ".Player Cheaker(ticks)"));
+        }, 0, MainConfig.config().getConfig().getInt("General." + "Timings" + ".Player Cheaker(ticks)"));
     }
 
     public void Timer2(final Player player, final Wolf wolf) {
-        CustomConfig config = new CustomConfig(this, "config");
+    	Config MainConfig = new Config(plugin);
         stop = Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)this, new Runnable(){
 
             @Override
@@ -119,12 +121,13 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
                 PlayerClass playerClass = new PlayerClass(plugin);
                 playerClass.run2(player, wolf);
             }
-        }, 0, config.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
+        }, 0, MainConfig.config().getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
     }
 
     public void onDisable() {
-        CustomConfig data = new CustomConfig(this, "data");
-        CustomConfig clans = new CustomConfig(this, "clans");
+    	Config MainConfig = new Config(plugin);
+        CustomConfig data = MainConfig.data();
+        CustomConfig clans = MainConfig.clans();
     	for(Player pl : Bukkit.getOnlinePlayers()){
     		String name = pl.getName().toString();
     	data.getConfig().set("Players." + name + ".WC", false);
