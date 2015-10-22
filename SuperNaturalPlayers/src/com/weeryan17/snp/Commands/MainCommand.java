@@ -55,7 +55,7 @@ public class MainCommand implements CommandExecutor {
             if (args.length == 3 && args[0].equals("toggle")) {
                 player = args[1];
                 race = args[2];
-                if (args[2].equals("Demon") || args[2].equals("Werewolf") || args[2].equals("Vampire") || args[2].equals("Angel") || args[2].equals("Necromancer") || args[2].equals("Human")) {
+                if (args[2].equalsIgnoreCase("Demon") || args[2].equalsIgnoreCase("Werewolf") || args[2].equalsIgnoreCase("Vampire") || args[2].equalsIgnoreCase("Angel") || args[2].equalsIgnoreCase("Necromancer") || args[2].equalsIgnoreCase("Human")) {
                     sender.sendMessage("You turned " + player + " into a(n) " + race);
                     p = Bukkit.getServer().getPlayer(this.player);
                     p.sendMessage("You are now a(n) " + race);
@@ -75,7 +75,7 @@ public class MainCommand implements CommandExecutor {
                     sender.sendMessage("not a valid race");
                 }
             }
-            if (args.length == 3 && args[0].equals("item") && args[2].equals("BloodPot")) {
+            if (args.length == 3 && args[0].equals("item") && args[2].equalsIgnoreCase("BloodPot")) {
                 p = Bukkit.getServer().getPlayer(args[1]);
                 ItemStack item = new ItemStack(Material.POTION);
                 ItemMeta meta = item.getItemMeta();
@@ -85,7 +85,7 @@ public class MainCommand implements CommandExecutor {
                 Main.addLore(item, ChatColor.YELLOW + "Only useable as a Vampire");
                 p.getInventory().addItem(new ItemStack[]{item});
             }
-            if(args.length == 3 && args[0].equals("item") && args[2].equals("Soulstone")){
+            if(args.length == 3 && args[0].equals("item") && args[2].equalsIgnoreCase("Soulstone")){
             	p = Bukkit.getServer().getPlayer(args[1]);
             	ItemStack item = new ItemStack(Material.CLAY_BALL);
             	ItemMeta meta = item.getItemMeta();
@@ -95,7 +95,7 @@ public class MainCommand implements CommandExecutor {
             	Main.addLore(item, ChatColor.DARK_GRAY + "only useable by necromancers");
             	p.getInventory().addItem(new ItemStack[]{item});
             }
-            if(args.length == 3 && args[0].equals("item") && args[2].equals("Tools")){
+            if(args.length == 3 && args[0].equals("item") && args[2].equalsIgnoreCase("Tools")){
             	p = Bukkit.getServer().getPlayer(args[1]);
             	ItemStack item = new ItemStack(Material.CHEST);
             	ItemMeta meta = item.getItemMeta();
@@ -107,12 +107,12 @@ public class MainCommand implements CommandExecutor {
             if (args.length == 4 && args[0].equals("give")){
             	Player player = Bukkit.getPlayer(args[1]);
         		String name = player.getName();
-            	if(args[2].equals("Blood")){
+            	if(args[2].equalsIgnoreCase("Blood")){
             		double blood = data.getConfig().getDouble("Players." + name + ".Blood");
             		double addedBlood = Double.parseDouble(args[3]);
             		blood = blood + addedBlood;
             		data.getConfig().set("Players." + name + ".Blood", blood);
-            	} else if(args[2].equals("Souls")){
+            	} else if(args[2].equalsIgnoreCase("Souls")){
             		int souls = data.getConfig().getInt("Players." + name + ".Souls");
             		int addedSouls = Integer.parseInt(args[3]);
             		souls = souls + addedSouls;

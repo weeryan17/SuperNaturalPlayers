@@ -39,7 +39,7 @@ public class ClanCommand implements CommandExecutor {
 				sender.sendMessage(ChatColor.YELLOW + "   if you have the permision or you're op you can force another person to join the clan wether open or closed");
 				sender.sendMessage(ChatColor.YELLOW + "/clan create <name>");
 				sender.sendMessage(ChatColor.YELLOW + "   creates a new clan with the specifyed name");
-				sender.sendMessage(ChatColor.YELLOW + "/clan options");
+				sender.sendMessage(ChatColor.YELLOW + "/clan opntions");
 				sender.sendMessage(ChatColor.YELLOW + "   brings up the clan options that you can set if you made the clan");
 			} else {
 			if(sender instanceof Player){
