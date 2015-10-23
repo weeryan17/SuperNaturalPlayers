@@ -95,6 +95,7 @@ public class Events implements Listener {
         		}, 6000);
         	}
         }
+        data.saveConfig();
     }
     
 	@EventHandler
@@ -114,6 +115,7 @@ public class Events implements Listener {
             if(data.getConfig().get("Players." + player + ".type").toString().equals("Demon")){
             	
             }
+            data.saveConfig();
         }
     }
     
@@ -247,6 +249,7 @@ public class Events implements Listener {
         	}
         }
     }
+        	data.saveConfig();
         }
     }
     public void onExplode(EntityExplodeEvent event){

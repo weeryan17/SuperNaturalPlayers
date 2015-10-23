@@ -44,7 +44,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
     public void onEnable() {
         this.protocolManager = ProtocolLibrary.getProtocolManager();
         plugin = this;
-        this.Timer(plugin);
+        this.Timer();
         ClanCommand exec8 = new ClanCommand(plugin);
         Config MainConfig = new Config(plugin);
         CustomConfig config = MainConfig.config();
@@ -100,7 +100,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         this.getLogger().info("Super Natural Players plugin enabled");
     }
 
-    public void Timer(final Main plugin) {
+    public void Timer() {
     	Config MainConfig = new Config(plugin);
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
 
