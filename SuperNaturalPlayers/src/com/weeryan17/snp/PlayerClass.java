@@ -25,7 +25,6 @@ import org.bukkit.potion.PotionEffectType;
 
 public class PlayerClass {
 	Map<Player, Integer> map = new HashMap<Player, Integer>();
-	Map<Player, Wolf> wolves;
     public int stop;
     Player p;
     String playerString;
@@ -78,7 +77,7 @@ public class PlayerClass {
                     pl.playSound(loc, Sound.WOLF_HOWL, 1.0f, 0.0f);
                     pl.hidePlayer(p);
             	}
-            	stop = Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)this, new Runnable(){
+            	stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new Runnable(){
 
                     @Override
                     public void run() {
@@ -86,7 +85,6 @@ public class PlayerClass {
                     }
                 }, 0, config.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
             	map.put(p, stop);
-            	wolves.put(p, wolf);
                 data.getConfig().set("Players." + playerName + ".Wolf", true);
         			data.saveConfig();
             }
@@ -97,7 +95,6 @@ public class PlayerClass {
             	for(Player pl : Bukkit.getOnlinePlayers()) {
             		pl.showPlayer(p);
             	}
-            	wolves.get(p).remove();
                 data.getConfig().set("Players." + playerName + ".Wolf", false);
         			data.saveConfig();
             Bukkit.getScheduler().cancelTask(map.get(p));

@@ -32,7 +32,6 @@ import org.bukkit.entity.Wolf;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin implements Listener, CommandExecutor {
@@ -44,7 +43,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
     public void onEnable() {
         this.protocolManager = ProtocolLibrary.getProtocolManager();
         plugin = this;
-        this.Timer();
+        this.Timer(plugin);
         ClanCommand exec8 = new ClanCommand(plugin);
         Config MainConfig = new Config(plugin);
         CustomConfig config = MainConfig.config();
@@ -100,13 +99,13 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         this.getLogger().info("Super Natural Players plugin enabled");
     }
 
-    public void Timer() {
+    public void Timer(final Main plugin) {
     	Config MainConfig = new Config(plugin);
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
-
-            @Override
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
+			
+			@Override
             public void run() {
-                PlayerClass playerClass = new PlayerClass(plugin);
+		        PlayerClass playerClass = new PlayerClass(plugin);
                 playerClass.runClass();
             }
         }, 0, MainConfig.config().getConfig().getInt("General." + "Timings" + ".Player Cheaker(ticks)"));
@@ -114,7 +113,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
 
     public void Timer2(final Player player, final Wolf wolf) {
     	Config MainConfig = new Config(plugin);
-        stop = Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)this, new Runnable(){
+        stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
 
             @Override
             public void run() {
