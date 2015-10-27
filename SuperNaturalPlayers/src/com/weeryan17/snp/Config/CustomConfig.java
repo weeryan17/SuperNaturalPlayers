@@ -15,7 +15,9 @@ public class CustomConfig {
     private final Plugin pl;
     private final String name;
     private final File file;
+    private final File api;
     private FileConfiguration fileConfig;
+    private FileConfiguration fileAPIConfig;
 
 /**
  * @author Giovanni N. | Hurricanes
@@ -25,6 +27,7 @@ public class CustomConfig {
         this.pl = pl;
         this.name = name;
         this.file = new File(pl.getDataFolder(), name + (name.contains(".yml") ? "" : ".yml"));
+        this.api = new File(pl.getDataFolder() + "/api", name + (name.contains(".yml") ? "" : ".yml"));
     }
 
     public FileConfiguration getConfig() {
@@ -32,6 +35,12 @@ public class CustomConfig {
             this.reloadConfig();
         }
         return this.fileConfig;
+    }
+    public FileConfiguration getAPIConfig(){
+    	if(this.fileAPIConfig == null){
+    		this.reloadAPIConfig();
+    	}
+    	return this.fileAPIConfig;
     }
 
     private void reloadConfig() {
@@ -41,6 +50,16 @@ public class CustomConfig {
             @SuppressWarnings({ "deprecation"})
             final YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
             this.fileConfig.setDefaults((Configuration) defConfig);
+        }
+    }
+    
+    private void reloadAPIConfig(){
+    	this.fileAPIConfig = (FileConfiguration) YamlConfiguration.loadConfiguration(this.api);
+    	final InputStream defConfigStream = this.pl.getResource(this.name + ".yml");
+        if (defConfigStream != null) {
+            @SuppressWarnings({ "deprecation"})
+            final YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+            this.fileAPIConfig.setDefaults((Configuration) defConfig);
         }
     }
 

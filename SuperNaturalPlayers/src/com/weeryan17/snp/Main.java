@@ -46,6 +46,8 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
     ProtocolManager protocolManager;
     public static int stop;
     public static Main plugin;
+    ArrayList<String> clan = new ArrayList<String>();
+    ArrayList<String> element = new ArrayList<String>();
     String type;
     String player;
 	@Override
@@ -54,9 +56,9 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
     	File protocolLib = new File("plugins/ProtocolLib.jar");
     	Plugin protocol = getServer().getPluginManager().getPlugin("ProtocolLib");
     	if(protocol == null){
-    		plugin.getLogger().info("Protocollib not detected instaling it");
+    		plugin.getLogger().info("ProtocolLib not detected instaling it");
 				try {
-					URL url = new URL("https://www.spigotmc.org/resources/protocollib.1997/download?version=33748");
+					URL url = new URL("http://dev.bukkit.org/media/files/888/760/ProtocolLib.jar");
 					FileUtils.copyURLToFile(url, protocolLib);
 					getServer().getPluginManager().loadPlugin(protocolLib);
 				} catch (IOException e) {
@@ -79,6 +81,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         Config MainConfig = new Config(plugin);
         CustomConfig config = MainConfig.config();
         CustomConfig clans = MainConfig.clans();
+        CustomConfig api = new CustomConfig(plugin, "api");
         MobCommand exec6 = new MobCommand(plugin);
         WitherCommand exec7 = new WitherCommand(plugin);
         VampBlCommand exec2 = new VampBlCommand(plugin);
@@ -95,6 +98,11 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         this.getCommand("howl").setExecutor(exec4);
         this.getCommand("mob").setExecutor(exec6);
         Bukkit.getServer().getPluginManager().registerEvents(event, this);
+        if(!api.getAPIConfig().contains("Lists.")){
+        	this.getLogger().info("Api info not found making it");
+        	api.getAPIConfig().set("List." + ".Clans", clan);
+        	api.getAPIConfig().set("Lists." + ".Elements", element);
+        }
         if(!config.getConfig().contains("General.")){
         	this.getLogger().info("General info not found creating it");
         	config.getConfig().set("General." + "Clans" + ".Enabled", false);
