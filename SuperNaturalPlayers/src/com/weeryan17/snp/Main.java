@@ -15,6 +15,9 @@ import com.weeryan17.snp.Config.CustomConfig;
 import com.weeryan17.snp.Util.Events;
 import com.weeryan17.snp.PlayerClass;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,6 +25,7 @@ import java.util.logging.Level;
 
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 
+import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
@@ -32,6 +36,10 @@ import org.bukkit.entity.Wolf;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.InvalidDescriptionException;
+import org.bukkit.plugin.InvalidPluginException;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.UnknownDependencyException;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin implements Listener, CommandExecutor {
@@ -40,9 +48,32 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
     public static Main plugin;
     String type;
     String player;
-    public void onEnable() {
-        this.protocolManager = ProtocolLibrary.getProtocolManager();
+	@Override
+	public void onEnable() {
         plugin = this;
+    	File protocolLib = new File("plugins/ProtocolLib.jar");
+    	Plugin protocol = getServer().getPluginManager().getPlugin("ProtocolLib");
+    	if(protocol == null){
+    		plugin.getLogger().info("Protocollib not detected instaling it");
+				try {
+					URL url = new URL("https://www.spigotmc.org/resources/protocollib.1997/download?version=33748");
+					FileUtils.copyURLToFile(url, protocolLib);
+					getServer().getPluginManager().loadPlugin(protocolLib);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (UnknownDependencyException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvalidPluginException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvalidDescriptionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+    	}
+        this.protocolManager = ProtocolLibrary.getProtocolManager();
         this.Timer(plugin);
         ClanCommand exec8 = new ClanCommand(plugin);
         Config MainConfig = new Config(plugin);

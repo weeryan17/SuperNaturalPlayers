@@ -55,7 +55,7 @@ public class MainCommand implements CommandExecutor {
             if (args.length == 3 && args[0].equals("toggle")) {
                 player = args[1];
                 race = args[2];
-                if (args[2].equalsIgnoreCase("Demon") || args[2].equalsIgnoreCase("Werewolf") || args[2].equalsIgnoreCase("Vampire") || args[2].equalsIgnoreCase("Angel") || args[2].equalsIgnoreCase("Necromancer") || args[2].equalsIgnoreCase("Human")) {
+                if (args[2].equals("Demon") || args[2].equals("Werewolf") || args[2].equals("Vampire") || args[2].equals("Angel") || args[2].equals("Necromancer") || args[2].equals("Human")) {
                     sender.sendMessage("You turned " + player + " into a(n) " + race);
                     p = Bukkit.getServer().getPlayer(this.player);
                     p.sendMessage("You are now a(n) " + race);
