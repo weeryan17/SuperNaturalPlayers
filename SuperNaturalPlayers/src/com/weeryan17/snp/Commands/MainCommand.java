@@ -6,6 +6,8 @@ import com.weeryan17.snp.Config.CustomConfig;
 
 import net.md_5.bungee.api.ChatColor;
 
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -22,9 +24,11 @@ public class MainCommand implements CommandExecutor {
     public MainCommand(Main instance) {
         this.instance = instance;
     }
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    @SuppressWarnings("unchecked")
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
     	Config MainConfig = new Config(instance);
     	CustomConfig data = MainConfig.data();
+    	CustomConfig api = new CustomConfig(instance, "api");
         if (cmd.getName().equalsIgnoreCase("snp") && 
         		sender.hasPermission("snp.command") || sender.isOp()) {
             Player p;
@@ -40,6 +44,8 @@ public class MainCommand implements CommandExecutor {
                     sender.sendMessage(ChatColor.YELLOW + "/snp toggle <player> <race>");
                     sender.sendMessage(ChatColor.YELLOW + "Races:");
                     sender.sendMessage(ChatColor.YELLOW + "Demon, Werewolf, Vampire, Angel, and Necromancer");
+                    sender.sendMessage(ChatColor.YELLOW + "Races from addons:");
+                    sender.sendMessage(ChatColor.YELLOW + api.getAPIConfig().get("List." + ".Clans").toString());
                 } else if (args[0].equals("item")) {
                     sender.sendMessage(ChatColor.RED + "[SNP Help]");
                     sender.sendMessage(ChatColor.YELLOW + "/snp item <player> <item>");
@@ -55,7 +61,8 @@ public class MainCommand implements CommandExecutor {
             if (args.length == 3 && args[0].equals("toggle")) {
                 player = args[1];
                 race = args[2];
-                if (args[2].equals("Demon") || args[2].equals("Werewolf") || args[2].equals("Vampire") || args[2].equals("Angel") || args[2].equals("Necromancer") || args[2].equals("Human")) {
+        		ArrayList<String> clan = (ArrayList<String>) api.getAPIConfig().get("List." + ".Clans");
+                if (args[2].equals("Demon") || args[2].equals("Werewolf") || args[2].equals("Vampire") || args[2].equals("Angel") || args[2].equals("Necromancer") || args[2].equals("Human") || clan.contains(args[2])) {
                     sender.sendMessage("You turned " + player + " into a(n) " + race);
                     p = Bukkit.getServer().getPlayer(this.player);
                     p.sendMessage("You are now a(n) " + race);

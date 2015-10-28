@@ -64,16 +64,12 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
 					plugin.getLogger().info("ProtocolLib instaled please restart the server to get the plugin to work");
 					getServer().getPluginManager().disablePlugin(this);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (UnknownDependencyException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (InvalidPluginException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (InvalidDescriptionException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
     	}
@@ -141,24 +137,24 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
     }
 
     public void Timer(final Main plugin) {
+        final PlayerClass playerClass = new PlayerClass(plugin);
     	Config MainConfig = new Config(plugin);
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
 			
 			@Override
             public void run() {
-		        PlayerClass playerClass = new PlayerClass(plugin);
                 playerClass.runClass();
             }
         }, 0, MainConfig.config().getConfig().getInt("General." + "Timings" + ".Player Cheaker(ticks)"));
     }
 
     public void Timer2(final Player player, final Wolf wolf) {
+        final PlayerClass playerClass = new PlayerClass(plugin);
     	Config MainConfig = new Config(plugin);
         stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
 
             @Override
             public void run() {
-                PlayerClass playerClass = new PlayerClass(plugin);
                 playerClass.run2(player, wolf);
             }
         }, 0, MainConfig.config().getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
