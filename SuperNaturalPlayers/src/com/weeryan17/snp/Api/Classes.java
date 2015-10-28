@@ -19,7 +19,7 @@ public class Classes {
 		clan = (ArrayList<String>) api.getAPIConfig().get("List." + ".Clans");
 		clan.add(name);
 	}
-	public void AddElemnt(String name){
+	public void AddElemnt(String name, String race){
 		
 	}
 }

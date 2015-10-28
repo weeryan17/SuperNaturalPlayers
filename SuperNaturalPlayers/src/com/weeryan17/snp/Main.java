@@ -61,6 +61,8 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
 					URL url = new URL("http://dev.bukkit.org/media/files/888/760/ProtocolLib.jar");
 					FileUtils.copyURLToFile(url, protocolLib);
 					getServer().getPluginManager().loadPlugin(protocolLib);
+					plugin.getLogger().info("ProtocolLib instaled please restart the server to get the plugin to work");
+					getServer().getPluginManager().disablePlugin(this);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
