@@ -28,6 +28,8 @@ import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -76,10 +78,6 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         this.protocolManager = ProtocolLibrary.getProtocolManager();
         this.Timer(plugin);
         ClanCommand exec8 = new ClanCommand(plugin);
-        Config MainConfig = new Config(plugin);
-        CustomConfig config = MainConfig.config();
-        CustomConfig clans = MainConfig.clans();
-        CustomConfig api = new CustomConfig(plugin, "api");
         MobCommand exec6 = new MobCommand(plugin);
         WitherCommand exec7 = new WitherCommand(plugin);
         VampBlCommand exec2 = new VampBlCommand(plugin);
@@ -96,43 +94,38 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         this.getCommand("howl").setExecutor(exec4);
         this.getCommand("mob").setExecutor(exec6);
         Bukkit.getServer().getPluginManager().registerEvents(event, this);
-        if(!api.getAPIConfig().contains("Lists.")){
-        	this.getLogger().info("Api info not found making it");
-        	api.getAPIConfig().set("List." + ".Clans", clan);
-        	api.getAPIConfig().set("Lists." + ".Elements", element);
-        }
-        if(!config.getConfig().contains("General.")){
+        if(!this.getConfigConfig().contains("General.")){
         	this.getLogger().info("General info not found creating it");
-        	config.getConfig().set("General." + "Clans" + ".Enabled", false);
-        	config.getConfig().set("General." + "Timings" + ".Player Cheaker(ticks)", 10);
-        	config.getConfig().set("General." + "Timings" + ".Entity Discusier Teloporting(ticks)", 10);
+        	this.getConfigConfig().set("General." + "Clans" + ".Enabled", false);
+        	this.getConfigConfig().set("General." + "Timings" + ".Player Cheaker(ticks)", 10);
+        	this.getConfigConfig().set("General." + "Timings" + ".Entity Discusier Teloporting(ticks)", 10);
         }
-        if(config.getConfig().getBoolean("General." + "Clans" + ".Enabled") == true){
+        if(this.getConfigConfig().getBoolean("General." + "Clans" + ".Enabled") == true){
         	this.getCommand("clan").setExecutor(exec8);
-        if(!clans.getConfig().contains("Clans.")){
+        if(!this.getClansConfig().contains("Clans.")){
         	this.getLogger().info("Clan info not found adding clan info and default clans");
-        	clans.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Open" , true);
-        	clans.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Owner" , "Server");
-        	clans.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Open" , true);
-        	clans.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Owner" , "Server");
-        	clans.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Open" , true);
-        	clans.getConfig().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Owner" , "Server");
-        	clans.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Open" , true);
-        	clans.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Owner" , "Server");
-        	clans.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Open" , true);
-        	clans.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Owner" , "Server");
-        	clans.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Open" , true);
-        	clans.getConfig().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Owner" , "Server");
-        	clans.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Open" , true);
-        	clans.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Owner" , "Server");
-        	clans.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Open" , true);
-        	clans.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Owner" , "Server");
-        	clans.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Open" , true);
-        	clans.getConfig().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Owner" , "Server");
+        	this.getClansConfig().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Open" , true);
+        	this.getClansConfig().set("Clans." + "Necromancer" + ".Clans" + ".Noximperius" + ".Owner" , "Server");
+        	this.getClansConfig().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Open" , true);
+        	this.getClansConfig().set("Clans." + "Necromancer" + ".Clans" + ".Witherheart" + ".Owner" , "Server");
+        	this.getClansConfig().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Open" , true);
+        	this.getClansConfig().set("Clans." + "Necromancer" + ".Clans" + ".Deathskull" + ".Owner" , "Server");
+        	this.getClansConfig().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Open" , true);
+        	this.getClansConfig().set("Clans." + "Werewolf" + ".Clans" + ".Darkclaw" + ".Owner" , "Server");
+        	this.getClansConfig().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Open" , true);
+        	this.getClansConfig().set("Clans." + "Werewolf" + ".Clans" + ".Silverclaw" + ".Owner" , "Server");
+        	this.getClansConfig().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Open" , true);
+        	this.getClansConfig().set("Clans." + "Werewolf" + ".Clans" + ".Bloodvenom" + ".Owner" , "Server");
+        	this.getClansConfig().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Open" , true);
+        	this.getClansConfig().set("Clans." + "Vampire" + ".Clans" + ".Nightwing" + ".Owner" , "Server");
+        	this.getClansConfig().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Open" , true);
+        	this.getClansConfig().set("Clans." + "Vampire" + ".Clans" + ".Ashborn" + ".Owner" , "Server");
+        	this.getClansConfig().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Open" , true);
+        	this.getClansConfig().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Owner" , "Server");
         }
         }
-        clans.saveConfig();
-        config.saveConfig();
+        this.saveConfigConfig();
+        this.saveClansConfig();
         this.getLogger().info("Super Natural Players plugin enabled");
     }
 
@@ -232,4 +225,47 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
 	   public static String removeCharAt(String s, int pos) {
 		      return s.substring(0, pos) + s.substring(pos + 1);
 		   }
+	   private FileConfiguration getConfig(String name){
+		   File file = new File(this.getDataFolder(), name + (name.contains(".yml") ? "" : ".yml"));
+		   FileConfiguration fileConfig = (FileConfiguration) YamlConfiguration.loadConfiguration(file);
+		return fileConfig;
+	       
+	   }
+	   public void saveConfigConfig(){
+		   File file = new File(this.getDataFolder(), "config.yml");
+		   try {
+			this.getConfigConfig().save(file);
+		} catch (IOException e) {
+			this.getLogger().log(Level.WARNING, "Couldn''t save config.yml");
+		}
+	   }
+	   public void saveDataConfig(){
+		   File file = new File(this.getDataFolder(), "data.yml");
+		   try {
+			this.getConfigConfig().save(file);
+		} catch (IOException e) {
+			this.getLogger().log(Level.WARNING, "Couldn''t save data.yml");
+		}
+	   }
+	   public void saveClansConfig(){
+		   File file = new File(this.getDataFolder(), "clans.yml");
+		   try {
+			this.getConfigConfig().save(file);
+		} catch (IOException e) {
+			this.getLogger().log(Level.WARNING, "Couldn''t save clans.yml");
+		}
+	   }
+	   public FileConfiguration getConfigConfig(){
+		   FileConfiguration config = getConfig("config");
+		return config;
+	   }
+	   public FileConfiguration getDataConfig(){
+		   FileConfiguration config = getConfig("data");
+			return config;
+	   }
+	   public FileConfiguration getClansConfig(){
+		   FileConfiguration config = getConfig("clans");
+			return config;
+	   }
+	   
 }
