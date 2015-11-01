@@ -17,6 +17,7 @@ import com.weeryan17.snp.PlayerClass;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
@@ -94,13 +96,13 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         this.getCommand("howl").setExecutor(exec4);
         this.getCommand("mob").setExecutor(exec6);
         Bukkit.getServer().getPluginManager().registerEvents(event, this);
-        if(!this.getConfigConfig().contains("General.")){
+        if(!this.getConfig().contains("General.")){
         	this.getLogger().info("General info not found creating it");
-        	this.getConfigConfig().set("General." + "Clans" + ".Enabled", false);
-        	this.getConfigConfig().set("General." + "Timings" + ".Player Cheaker(ticks)", 10);
-        	this.getConfigConfig().set("General." + "Timings" + ".Entity Discusier Teloporting(ticks)", 10);
+        	this.getConfig().set("General." + "Clans" + ".Enabled", false);
+        	this.getConfig().set("General." + "Timings" + ".Player Cheaker(ticks)", 10);
+        	this.getConfig().set("General." + "Timings" + ".Entity Discusier Teloporting(ticks)", 10);
         }
-        if(this.getConfigConfig().getBoolean("General." + "Clans" + ".Enabled") == true){
+        if(this.getConfig().getBoolean("General." + "Clans" + ".Enabled") == true){
         	this.getCommand("clan").setExecutor(exec8);
         if(!this.getClansConfig().contains("Clans.")){
         	this.getLogger().info("Clan info not found adding clan info and default clans");
@@ -124,46 +126,41 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         	this.getClansConfig().set("Clans." + "Vampire" + ".Clans" + ".Darkblood" + ".Owner" , "Server");
         }
         }
-        this.saveConfigConfig();
+        this.saveConfig();
         this.saveClansConfig();
         this.getLogger().info("Super Natural Players plugin enabled");
     }
 
     public void Timer(final Main plugin) {
         final PlayerClass playerClass = new PlayerClass(plugin);
-    	Config MainConfig = new Config(plugin);
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
 			
 			@Override
             public void run() {
                 playerClass.runClass();
             }
-        }, 0, MainConfig.config().getConfig().getInt("General." + "Timings" + ".Player Cheaker(ticks)"));
+        }, 0, getConfig().getInt("General." + "Timings" + ".Player Cheaker(ticks)"));
     }
 
     public void Timer2(final Player player, final Wolf wolf) {
         final PlayerClass playerClass = new PlayerClass(plugin);
-    	Config MainConfig = new Config(plugin);
         stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
 
             @Override
             public void run() {
                 playerClass.run2(player, wolf);
             }
-        }, 0, MainConfig.config().getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
+        }, 0, getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
     }
 
     public void onDisable() {
-    	Config MainConfig = new Config(plugin);
-        CustomConfig data = MainConfig.data();
-        CustomConfig clans = MainConfig.clans();
     	for(Player pl : Bukkit.getOnlinePlayers()){
     		String name = pl.getName().toString();
-    	data.getConfig().set("Players." + name + ".WC", false);
-    	data.getConfig().set("Players." + name + ".Truce", true);
+    	this.getDataConfig().set("Players." + name + ".WC", false);
+    	this.getDataConfig().set("Players." + name + ".Truce", true);
     	}
-    	data.saveConfig();
-    	clans.saveConfig();
+    	this.saveDataConfig();
+    	this.saveClansConfig();
     	this.saveConfig();
         this.getLogger().info("Super Natural Players plugin disabled");
     }
@@ -225,47 +222,40 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
 	   public static String removeCharAt(String s, int pos) {
 		      return s.substring(0, pos) + s.substring(pos + 1);
 		   }
-	   private FileConfiguration getConfig(String name){
-		   File file = new File(this.getDataFolder(), name + (name.contains(".yml") ? "" : ".yml"));
-		   FileConfiguration fileConfig = (FileConfiguration) YamlConfiguration.loadConfiguration(file);
-		return fileConfig;
-	       
-	   }
-	   public void saveConfigConfig(){
-		   File file = new File(this.getDataFolder(), "config.yml");
-		   try {
-			this.getConfigConfig().save(file);
-		} catch (IOException e) {
-			this.getLogger().log(Level.WARNING, "Couldn''t save config.yml");
-		}
-	   }
-	   public void saveDataConfig(){
-		   File file = new File(this.getDataFolder(), "data.yml");
-		   try {
-			this.getConfigConfig().save(file);
-		} catch (IOException e) {
-			this.getLogger().log(Level.WARNING, "Couldn''t save data.yml");
-		}
-	   }
-	   public void saveClansConfig(){
-		   File file = new File(this.getDataFolder(), "clans.yml");
-		   try {
-			this.getConfigConfig().save(file);
-		} catch (IOException e) {
-			this.getLogger().log(Level.WARNING, "Couldn''t save clans.yml");
-		}
-	   }
-	   public FileConfiguration getConfigConfig(){
-		   FileConfiguration config = getConfig("config");
-		return config;
+	   private FileConfiguration config(String name){
+		   final File config = new File(getDataFolder(), name + ".yml");
+		   FileConfiguration data;
+		   if(data == null){
+			   data = (FileConfiguration) YamlConfiguration.loadConfiguration(config);
+			   final InputStream defConfigStream = getResource(name + ".yml");
+			   if (defConfigStream != null) {
+	                @SuppressWarnings({ "deprecation"})
+	                final YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+	                data.setDefaults((Configuration) defConfig);
+			   }
+		   }
+		   return data;
 	   }
 	   public FileConfiguration getDataConfig(){
-		   FileConfiguration config = getConfig("data");
-			return config;
+		   return this.config("data");
 	   }
 	   public FileConfiguration getClansConfig(){
-		   FileConfiguration config = getConfig("clans");
-			return config;
+		   return this.config("clans");
 	   }
-	   
+	   private void saveConfigs(String name){
+		   final File config = new File(getDataFolder(), name + ".yml");
+		   try {
+	            this.getConfig().options().copyDefaults(true);
+	            this.getClansConfig().save(config);
+	            this.config(name);
+		   } catch (IOException ex) {
+	            getLogger().log(Level.WARNING, "Couldn''t save {0}.yml", name);
+	        }
+	   }
+	   public void saveClansConfig(){
+		   this.saveConfigs("clans");
+	   }
+	   public void saveDataConfig(){
+		   this.saveConfigs("data");
+	   }
 }
