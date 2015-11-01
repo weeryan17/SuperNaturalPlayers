@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.weeryan17.snp.Main;
-import com.weeryan17.snp.Config.Config;
-import com.weeryan17.snp.Config.CustomConfig;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -27,19 +25,17 @@ public class VampBlCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-    	Config MainConfig = new Config(this.instance);
-    	CustomConfig data = MainConfig.data();
         String playerName = sender.getName().toString();
     	Player p = Bukkit.getPlayer(playerName);
         if (sender instanceof Player) {
-            if (cmd.getName().equalsIgnoreCase("bl") && data.getConfig().get("Players." + playerName + ".type").toString().equals("Vampire")) {
+            if (cmd.getName().equalsIgnoreCase("bl") && instance.getDataConfig().get("Players." + playerName + ".type").toString().equals("Vampire")) {
                 if (args.length == 0) {
-                	if(data.getConfig().getBoolean("Players." + playerName + ".BL") == false){
-                		data.getConfig().set("Players." + playerName + ".BL", true);
+                	if(instance.getDataConfig().getBoolean("Players." + playerName + ".BL") == false){
+                		instance.getDataConfig().set("Players." + playerName + ".BL", true);
                     blood(playerName, p);
                     sender.sendMessage(ChatColor.RED + "You went into blood lust mode. This will drain your blood");
                 } else {
-                	data.getConfig().set("Players." + playerName + ".BL", false);
+                	instance.getDataConfig().set("Players." + playerName + ".BL", false);
                 	stop(p);
                 	p.sendMessage(ChatColor.RED + "You exited bloodlust mode");
                 }
@@ -51,19 +47,16 @@ public class VampBlCommand implements CommandExecutor {
         if (args.length == 1 && args[0].equals("stop")) {
             stop(p);
         }
-        data.saveConfig();
+        instance.saveDataConfig();
         return true;
     }
 
     public void blood(final String sender, final Player p) {
-    	Config MainConfig = new Config(instance);
-    	CustomConfig data = MainConfig.data();
-    	CustomConfig config = MainConfig.config();
-        double blood = data.getConfig().getDouble("Players." + sender + ".Blood");
+        double blood = instance.getDataConfig().getDouble("Players." + sender + ".Blood");
         if (blood >= 0.1) {
-        	int ticks = config.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)");
+        	int ticks = instance.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)");
         	int seconds = ticks/20;
-            data.getConfig().set("Players." + sender + ".Blood", (blood - seconds));
+            instance.getDataConfig().set("Players." + sender + ".Blood", (blood - seconds));
             p.removePotionEffect(PotionEffectType.SPEED);
             p.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, seconds + 1, 5));
@@ -74,7 +67,7 @@ public class VampBlCommand implements CommandExecutor {
                 public void run() {
                     VampBlCommand.this.blood2(sender, p);
                 }
-            }, 0, config.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
+            }, 0, instance.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
             map.put(p, stop);
         } else {
         	map.put(p, stop);
@@ -84,15 +77,12 @@ public class VampBlCommand implements CommandExecutor {
     }
 
     public void blood2(String sender, Player p) {
-    	Config MainConfig = new Config(instance);
-    	CustomConfig data = MainConfig.data();
-    	CustomConfig config = MainConfig.config();
-        double blood = data.getConfig().getDouble("Players." + sender + ".Blood");
+        double blood = instance.getDataConfig().getDouble("Players." + sender + ".Blood");
         if (blood >= 0.1) {
-        	int ticks = config.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)");
+        	int ticks = instance.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)");
         	int seconds = ticks/20;
-            data.getConfig().set("Players." + sender + ".Blood", (blood - seconds));
-            data.saveConfig();
+            instance.getDataConfig().set("Players." + sender + ".Blood", (blood - seconds));
+            instance.saveDataConfig();
             p.removePotionEffect(PotionEffectType.SPEED);
             p.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, seconds + 1, 1));

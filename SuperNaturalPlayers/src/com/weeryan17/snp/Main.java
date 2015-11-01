@@ -10,8 +10,6 @@ import com.weeryan17.snp.Commands.MobCommand;
 import com.weeryan17.snp.Commands.VampBatCommand;
 import com.weeryan17.snp.Commands.VampBlCommand;
 import com.weeryan17.snp.Commands.WitherCommand;
-import com.weeryan17.snp.Config.Config;
-import com.weeryan17.snp.Config.CustomConfig;
 import com.weeryan17.snp.Util.Events;
 import com.weeryan17.snp.PlayerClass;
 
@@ -222,9 +220,9 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
 	   public static String removeCharAt(String s, int pos) {
 		      return s.substring(0, pos) + s.substring(pos + 1);
 		   }
+	   private FileConfiguration data;
 	   private FileConfiguration config(String name){
 		   final File config = new File(getDataFolder(), name + ".yml");
-		   FileConfiguration data;
 		   if(data == null){
 			   data = (FileConfiguration) YamlConfiguration.loadConfiguration(config);
 			   final InputStream defConfigStream = getResource(name + ".yml");

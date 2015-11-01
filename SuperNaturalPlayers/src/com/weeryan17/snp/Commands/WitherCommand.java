@@ -15,8 +15,6 @@ import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Skeleton.SkeletonType;
 
 import com.weeryan17.snp.Main;
-import com.weeryan17.snp.Config.Config;
-import com.weeryan17.snp.Config.CustomConfig;
 import com.weeryan17.snp.Util.EntityHider;
 import com.weeryan17.snp.Util.WitherStuff;
 
@@ -28,15 +26,12 @@ public class WitherCommand implements CommandExecutor{
     }
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {
-    	Config MainConfig = new Config(instance);
-    	CustomConfig data = MainConfig.data();
-    	CustomConfig config = MainConfig.config();
 		if(cmd.getName().equalsIgnoreCase("wither")){
 			final String name = sender.getName().toString();
-			if(sender instanceof Player && data.getConfig().get("Players." + name + ".type").toString().equals("Necromancer")){
-				if(data.getConfig().getBoolean("Players." + name + ".Truce") == true){
+			if(sender instanceof Player && instance.getDataConfig().get("Players." + name + ".type").toString().equals("Necromancer")){
+				if(instance.getDataConfig().getBoolean("Players." + name + ".Truce") == true){
 				final Player player = Bukkit.getPlayer(name);
-				if(data.getConfig().getBoolean("Player." + name + ".WC") == false){
+				if(instance.getDataConfig().getBoolean("Player." + name + ".WC") == false){
 					Location loc = player.getLocation();
 					final Skeleton skely = (Skeleton)loc.getWorld().spawnEntity(loc, EntityType.SKELETON);
 					skely.setSkeletonType(SkeletonType.WITHER);
@@ -44,12 +39,12 @@ public class WitherCommand implements CommandExecutor{
 					EntityHider hide = new EntityHider(this.instance, EntityHider.Policy.BLACKLIST);
 					hide.hideEntity(player, skely);
 					
-					int stop1 = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new WitherStuff(player, skely, config.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)")), 0, config.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
+					int stop1 = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new WitherStuff(player, skely, instance.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)")), 0, instance.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
 					map.put(player, stop1);
 					for(Player pl : Bukkit.getOnlinePlayers()){
 						pl.hidePlayer(player);
 					}
-					data.getConfig().set("Player." + name + ".WC", true);
+					instance.getDataConfig().set("Player." + name + ".WC", true);
 					Bukkit.getScheduler().scheduleSyncDelayedTask(this.instance, new Runnable(){
 
 						@Override
@@ -81,14 +76,12 @@ public class WitherCommand implements CommandExecutor{
 		}
 		
 		
-		data.saveConfig();
+		instance.saveDataConfig();
 		return false;
 	}
 	public void WC(String name){
-    	Config MainConfig = new Config(instance);
-    	CustomConfig data = MainConfig.data();
-		data.getConfig().set("Player." + name + ".WC", false);
-		data.saveConfig();
+		instance.getDataConfig().set("Player." + name + ".WC", false);
+		instance.saveDataConfig();
 	}
 	public void stop(Player player, Skeleton skely){
 		skely.remove();

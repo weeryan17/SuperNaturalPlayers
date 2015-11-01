@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.weeryan17.snp.Main;
-import com.weeryan17.snp.Config.Config;
-import com.weeryan17.snp.Config.CustomConfig;
 import com.weeryan17.snp.Util.EntityHider;
 import com.weeryan17.snp.Util.Sun;
 
@@ -35,20 +33,17 @@ public class PlayerClass {
     }
 
     void runClass() {
-    	Config MainConfig = new Config(instance);
-    	CustomConfig data = MainConfig.data();
-    	CustomConfig config = MainConfig.config();
     	for(final Player p : Bukkit.getOnlinePlayers()) {
     		playerName = p.getName();
             World world = p.getWorld();
             int days = (int)world.getFullTime() / 24000;
             int phase = days % 8;
-            if (data.getConfig().get("Players." + playerName + ".type").toString().equals("Vampire")) {
+            if (instance.getDataConfig().get("Players." + playerName + ".type").toString().equals("Vampire")) {
                 double rad = Sun.calcPlayerIrradiation(p);
                 if (rad >= 0.25 && p.getGameMode() != GameMode.CREATIVE && p.getGameMode() != GameMode.SPECTATOR) {
                     p.damage(rad);
                     p.sendMessage(ChatColor.RED + "The day light is burning you");
-                    int timer = config.getConfig().getInt("General." + "Timings" + ".Player Cheaker(ticks)");
+                    int timer = instance.getConfig().getInt("General." + "Timings" + ".Player Cheaker(ticks)");
                     double seconds = timer/20;
                     double fireticks = seconds+1;
                     p.setFireTicks((int) fireticks);
@@ -56,7 +51,7 @@ public class PlayerClass {
                 
             }
             	EntityHider hide = new EntityHider((Plugin)this.instance, EntityHider.Policy.BLACKLIST);
-            if (data.getConfig().get("Players." + playerName + ".type").toString().equals("Werewolf")){
+            if (instance.getDataConfig().get("Players." + playerName + ".type").toString().equals("Werewolf")){
             if (phase == 0 && world.getTime() >= 13000) {
                 p.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
                 p.removePotionEffect(PotionEffectType.SPEED);
@@ -65,10 +60,10 @@ public class PlayerClass {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 300, 4));
                 p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 4));
                 p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 300, 0));
-                if (data.getConfig().getBoolean("Players." + playerName + ".Wolf") == false){
+                if (instance.getDataConfig().getBoolean("Players." + playerName + ".Wolf") == false){
                 p.sendMessage(ChatColor.DARK_PURPLE + "The moon is full and bright tonight...");
-                int moon = data.getConfig().getInt("Players." + playerName + ".FullMoons");
-                data.getConfig().set("Players." + playerName + ".FullMoons", moon+1);
+                int moon = instance.getDataConfig().getInt("Players." + playerName + ".FullMoons");
+                instance.getDataConfig().set("Players." + playerName + ".FullMoons", moon+1);
                 Location loc = p.getLocation();
                 final Wolf wolf = (Wolf)loc.getWorld().spawnEntity(loc, EntityType.WOLF);
                 Main.noAI(wolf);
@@ -83,20 +78,20 @@ public class PlayerClass {
                     public void run() {
                         run2(p, wolf);
                     }
-                }, 0, config.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
+                }, 0, instance.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
             	map.put(p, stop);
-                data.getConfig().set("Players." + playerName + ".Wolf", true);
-        			data.saveConfig();
+                instance.getDataConfig().set("Players." + playerName + ".Wolf", true);
+        			instance.saveDataConfig();
             }
         } else {
         	p.removePotionEffect(PotionEffectType.SPEED);
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 0));
-            if (data.getConfig().getBoolean("Players." + playerName + ".Wolf") == true){
+            if (instance.getDataConfig().getBoolean("Players." + playerName + ".Wolf") == true){
             	for(Player pl : Bukkit.getOnlinePlayers()) {
             		pl.showPlayer(p);
             	}
-                data.getConfig().set("Players." + playerName + ".Wolf", false);
-        			data.saveConfig();
+                instance.getDataConfig().set("Players." + playerName + ".Wolf", false);
+        			instance.saveDataConfig();
             Bukkit.getScheduler().cancelTask(map.get(p));
             }
         }

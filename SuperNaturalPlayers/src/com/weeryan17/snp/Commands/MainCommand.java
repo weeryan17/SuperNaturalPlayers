@@ -1,12 +1,10 @@
 package com.weeryan17.snp.Commands;
 
 import com.weeryan17.snp.Main;
-import com.weeryan17.snp.Config.Config;
-import com.weeryan17.snp.Config.CustomConfig;
 
 import net.md_5.bungee.api.ChatColor;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -24,11 +22,8 @@ public class MainCommand implements CommandExecutor {
     public MainCommand(Main instance) {
         this.instance = instance;
     }
-    @SuppressWarnings("unchecked")
+    //@SuppressWarnings("unchecked")
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-    	Config MainConfig = new Config(instance);
-    	CustomConfig data = MainConfig.data();
-    	CustomConfig api = new CustomConfig(instance, "api");
         if (cmd.getName().equalsIgnoreCase("snp") && 
         		sender.hasPermission("snp.command") || sender.isOp()) {
             Player p;
@@ -44,8 +39,8 @@ public class MainCommand implements CommandExecutor {
                     sender.sendMessage(ChatColor.YELLOW + "/snp toggle <player> <race>");
                     sender.sendMessage(ChatColor.YELLOW + "Races:");
                     sender.sendMessage(ChatColor.YELLOW + "Demon, Werewolf, Vampire, Angel, and Necromancer");
-                    sender.sendMessage(ChatColor.YELLOW + "Races from addons:");
-                    sender.sendMessage(ChatColor.YELLOW + api.getAPIConfig().get("List." + ".Clans").toString());
+                    //sender.sendMessage(ChatColor.YELLOW + "Races from addons:");
+                    //sender.sendMessage(ChatColor.YELLOW + api.getAPIConfig().get("List." + ".Clans").toString());
                 } else if (args[0].equals("item")) {
                     sender.sendMessage(ChatColor.RED + "[SNP Help]");
                     sender.sendMessage(ChatColor.YELLOW + "/snp item <player> <item>");
@@ -61,23 +56,28 @@ public class MainCommand implements CommandExecutor {
             if (args.length == 3 && args[0].equals("toggle")) {
                 player = args[1];
                 race = args[2];
-        		ArrayList<String> clan = (ArrayList<String>) api.getAPIConfig().get("List." + ".Clans");
-                if (args[2].equals("Demon") || args[2].equals("Werewolf") || args[2].equals("Vampire") || args[2].equals("Angel") || args[2].equals("Necromancer") || args[2].equals("Human") || clan.contains(args[2])) {
+        		//ArrayList<String> clan = (ArrayList<String>) api.getAPIConfig().get("List." + ".Clans");
+                if (args[2].equals("Demon") || args[2].equals("Werewolf") || args[2].equals("Vampire") || args[2].equals("Angel") || args[2].equals("Necromancer") || args[2].equals("Human")) {
+                	/**
+                	 * add to if statment when api goes back in
+                	 *  || clan.contains(args[2])
+                	 * 
+                	 */
                     sender.sendMessage("You turned " + player + " into a(n) " + race);
                     p = Bukkit.getServer().getPlayer(this.player);
                     p.sendMessage("You are now a(n) " + race);
-                    data.getConfig().set("Players." + player + ".Blood", 0);
-                    data.getConfig().set("Players." + player + ".Kills", 0);
-                    data.getConfig().set("Players." + player + ".Souls", 0);
-                    data.getConfig().set("Players." + player + ".Bat", false);
-                    data.getConfig().set("Players." + player + ".BloodTotal", 0);
-                    data.getConfig().set("Players." + player + ".Vamplvl", 0);
-                    data.getConfig().set("Players." + player + ".FullMoons", 0);
-                    data.getConfig().set("Players." + player + ".Clan", "none");
-                    data.getConfig().set("Players." + player + ".TotalSouls", 0);
-                    if(data.getConfig().getBoolean("Players." + player + ".Bat") == true){
+                    instance.getDataConfig().set("Players." + player + ".Blood", 0);
+                    instance.getDataConfig().set("Players." + player + ".Kills", 0);
+                    instance.getDataConfig().set("Players." + player + ".Souls", 0);
+                    instance.getDataConfig().set("Players." + player + ".Bat", false);
+                    instance.getDataConfig().set("Players." + player + ".BloodTotal", 0);
+                    instance.getDataConfig().set("Players." + player + ".Vamplvl", 0);
+                    instance.getDataConfig().set("Players." + player + ".FullMoons", 0);
+                    instance.getDataConfig().set("Players." + player + ".Clan", "none");
+                    instance.getDataConfig().set("Players." + player + ".TotalSouls", 0);
+                    if(instance.getDataConfig().getBoolean("Players." + player + ".Bat") == true){
                     }
-                    data.getConfig().set("Players." + player + ".type", race);
+                    instance.getDataConfig().set("Players." + player + ".type", race);
                 } else {
                     sender.sendMessage("not a valid race");
                 }
@@ -115,21 +115,21 @@ public class MainCommand implements CommandExecutor {
             	Player player = Bukkit.getPlayer(args[1]);
         		String name = player.getName();
             	if(args[2].equalsIgnoreCase("Blood")){
-            		double blood = data.getConfig().getDouble("Players." + name + ".Blood");
+            		double blood = instance.getDataConfig().getDouble("Players." + name + ".Blood");
             		double addedBlood = Double.parseDouble(args[3]);
             		blood = blood + addedBlood;
-            		data.getConfig().set("Players." + name + ".Blood", blood);
+            		instance.getDataConfig().set("Players." + name + ".Blood", blood);
             	} else if(args[2].equalsIgnoreCase("Souls")){
-            		int souls = data.getConfig().getInt("Players." + name + ".Souls");
+            		int souls = instance.getDataConfig().getInt("Players." + name + ".Souls");
             		int addedSouls = Integer.parseInt(args[3]);
             		souls = souls + addedSouls;
-            		data.getConfig().set("Players." + name + ".Souls", souls);
+            		instance.getDataConfig().set("Players." + name + ".Souls", souls);
             	}
         }
     }else {
         sender.sendMessage(ChatColor.RED + "You don't have permision to preform this acction");
     }
-        data.saveConfig();
+        instance.saveDataConfig();
 		return false;
 }
 }

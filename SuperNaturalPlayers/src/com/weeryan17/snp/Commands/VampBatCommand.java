@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.weeryan17.snp.Main;
-import com.weeryan17.snp.Config.Config;
-import com.weeryan17.snp.Config.CustomConfig;
 import com.weeryan17.snp.Util.BatTimer;
 
 import net.md_5.bungee.api.ChatColor;
@@ -29,16 +27,13 @@ public class VampBatCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-    	Config MainConfig = new Config(instance);
-    	CustomConfig data = MainConfig.data();
-    	CustomConfig config = MainConfig.config();
         String playerRaw = sender.getName().toString();
         player = Bukkit.getServer().getPlayer(playerRaw);
-        if (sender instanceof Player && data.getConfig().get("Players." + playerRaw + ".type").toString().equals("Vampire")) {
+        if (sender instanceof Player && instance.getDataConfig().get("Players." + playerRaw + ".type").toString().equals("Vampire")) {
             if (cmd.getName().equalsIgnoreCase("bat")) {
-                if (data.getConfig().getBoolean("Players." + playerRaw + ".Bat") == false && args.length == 0) {
-                    data.getConfig().set("Players." + playerRaw + ".Bat", true);
-                    data.saveConfig();
+                if (instance.getDataConfig().getBoolean("Players." + playerRaw + ".Bat") == false && args.length == 0) {
+                    instance.getDataConfig().set("Players." + playerRaw + ".Bat", true);
+                    instance.saveDataConfig();
                     Location loc = this.player.getLocation();
                     final Bat bat = (Bat)loc.getWorld().spawnEntity(loc, EntityType.BAT);
                     Bukkit.getScheduler().scheduleSyncDelayedTask(instance, new Runnable(){
@@ -56,7 +51,7 @@ public class VampBatCommand implements CommandExecutor {
                     player.setAllowFlight(true);
                     player.setMaxHealth(2.0);
                     player.sendMessage(ChatColor.BLACK + "you became a bat");
-                    int stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new BatTimer(player, bat), 0, config.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
+                    int stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new BatTimer(player, bat), 0, instance.getConfig().getInt("General." + "Timings" + ".Entity Discusier Teloporting(ticks)"));
                     map.put(player, stop);
                 } else {
                 	untrans(map.get(player), player);
@@ -75,9 +70,8 @@ public class VampBatCommand implements CommandExecutor {
     	for(Player pl : Bukkit.getOnlinePlayers()) {
         	pl.showPlayer(player);
         }
-        CustomConfig data = new CustomConfig(this.instance, "data");
-        data.getConfig().set("Players." + playerRaw + ".Bat", false);
-        data.saveConfig();
+        instance.getDataConfig().set("Players." + playerRaw + ".Bat", false);
+        instance.saveDataConfig();
         this.player.setAllowFlight(false);
         this.player.setMaxHealth(20.0);
         this.player.sendMessage(ChatColor.RED + "You are no longer a bat");
