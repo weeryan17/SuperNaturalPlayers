@@ -66,6 +66,7 @@ public class PlayerClass {
                 instance.getDataConfig().set("Players." + playerName + ".FullMoons", moon+1);
                 Location loc = p.getLocation();
                 final Wolf wolf = (Wolf)loc.getWorld().spawnEntity(loc, EntityType.WOLF);
+                this.instance.getDataConfig().set("Players." + playerName + ".Mob", wolf);
                 Main.noAI(wolf);
                 hide.hideEntity(p, wolf);
             	for(Player pl : Bukkit.getOnlinePlayers()) {
@@ -91,6 +92,8 @@ public class PlayerClass {
             		pl.showPlayer(p);
             	}
                 instance.getDataConfig().set("Players." + playerName + ".Wolf", false);
+                Wolf wolf = (Wolf) instance.getDataConfig().get("Players." + playerName + ".Mob");
+                wolf.remove();
         			instance.saveDataConfig();
             Bukkit.getScheduler().cancelTask(map.get(p));
             }
@@ -100,8 +103,6 @@ public class PlayerClass {
     }
 
     public void run2(Player player, Wolf wolf) {
-        Location loc = player.getLocation();
-        wolf.teleport(loc);
         wolf.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 300, 10));
         wolf.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 300, 10));
   

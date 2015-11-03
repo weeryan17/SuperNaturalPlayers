@@ -16,6 +16,7 @@ import net.minecraft.server.v1_8_R3.GenericAttributes;
 
 import org.bukkit.event.block.*;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
@@ -23,8 +24,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.WitherSkull;
+import org.bukkit.entity.Wolf;
 import org.bukkit.Material;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.Listener;
@@ -238,11 +241,22 @@ public class Events implements Listener {
         	instance.saveDataConfig();
         }
     }
+    @EventHandler
     public void onExplode(EntityExplodeEvent event){
     	Entity entity = event.getEntity();
     	if(map.containsValue(entity)){
     		Bukkit.getScheduler().cancelTask(map.get(entity));
     		entity.remove();
+    	}
+    }
+    @EventHandler
+    public void onMove(PlayerMoveEvent e){
+    	Player player = e.getPlayer();
+    	String name = player.getName();
+    	if(this.instance.getDataConfig().getBoolean("Players." + name + ".Wolf") == true){
+    		Location loc = player.getLocation();
+    		Wolf wolf = (Wolf) this.instance.getDataConfig().get("Players." + name + ".Mob");
+    		wolf.teleport(loc);
     	}
     }
     public void truce(String name){
