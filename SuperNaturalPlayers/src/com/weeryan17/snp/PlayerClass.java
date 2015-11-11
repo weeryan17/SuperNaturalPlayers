@@ -70,7 +70,7 @@ public class PlayerClass {
                 Main.noAI(wolf);
                 hide.hideEntity(p, wolf);
             	for(Player pl : Bukkit.getOnlinePlayers()) {
-                    pl.playSound(loc, Sound.WOLF_HOWL, 1.0f, 0.0f);
+                    pl.playSound(loc, Sound.WOLF_HOWL, 0.5f, 0.0f);
                     pl.hidePlayer(p);
             	}
             	stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new Runnable(){

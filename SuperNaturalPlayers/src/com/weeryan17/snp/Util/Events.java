@@ -259,8 +259,13 @@ public class Events implements Listener {
     		wolf.teleport(loc);
     	}
     }
-    public void truce(String name){
+    @SuppressWarnings("deprecation")
+	public void truce(String name){
     	instance.getDataConfig().set("Players." + name + ".Truce", true);
+    	Player p = (Player) Bukkit.getServer().getOfflinePlayer(name);
+    	if(p.isOnline()){
+    		p.sendMessage(ChatColor.AQUA + "You regained your truce with the monsters");
+    	}
     	instance.saveDataConfig();
     }
     public Runnable skull(WitherSkull skull, Player player){
