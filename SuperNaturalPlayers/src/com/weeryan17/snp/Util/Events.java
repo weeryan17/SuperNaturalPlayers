@@ -85,7 +85,6 @@ public class Events implements Listener {
         		damager.sendMessage(ChatColor.DARK_GRAY + "You broke you're truce with the monsters for the next 5 mins");
         		Bukkit.getScheduler().scheduleSyncDelayedTask(this.instance, new Runnable(){
 
-					@Override
 					public void run() {
 						truce(player);
 						
@@ -214,7 +213,6 @@ public class Events implements Listener {
             		final WitherSkull skull = player.launchProjectile(WitherSkull.class);
             		int stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new Runnable(){
 
-						@Override
 						public void run() {
 							skull(skull, player);
 							
@@ -276,7 +274,6 @@ public class Events implements Listener {
 				((EntityLiving)((CraftEntity)e).getHandle()).getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(-1);
     			Bukkit.getScheduler().scheduleSyncDelayedTask(instance, new Runnable(){
 
-					@Override
 					public void run() {
 						
 						((EntityLiving)((CraftEntity)e).getHandle()).getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.02);

@@ -18,7 +18,6 @@ public class BatTimer implements Runnable {
 		Bat = bat;
 	}
 
-	@Override
 	public void run() {
 		double ticks = this.instance.getConfig().getDouble("General." + "Timings" + ".Entity Discusier Teloporting(ticks)");
 		double seconds = ticks / 20;

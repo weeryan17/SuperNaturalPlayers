@@ -24,7 +24,6 @@ public class WitherCommand implements CommandExecutor{
     public WitherCommand(Main instance) {
         this.instance = instance;
     }
-	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {
 		if(cmd.getName().equalsIgnoreCase("wither")){
 			final String name = sender.getName().toString();
@@ -47,7 +46,6 @@ public class WitherCommand implements CommandExecutor{
 					instance.getDataConfig().set("Player." + name + ".WC", true);
 					Bukkit.getScheduler().scheduleSyncDelayedTask(this.instance, new Runnable(){
 
-						@Override
 						public void run() {
 							WC(name);
 							
@@ -56,7 +54,6 @@ public class WitherCommand implements CommandExecutor{
 					}, 6000);
 					Bukkit.getScheduler().scheduleSyncDelayedTask(this.instance, new Runnable(){
 
-						@Override
 						public void run() {
 							stop(player, skely);
 							

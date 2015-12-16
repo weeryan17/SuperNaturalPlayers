@@ -20,7 +20,6 @@ public class WitherStuff implements Runnable {
 		this.ticks = ticks;
 	}
 
-	@Override
 	public void run() {
 		skely.teleport(player);
 		int seconds = ticks / 20;

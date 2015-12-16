@@ -133,8 +133,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         final PlayerClass playerClass = new PlayerClass(plugin);
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
 			
-			@Override
-            public void run() {
+			public void run() {
                 playerClass.runClass();
             }
         }, 0, getConfig().getInt("General." + "Timings" + ".Player Cheaker(ticks)"));
@@ -144,7 +143,6 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         final PlayerClass playerClass = new PlayerClass(plugin);
         stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
 
-            @Override
             public void run() {
                 playerClass.run2(player, wolf);
             }

@@ -75,7 +75,6 @@ public class PlayerClass {
             	}
             	stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new Runnable(){
 
-                    @Override
                     public void run() {
                         run2(p, wolf);
                     }

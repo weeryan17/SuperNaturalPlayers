@@ -63,7 +63,6 @@ public class VampBlCommand implements CommandExecutor {
             p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, seconds + 1, 5));
             stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(this.instance, new Runnable(){
 
-                @Override
                 public void run() {
                     VampBlCommand.this.blood2(sender, p);
                 }

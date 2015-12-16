@@ -21,7 +21,6 @@ public class ClanCommand implements CommandExecutor {
     public ClanCommand(Main instance) {
     	this.instance = instance;
     }
-	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {
 		if(cmd.getName().equalsIgnoreCase("clan")){
 			String playerName = sender.getName();

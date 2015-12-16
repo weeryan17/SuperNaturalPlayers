@@ -95,7 +95,6 @@ public class MobCommand implements CommandExecutor {
     							horse.setPassenger(pl);
     							int stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(instance, new Runnable(){
 
-									@Override
 									public void run() {
 										if(horse.getPassenger() != pl){
 											horse.remove();
@@ -134,7 +133,6 @@ public class MobCommand implements CommandExecutor {
     							horse.setPassenger(pl);
     							int stop = Bukkit.getScheduler().scheduleSyncRepeatingTask(instance, new Runnable(){
 
-									@Override
 									public void run() {
 										if(horse.getPassenger() != pl){
 											horse.remove();

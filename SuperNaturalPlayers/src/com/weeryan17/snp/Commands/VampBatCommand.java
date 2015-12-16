@@ -38,7 +38,6 @@ public class VampBatCommand implements CommandExecutor {
                     final Bat bat = (Bat)loc.getWorld().spawnEntity(loc, EntityType.BAT);
                     Bukkit.getScheduler().scheduleSyncDelayedTask(instance, new Runnable(){
 
-						@Override
 						public void run() {
 							Main.noAI(bat);
 							
