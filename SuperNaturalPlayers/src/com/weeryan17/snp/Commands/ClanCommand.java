@@ -118,6 +118,8 @@ public class ClanCommand implements CommandExecutor {
 				} else {
 					sender.sendMessage(ChatColor.YELLOW + "You arn't a clan owner so you can't accept anyone");
 				}
+			} else {
+				
 			}
 		}
 		
