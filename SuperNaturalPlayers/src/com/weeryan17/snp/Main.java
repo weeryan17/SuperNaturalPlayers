@@ -126,7 +126,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         }
         this.saveConfig();
         this.saveClansConfig();
-        this.getLogger().info("Super Natural Players plugin enabled");
+        this.getLogger().info("Supernatural Players plugin enabled");
     }
 
     public void Timer(final Main plugin) {

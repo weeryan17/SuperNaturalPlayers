@@ -33,7 +33,7 @@ public class ClanCommand implements CommandExecutor {
 				sender.sendMessage(ChatColor.YELLOW + "   if you have the permision or you're op you can force another person to join the clan wether open or closed");
 				sender.sendMessage(ChatColor.YELLOW + "/clan create <name>");
 				sender.sendMessage(ChatColor.YELLOW + "   creates a new clan with the specifyed name");
-				sender.sendMessage(ChatColor.YELLOW + "/clan opntions");
+				sender.sendMessage(ChatColor.YELLOW + "/clan options");
 				sender.sendMessage(ChatColor.YELLOW + "   brings up the clan options that you can set if you made the clan");
 			} else {
 			if(sender instanceof Player){
@@ -118,8 +118,63 @@ public class ClanCommand implements CommandExecutor {
 				} else {
 					sender.sendMessage(ChatColor.YELLOW + "You arn't a clan owner so you can't accept anyone");
 				}
-			} else {
-				
+			} else if(args.length == 1 && args[0].equals("create")){
+				sender.sendMessage(ChatColor.YELLOW + "Please specify a name of your new clan");
+			} else if(args.length == 2 && args[0].equals("create")){
+				String clanName = "." + args[1];
+				this.instance.getClansConfig().set("Clans." + race + ".Clans" + clanName + ".Owner", playerName);
+				this.instance.getClansConfig().set("Clans." + race + ".Clans" + clanName + ".Open", false);
+				this.instance.getDataConfig().set("Players." + playerName + ".Clan", args[1]);
+				this.instance.getDataConfig().set("Players." + playerName + ".ClanOwner", true);
+			} else if(args.length == 1 && args[0].equals("options")){
+				if(this.instance.getDataConfig().getBoolean("Players." + playerName + ".ClanOwner") == true){
+					sender.sendMessage(ChatColor.RED + "[SNP Help]");
+					sender.sendMessage(ChatColor.YELLOW + "/clan options owner [name]");
+					sender.sendMessage(ChatColor.YELLOW + "   Allows you to change the owner of the clan");
+					sender.sendMessage(ChatColor.YELLOW + "/clan options open");
+					sender.sendMessage(ChatColor.YELLOW + "   Switches the open option of your clan.");
+					String clan = "." + this.instance.getDataConfig().getString("Players." + playerName + ".Clan");
+					if(this.instance.getClansConfig().getBoolean("Clans." + race + ".Clans" + clan + ".Open") == true){
+						sender.sendMessage(ChatColor.YELLOW + "Your clan is currently open");
+					} else {
+						sender.sendMessage(ChatColor.YELLOW + "Your clan is currently closed");
+					}
+				} else {
+					sender.sendMessage(ChatColor.RED + "You are not a clan owner so you can't preform this command");
+				}
+			} else if(args.length == 2 && args[0].equals("options") && args[1].equals("open")){
+				if(this.instance.getDataConfig().getBoolean("Players." + playerName + ".ClanOwner") == true){
+						String clan = "." + this.instance.getDataConfig().getString("Players." + playerName + ".Clan");
+						if(this.instance.getClansConfig().getBoolean("Clans." + race + ".Clans" + clan + ".Open") == true){
+							sender.sendMessage(ChatColor.YELLOW + "Your clan is now closed");
+							this.instance.getClansConfig().set("Clans." + race + ".Clans" + clan + ".Open", false);
+						} else {
+							sender.sendMessage(ChatColor.YELLOW + "Your clan is now open");
+							this.instance.getClansConfig().set("Clans." + race + ".Clans" + clan + ".Open", true);
+						}
+					} else {
+						sender.sendMessage(ChatColor.RED + "You are not a clan owner so you can't preform this command");
+					}
+			} else if(args.length == 2 && args[0].equals("options") && args[1].equals("owner")){
+				if(this.instance.getDataConfig().getBoolean("Players." + playerName + ".ClanOwner") == true){
+				sender.sendMessage(ChatColor.RED + "Please specify a name");
+				} else {
+					sender.sendMessage(ChatColor.RED + "You are not a clan owner so you can't preform this command");
+				}
+			} else if(args.length == 3 && args[0].equals("options") && args[1].equals("owner")){
+				if(this.instance.getDataConfig().getBoolean("Players." + playerName + ".ClanOwner") == true){
+					if(this.instance.getDataConfig().getString("Players." + args[2] + ".Clan").equals(this.instance.getDataConfig().getString("Players." + playerName + ".Clan"))){
+					sender.sendMessage(args[2] + " is now the owner of the clan");
+					this.instance.getDataConfig().set("Players." + playerName + ".ClanOwner", false);
+					this.instance.getDataConfig().set("Players." + args[2] + ".ClanOwner", true);
+					String clan = "." + this.instance.getDataConfig().getString("Players." + playerName + ".Clan");
+					this.instance.getClansConfig().set("Clans." + race + ".Clans" + clan + ".Owner", args[2]);
+					} else {
+						sender.sendMessage(ChatColor.RED + "That player isn't even a member of your clan!");
+					}
+				} else {
+					sender.sendMessage(ChatColor.RED + "You are not a clan owner so you can't preform this command");
+				}
 			}
 		}
 		
