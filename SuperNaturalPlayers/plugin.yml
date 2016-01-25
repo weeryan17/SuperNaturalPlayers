@@ -1,6 +1,6 @@
 name: SupernaturalPlayers
 main: com.weeryan17.snp.Main
-version: 1.2.0
+version: 1.2.1
 commands:
   howl:
     description: Werewolf command for howling

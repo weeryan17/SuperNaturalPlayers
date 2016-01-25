@@ -64,7 +64,9 @@ public class MainCommand implements CommandExecutor {
                 	 * 
                 	 */
                     sender.sendMessage("You turned " + player + " into a(n) " + race);
+                    ClanCommand clan = new ClanCommand(instance);
                     p = Bukkit.getServer().getPlayer(this.player);
+                    clan.leaveClan(p);
                     p.sendMessage("You are now a(n) " + race);
                     instance.getDataConfig().set("Players." + player + ".Blood", 0);
                     instance.getDataConfig().set("Players." + player + ".Kills", 0);

@@ -35,9 +35,12 @@ public class ClanCommand implements CommandExecutor {
 				sender.sendMessage(ChatColor.YELLOW + "   creates a new clan with the specifyed name");
 				sender.sendMessage(ChatColor.YELLOW + "/clan options");
 				sender.sendMessage(ChatColor.YELLOW + "   brings up the clan options that you can set if you made the clan");
+				sender.sendMessage(ChatColor.YELLOW + "/clan leave");
+				sender.sendMessage(ChatColor.YELLOW + "   Makes you leave the clan. if your the clan owner your clan will get deleted");
 			} else {
 			if(sender instanceof Player){
 				String race = instance.getClansConfig().getString("Players." + playerName + ".type");
+				Player player = Bukkit.getPlayer(playerName);
 			if(args.length == 1 && args[0].equals("list")){
 	            List<String> list = new ArrayList<String>();
 				ConfigurationSection Race = instance.getClansConfig().getConfigurationSection("Clans." + race + ".Clans");
@@ -121,6 +124,7 @@ public class ClanCommand implements CommandExecutor {
 			} else if(args.length == 1 && args[0].equals("create")){
 				sender.sendMessage(ChatColor.YELLOW + "Please specify a name of your new clan");
 			} else if(args.length == 2 && args[0].equals("create")){
+				leaveClan(player);
 				String clanName = "." + args[1];
 				this.instance.getClansConfig().set("Clans." + race + ".Clans" + clanName + ".Owner", playerName);
 				this.instance.getClansConfig().set("Clans." + race + ".Clans" + clanName + ".Open", false);
@@ -175,6 +179,8 @@ public class ClanCommand implements CommandExecutor {
 				} else {
 					sender.sendMessage(ChatColor.RED + "You are not a clan owner so you can't preform this command");
 				}
+			} else if(args.length == 1 && args[0].equals("leave")) {
+				leaveClan(player);
 			}
 		}
 		
@@ -184,5 +190,20 @@ public class ClanCommand implements CommandExecutor {
 			instance.saveClansConfig();
 		return false;
 	}
-
+	public void leaveClan(Player player){
+		String p = player.getName();
+		if(this.instance.getDataConfig().getBoolean("Players." + p + "ClanOwner") == true){
+			player.sendMessage(ChatColor.RED + "Because we are the owner of this clan and you left the clan is getting deleted");
+			ConfigurationSection players = this.instance.getDataConfig().getConfigurationSection("Players.");
+			String clan = this.instance.getDataConfig().getString("Players." + p + ".Clan");
+			this.instance.getClansConfig().set("Clans." + this.instance.getDataConfig().getString("Players." + p +".Race") + ".Clans" + clan, null);
+			for(String pl : players.getKeys(false)){
+				if(this.instance.getDataConfig().getString("Players." + pl + "Clan").equals(clan)){
+					this.instance.getDataConfig().set("Players." + pl + ".Clan", "none");
+				}
+			}
+		} else {
+			this.instance.getDataConfig().set("Players." + p + ".Clan", "none");
+		}
+	}
 }
